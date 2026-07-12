@@ -1,0 +1,78 @@
+---
+import Base from '../../layouts/Base.astro';
+import donnees from '../../data/clubs.json';
+
+const clubs = [...donnees.clubs].sort((a, b) =>
+  (a.ville || 'zzz').localeCompare(b.ville || 'zzz', 'fr')
+);
+const disciplines = [...new Set(clubs.flatMap((c) => c.disciplines || []))];
+---
+<Base
+  title="Les clubs de savate en Seine-et-Marne – CDSBF77"
+  description="Annuaire des clubs de savate boxe française, canne de combat, savate forme et savate défense affiliés en Seine-et-Marne."
+>
+  <section class="page-hero">
+    <p class="kicker">Annuaire</p>
+    <h1>Les clubs du 77</h1>
+    <p class="sous-titre">{clubs.length} clubs affiliés à la Fédération Française de Savate. Filtrez par commune ou par discipline.</p>
+  </section>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="filtres">
+        <input id="recherche" type="search" placeholder="Ville ou nom de club…" aria-label="Rechercher un club" />
+        <select id="discipline" aria-label="Filtrer par discipline">
+          <option value="">Toutes les disciplines</option>
+          {disciplines.map((d) => <option value={d}>{d}</option>)}
+        </select>
+      </div>
+
+      <div class="clubs-grid" id="liste-clubs">
+        {clubs.map((club) => (
+          <article
+            class="club-card"
+            style={'border-top-color:' + (club.couleurs?.accent || '#d4af37')}
+            data-nom={club.nom.toLowerCase()}
+            data-ville={(club.ville || '').toLowerCase()}
+            data-disciplines={(club.disciplines || []).join('|')}
+          >
+            <p class="ville" style={'color:' + (club.couleurs?.primaire || '#b8941f')}>{club.ville || 'Commune à confirmer'}</p>
+            <h3>{club.nom}</h3>
+            <p class="disciplines">{(club.disciplines || []).join(' · ')}</p>
+            <div class="pied">
+              <a class="fiche" href={'/clubs/' + club.slug}>Voir la fiche <i class="fas fa-arrow-right"></i></a>
+              <span class="rs">
+                {club.liens?.facebook && <a href={club.liens.facebook} aria-label={'Facebook ' + club.nom} rel="noopener"><i class="fab fa-facebook-f"></i></a>}
+                {club.liens?.instagram && <a href={club.liens.instagram} aria-label={'Instagram ' + club.nom} rel="noopener"><i class="fab fa-instagram"></i></a>}
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+      <p id="aucun" hidden style="text-align:center; color: var(--white); margin-top: 2rem;">Aucun club ne correspond à cette recherche.</p>
+    </div>
+  </main>
+
+  <script>
+    const recherche = document.getElementById('recherche');
+    const discipline = document.getElementById('discipline');
+    const cartes = Array.from(document.querySelectorAll('#liste-clubs .club-card'));
+    const aucun = document.getElementById('aucun');
+
+    function filtrer() {
+      const q = recherche.value.trim().toLowerCase();
+      const d = discipline.value;
+      let visibles = 0;
+      for (const carte of cartes) {
+        const okTexte = !q || carte.dataset.nom.includes(q) || carte.dataset.ville.includes(q);
+        const okDisc = !d || carte.dataset.disciplines.split('|').includes(d);
+        const ok = okTexte && okDisc;
+        carte.hidden = !ok;
+        if (ok) visibles++;
+      }
+      aucun.hidden = visibles > 0;
+    }
+    recherche.addEventListener('input', filtrer);
+    discipline.addEventListener('change', filtrer);
+  </script>
+</Base>

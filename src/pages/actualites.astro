@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import articles from '../data/actualites.json';
+const tries = [...articles].sort((a, b) => b.date.localeCompare(a.date));
+const formate = (iso) => new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base
+  title="Actualités – CDSBF77"
+  description="Les actualités de la savate en Seine-et-Marne : résultats, stages, vie des clubs et du comité."
+>
+  <section class="page-hero">
+    <p class="kicker">Actualités</p>
+    <h1>La vie du comité</h1>
+  </section>
+  <main class="main-content">
+    <div class="container">
+      {tries.map((article) => (
+        <section class="card visible" style="margin-bottom: 2rem;">
+          <div class="card-content">
+            <p class="kicker" style="color: var(--gold-dark);">{formate(article.date)}</p>
+            <h2 class="section-title" style="text-align:left;">{article.titre}</h2>
+            <p>{article.contenu}</p>
+          </div>
+        </section>
+      ))}
+    </div>
+  </main>
+</Base>

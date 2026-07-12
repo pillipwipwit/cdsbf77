@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import donnees from '../data/clubs.json';
+const inclusifs = donnees.clubs
+  .filter((c) => (c.publics || []).includes('handicaps'))
+  .sort((a, b) => (a.ville || 'zzz').localeCompare(b.ville || 'zzz', 'fr'));
+---
+<Base
+  title="Savate adaptée et para-savate – CDSBF77"
+  description="La savate pour tous en Seine-et-Marne : pratique adaptée, para-savate et clubs ouverts aux personnes en situation de handicap."
+>
+  <section class="page-hero">
+    <p class="kicker">Inclusion</p>
+    <h1>La savate, vraiment pour tous</h1>
+    <p class="sous-titre">
+      Pédagogie ajustée, encadrants formés et créneaux dédiés pour les personnes en
+      situation de handicap, quel que soit leur âge ou leur niveau.
+    </p>
+  </section>
+  <main class="main-content">
+    <div class="container">
+      <h2 class="section-title" style="color: var(--white);">Les clubs qui accueillent</h2>
+      <div class="clubs-grid">
+        {inclusifs.map((club) => (
+          <article class="club-card">
+            <p class="ville">{club.ville || 'Commune à confirmer'}</p>
+            <h3>{club.nom}</h3>
+            <div class="pied">
+              <a class="fiche" href={'/clubs/' + club.slug}>Voir la fiche <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </main>
+</Base>

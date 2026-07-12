@@ -1,0 +1,138 @@
+---
+import Base from '../../layouts/Base.astro';
+import donnees from '../../data/clubs.json';
+
+export function getStaticPaths() {
+  return donnees.clubs.map((club) => ({
+    params: { slug: club.slug },
+    props: { club },
+  }));
+}
+
+const { club } = Astro.props;
+const salles = club.salles || [];
+const horaires = club.horaires || [];
+const liens = club.liens || {};
+const contact = club.contact || {};
+const couleurs = club.couleurs || { primaire: '#0f3460', accent: '#d4af37' };
+function eclaircir(hex, f) {
+  const n = hex.replace('#', '');
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(n.slice(i, i + 2), 16));
+  const m = (v) => Math.round(v + (255 - v) * f).toString(16).padStart(2, '0');
+  return '#' + m(r) + m(g) + m(b);
+}
+const styleClub = [
+  '--club-primaire:' + couleurs.primaire,
+  '--club-primaire-clair:' + eclaircir(couleurs.primaire, 0.25),
+  '--club-accent:' + couleurs.accent,
+  '--club-halo:' + couleurs.accent + '40',
+].join(';');
+const titre = club.nom + (club.ville ? ' – Savate à ' + club.ville : '') + ' | CDSBF77';
+const description =
+  'Savate boxe française à ' + (club.ville || 'Seine-et-Marne') +
+  ' avec ' + club.nom + ' : disciplines, horaires et contact.';
+---
+<Base title={titre} description={description}>
+  <div class="club-scope" style={styleClub}>
+  <section class="page-hero">
+    {club.logo && (
+      <img class="club-logo" src={club.logo} alt={'Logo ' + club.nom} loading="eager" />
+    )}
+    {club.logo && (liens.site || liens.facebook || liens.instagram || liens.youtube) && (
+      <div class="logo-liens">
+        {liens.site && <a href={liens.site} rel="noopener" aria-label={'Site de ' + club.nom}><i class="fas fa-globe"></i></a>}
+        {liens.facebook && <a href={liens.facebook} rel="noopener" aria-label={'Facebook de ' + club.nom}><i class="fab fa-facebook-f"></i></a>}
+        {liens.instagram && <a href={liens.instagram} rel="noopener" aria-label={'Instagram de ' + club.nom}><i class="fab fa-instagram"></i></a>}
+        {liens.youtube && <a href={liens.youtube} rel="noopener" aria-label={'YouTube de ' + club.nom}><i class="fab fa-youtube"></i></a>}
+      </div>
+    )}
+    <p class="kicker">{club.ville || 'Seine-et-Marne'}</p>
+    <h1>{club.nom}</h1>
+    <div class="badges">
+      {(club.disciplines || []).map((d) => <span class="badge">{d}</span>)}
+      {(club.publics || []).includes('enfants') && <span class="badge">Ouvert aux enfants</span>}
+      {(club.publics || []).includes('handicaps') && <span class="badge badge--or">Accueil handicap</span>}
+      {(club.labels || []).map((l) => <span class="badge badge--or">Label {l}</span>)}
+    </div>
+  </section>
+
+  <main class="main-content">
+    <div class="container">
+
+      {(club.videos || []).length > 0 && (
+        <section class="card visible" style="padding: 0; background: transparent; box-shadow: none;">
+          <div class={club.videos.length > 1 ? 'videos-grille' : ''}>
+            {club.videos.map((v) => (
+              <div class="video-embed">
+                <iframe src={v.url} allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title={v.titre || 'Vidéo du club ' + club.nom} loading="lazy"></iframe>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section class="card visible" style="margin-top: 2rem;">
+        <div class="card-content">
+          <div class="info-grid">
+            <div class="info-card">
+              <h3><i class="fas fa-map-marker-alt"></i>Salle</h3>
+              {salles.length > 0 ? (
+                salles.map((salle) => (
+                  <p><strong>{salle.nom}</strong><br />{salle.adresse}</p>
+                ))
+              ) : (
+                <p>Lieu d'entraînement en cours de mise à jour.</p>
+              )}
+            </div>
+            <div class="info-card">
+              <h3><i class="fas fa-user"></i>Contact</h3>
+              {contact.correspondant && <p><strong>{contact.correspondant}</strong></p>}
+              {contact.telephone && <p><a href={'tel:' + contact.telephone.replace(/\s/g, '')}><i class="fas fa-phone"></i> {contact.telephone}</a></p>}
+              {contact.telephone2 && <p><a href={'tel:' + contact.telephone2.replace(/\s/g, '')}><i class="fas fa-phone"></i> {contact.telephone2}</a></p>}
+              {contact.email && <p><a href={'mailto:' + contact.email}><i class="fas fa-envelope"></i> {contact.email}</a></p>}
+              {!contact.correspondant && !contact.telephone && !contact.email && <p>Coordonnées en cours de mise à jour.</p>}
+            </div>
+            <div class="info-card">
+              <h3><i class="fas fa-link"></i>Liens</h3>
+              {liens.site && <p><a href={liens.site} rel="noopener"><i class="fas fa-globe"></i> Site du club</a></p>}
+              {liens.facebook && <p><a href={liens.facebook} rel="noopener"><i class="fab fa-facebook-f"></i> Facebook</a></p>}
+              {liens.instagram && <p><a href={liens.instagram} rel="noopener"><i class="fab fa-instagram"></i> Instagram</a></p>}
+              {liens.youtube && <p><a href={liens.youtube} rel="noopener"><i class="fab fa-youtube"></i> YouTube</a></p>}
+              {liens.ffsavate && <p><a href={liens.ffsavate} rel="noopener"><i class="fas fa-external-link-alt"></i> Fiche fédérale</a></p>}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card visible" style="margin-top: 2rem;">
+        <div class="card-content">
+          <h2 class="section-title">Horaires</h2>
+          {horaires.length > 0 ? (
+            <table class="horaires">
+              <thead>
+                <tr><th>Public</th><th>Jour</th><th>Créneau</th><th>Pratique</th></tr>
+              </thead>
+              <tbody>
+                {horaires.map((h) => (
+                  <tr><td>{h.public}</td><td>{h.jour}</td><td>{h.creneau}</td><td>{h.type || '—'}</td></tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p style="text-align:center;">Horaires en cours de mise à jour : contactez le club pour la grille de la saison.</p>
+          )}
+          {club.aCompleter && (
+            <p class="avis" style="margin-top:1.5rem;">
+              Cette fiche est en cours de complétion par le comité.
+              Une information à corriger ? <a href="/contact">Écrivez-nous</a>.
+            </p>
+          )}
+          <p style="margin-top:2rem; text-align:center;">
+            <a class="btn-or" href="/clubs"><i class="fas fa-arrow-left"></i> Tous les clubs</a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+  </div>
+</Base>

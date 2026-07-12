@@ -1,0 +1,118 @@
+---
+import '../styles/comite.css';
+
+const {
+  title = 'CDSBF77 – Savate boxe française en Seine-et-Marne',
+  description = 'Le Comité Départemental de Savate Boxe Française de Seine-et-Marne : annuaire des clubs, disciplines, compétitions et formations.',
+} = Astro.props;
+
+const nav = [
+  { href: '/', label: 'Accueil' },
+  { href: '/clubs', label: 'Clubs' },
+  { href: '/disciplines', label: 'Disciplines' },
+  { href: '/competitions', label: 'Compétitions' },
+  { href: '/formations', label: 'Formations' },
+  { href: '/savate-adaptee', label: 'Savate adaptée' },
+  { href: '/actualites', label: 'Actualités' },
+  { href: '/contact', label: 'Contact' },
+];
+const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:site_name" content="CDSBF77" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <noscript><style>.card { opacity: 1 !important; transform: none !important; }</style></noscript>
+  </head>
+  <body>
+    <div class="particles" id="particles" aria-hidden="true"></div>
+
+    <nav class="navigation" id="navigation" aria-label="Navigation principale">
+      <div class="nav-container">
+        {nav.map((item) => (
+          <a
+            href={item.href}
+            class="nav-link"
+            aria-current={chemin === item.href || (item.href !== '/' && chemin.startsWith(item.href + '/')) ? 'page' : undefined}
+          ><span>{item.label}</span></a>
+        ))}
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer id="contact">
+      <div class="footer-content">
+        <img src="https://i.postimg.cc/zfhFq0j9/logocdsbf.jpg" alt="Logo CDSBF77" class="footer-logo" loading="lazy" />
+        <div class="social-links">
+          <a href="https://www.facebook.com/profile.php?id=100088440284322" class="social-link" aria-label="Facebook" rel="noopener">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="https://www.instagram.com/comite_77_savate_bf/" class="social-link" aria-label="Instagram" rel="noopener">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="mailto:contact@cdsbf77.org" class="social-link" aria-label="Email">
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+        <p>© 2026 - Comité Départemental de Savate Boxe Française de Seine-et-Marne</p>
+        <p>
+          <a href="mailto:contact@cdsbf77.org" style="color: var(--gold); text-decoration: none;">contact@cdsbf77.org</a>
+          &nbsp;·&nbsp;
+          <a href="/liens" style="color: var(--gold); text-decoration: none;">Liens utiles</a>
+          &nbsp;·&nbsp;
+          <a href="/comite" style="color: var(--gold); text-decoration: none;">Le comité</a>
+          &nbsp;·&nbsp;
+          <a href="/mentions-legales" style="color: var(--gold); text-decoration: none;">Mentions légales</a>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Particules flottantes
+      const conteneur = document.getElementById('particles');
+      if (conteneur && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        for (let i = 0; i < 20; i++) {
+          const p = document.createElement('div');
+          p.className = 'particle';
+          p.style.left = Math.random() * 100 + '%';
+          p.style.animationDelay = Math.random() * 20 + 's';
+          p.style.animationDuration = (15 + Math.random() * 20) + 's';
+          const taille = Math.random() * 5 + 3;
+          p.style.width = taille + 'px';
+          p.style.height = taille + 'px';
+          conteneur.appendChild(p);
+        }
+      }
+
+      // Effet de scroll sur la navigation
+      const nav = document.getElementById('navigation');
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.pageYOffset > 100);
+      });
+
+      // Apparition des cartes au défilement
+      const observer = new IntersectionObserver((entrees) => {
+        entrees.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+      document.querySelectorAll('.card').forEach((c) => observer.observe(c));
+
+      // Année dynamique
+      const annee = new Date().getFullYear();
+      document.querySelectorAll('footer p').forEach((p) => {
+        if (p.textContent.includes('©')) p.textContent = p.textContent.replace('2026', String(annee));
+      });
+    </script>
+  </body>
+</html>

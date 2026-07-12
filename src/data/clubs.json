@@ -1,0 +1,1526 @@
+{
+  "meta": {
+    "source": "ffsavate.com - page comité 77 Seine-et-Marne et fiches clubs",
+    "dateExtraction": "2026-07-10",
+    "nombreClubs": 31,
+    "comite": {
+      "nom": "Comité Départemental de Savate Boxe Française de Seine-et-Marne (CDSBF77)",
+      "president": "Cédric Senez",
+      "adresse": "24 avenue Franklin Roosevelt, 77100 Meaux",
+      "telephone": "06 26 49 82 59",
+      "instagram": "https://www.instagram.com/comite_77_savate_bf/",
+      "facebook": "https://www.facebook.com/profile.php?id=100088440284322",
+      "ligue": "Île-de-France"
+    },
+    "notes": [
+      "Sources : pages fournies par le comité (juillet 2026), ffsavate.com, sites des clubs",
+      "Entrées aCompleter=true : horaires ou contacts restant à valider via l’extranet fédéral"
+    ]
+  },
+  "clubs": [
+    {
+      "slug": "savate-pour-tous",
+      "nom": "Savate pour Tous",
+      "ville": "Hautefeuille / Juilly",
+      "codePostal": null,
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Salle communale",
+          "adresse": "77515 Hautefeuille"
+        },
+        {
+          "nom": "Salle communale",
+          "adresse": "77230 Juilly"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Tous publics",
+          "jour": "Mercredi",
+          "creneau": "20h00 - 21h00",
+          "type": "Hautefeuille"
+        },
+        {
+          "public": "Tous publics",
+          "jour": "Jeudi",
+          "creneau": "12h00 - 14h00",
+          "type": "Juilly"
+        }
+      ],
+      "contact": {
+        "email": "savatepourtous@gmail.com"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/savate-pour-tous/"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      }
+    },
+    {
+      "slug": "crecy",
+      "nom": "Crécy Boxe Française",
+      "ville": "Crécy-la-Chapelle",
+      "codePostal": "77580",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase de Crécy-la-Chapelle",
+          "adresse": "77580 Crécy-la-Chapelle"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "email": "bf.crecy@gmail.com"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/crecy-boxe-francaise/",
+        "facebook": "https://www.facebook.com/share/1Jw6g3FvjZ/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#1a237e",
+        "accent": "#ffd700"
+      }
+    },
+    {
+      "slug": "villevaude",
+      "nom": "Canne Boxe Française Brie",
+      "ville": "Villevaudé",
+      "codePostal": "77410",
+      "disciplines": [
+        "Savate boxe française",
+        "Savate Défense"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "equipements": [
+        "Ring"
+      ],
+      "salles": [
+        {
+          "nom": "Salle polyvalente Les Merisiers",
+          "adresse": "77410 Villevaudé"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": null,
+        "email": null,
+        "correspondant": null
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/canne-boxe-francaise-brie/"
+      },
+      "aCompleter": true,
+      "commentaire": "Horaires et contact à compléter",
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      }
+    },
+    {
+      "slug": "aestbf",
+      "nom": "AEST BF",
+      "ville": "Torcy",
+      "codePostal": "77200",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Complexe sportif de l'Arche Guédon",
+          "adresse": "Place des Rencontres, 77200 Torcy"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 17 17 24 10",
+        "email": "aestbf@orange.fr",
+        "correspondant": "Rachid Abdoune"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/aestbf/",
+        "site": "https://aestbf.fr/",
+        "youtube": "http://www.youtube.com/@hmed3284",
+        "facebook": "https://www.facebook.com/aestbf/"
+      },
+      "aCompleter": false,
+      "commentaire": "Ville déduite de la page Wix /torcy, à confirmer",
+      "couleurs": {
+        "primaire": "#000000",
+        "accent": "#CD9B4A"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209197756?h=ddb081ce7a"
+        }
+      ]
+    },
+    {
+      "slug": "champs",
+      "nom": "AES Champs-sur-Marne",
+      "ville": "Champs-sur-Marne",
+      "codePostal": "77420",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase Bois des Enfants",
+          "adresse": "77420 Champs-sur-Marne"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Enfants (6-10 ans)",
+          "jour": "Mercredi et vendredi",
+          "creneau": "18h00 - 19h00",
+          "type": "Savate"
+        },
+        {
+          "public": "Jeunes (11-14 ans)",
+          "jour": "Mercredi et vendredi",
+          "creneau": "19h00 - 20h00",
+          "type": "Savate"
+        },
+        {
+          "public": "Ados/Adultes (15 ans et +)",
+          "jour": "Lundi et mercredi",
+          "creneau": "20h00 - 22h30",
+          "type": "Savate"
+        },
+        {
+          "public": "Ados/Adultes",
+          "jour": "Jeudi",
+          "creneau": "20h00 - 22h00",
+          "type": "Cardio boxing"
+        }
+      ],
+      "contact": {
+        "telephone": "06 85 59 28 94",
+        "email": "aes.champssurmarne@gmail.com"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/aes-champs-sur-marne/",
+        "site": "https://www.savate-champs.fr/"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#1a1a2e",
+        "accent": "#e94560"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209198598?h=50dcfc15c9"
+        }
+      ]
+    },
+    {
+      "slug": "vulaines-sur-seine",
+      "nom": "CCSV (Centre Culturel et Sportif de Vulaines-sur-Seine)",
+      "ville": "Vulaines-sur-Seine",
+      "codePostal": "77870",
+      "adresseSiege": "7 rue Riche, 77870 Vulaines-sur-Seine",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Dojo du complexe sportif Pierre-de-Coubertin",
+          "adresse": "77870 Vulaines-sur-Seine"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Enfants",
+          "jour": "Mardi",
+          "creneau": "18h30 - 19h30",
+          "type": "Loisir"
+        },
+        {
+          "public": "Ados et adultes",
+          "jour": "Mardi",
+          "creneau": "19h30 - 21h00",
+          "type": "Loisir"
+        }
+      ],
+      "contact": {
+        "telephone": "01 64 23 91 39",
+        "email": "ccsv.vulaines@gmail.com",
+        "telephone2": "06 81 31 34 17",
+        "correspondant": "Françoise Boyer"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/ccsv/",
+        "site": "http://www.vulaines-ccsv-sport-culture.com"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#1a237e",
+        "accent": "#c41e3a"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209206334?h=70f7254c25"
+        }
+      ]
+    },
+    {
+      "slug": "roissy",
+      "nom": "Savate Boxe Française Kick Boxing Roissy",
+      "ville": "Roissy-en-Brie",
+      "codePostal": "77680",
+      "disciplines": [
+        "Savate boxe française",
+        "Savate Forme"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [
+        "Jeunes : Argent",
+        "Savate pour Tous : Bronze"
+      ],
+      "salles": [
+        {
+          "nom": "Gymnase",
+          "adresse": "Avenue Eugène-Delacroix, 77680 Roissy-en-Brie"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Adultes et ados",
+          "jour": "Lundi et mercredi",
+          "creneau": "20h30 - 22h30",
+          "type": "Loisir et compétition"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Samedi",
+          "creneau": "9h00 - 13h00",
+          "type": "Compétition puis loisir"
+        },
+        {
+          "public": "Jeunes et ados",
+          "jour": "Samedi",
+          "creneau": "9h00 - 11h30",
+          "type": "Loisir et compétition"
+        }
+      ],
+      "contact": {
+        "telephone": "06 15 20 43 22",
+        "email": "sbfroissy77680@gmail.com",
+        "telephone2": "01 70 10 39 17",
+        "correspondant": "Gilbert Inganni"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/savate-boxe-francaise-kick-boxing-roissy/",
+        "site": "https://www.sbfkb-roissy.fr",
+        "facebook": "https://www.facebook.com/p/SBF-Roissy-Savate-Boxe-Francaise-100064240347271/"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1097120804"
+        }
+      ],
+      "adresseSiege": "3 square Nicolas Adam, 77680 Roissy-en-Brie"
+    },
+    {
+      "slug": "lagny",
+      "nom": "Box In Lagny",
+      "ville": "Lagny-sur-Marne",
+      "codePostal": "77400",
+      "disciplines": [
+        "Savate boxe française",
+        "Savate Défense"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [
+        "Jeunes : Bronze",
+        "Savate pour Tous : Bronze"
+      ],
+      "salles": [
+        {
+          "nom": "Salle de boxe",
+          "adresse": "3 rue Louis Dreux, 77400 Lagny-sur-Marne"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 30 20 44 50",
+        "email": "nicolas.boxingclub@hotmail.fr",
+        "correspondant": "Mathieu Prévot"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/box-in-lagny/",
+        "site": "http://www.boxinlagny.com/",
+        "facebook": "https://www.facebook.com/boxinlagny77/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#05005c",
+        "accent": "#3949ab"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209198117?h=6ea168bfd8"
+        }
+      ],
+      "logo": "https://i.postimg.cc/YSyVRfGr/452745923-950097770460749-1526358719428855874-n.jpg"
+    },
+    {
+      "slug": "moussy",
+      "nom": "Moussy Savate Boxe Française",
+      "ville": "Moussy-le-Vieux",
+      "codePostal": "77230",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 22 76 23 31",
+        "email": "msbfsavate77@yahoo.com",
+        "correspondant": "David Lointier"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/moussy-savate-boxe-francaise/",
+        "site": "https://msbfsavate77.clubeo.com/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#1976d2",
+        "accent": "#d32f2f"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209198159?h=2e8e955124"
+        }
+      ]
+    },
+    {
+      "slug": "presles-en-brie",
+      "nom": "ASBFP (AS Boxe Française de Presles)",
+      "ville": "Presles-en-Brie",
+      "codePostal": "77220",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Salle polyvalente",
+          "adresse": "Rue du Bicentenaire, 77220 Presles-en-Brie"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 17 74 79 66",
+        "telephone2": "06 22 66 31 11",
+        "email": "asbfp77@gmail.com"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/asbfp/"
+      },
+      "aCompleter": false,
+      "commentaire": "Anciennes données 2020 (ancien site cdsbf77.fr) : tél 06 17 74 79 66, adultes lundi et vendredi 19h30-21h30, enfants mercredi 18h30-19h30. À revalider avant publication",
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1097120452"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1097120468"
+        }
+      ]
+    },
+    {
+      "slug": "serris",
+      "nom": "Serris Val d'Europe Savate (SVES)",
+      "ville": "Serris",
+      "codePostal": "77700",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase Olympe de Gouges",
+          "adresse": "4 cours du Rhin, 77700 Serris"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "email": "serrisvaldeuropesavate@gmail.com",
+        "telephone": "06 09 38 37 99",
+        "correspondant": "Marc Rodier"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/serris-val-d-europe-savate/",
+        "site": "http://www.svesavate.fr",
+        "facebook": "https://www.facebook.com/svesboxing/",
+        "instagram": "https://www.instagram.com/sbf_serris/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#2F7C96",
+        "accent": "#7EC8DE"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1054936470",
+          "titre": "SVES – Marc Rodier"
+        }
+      ],
+      "logo": "https://i.postimg.cc/j2BFTs6G/logoSVES.png"
+    },
+    {
+      "slug": "montereau",
+      "nom": "CS Montereau BF",
+      "ville": "Montereau-Fault-Yonne",
+      "codePostal": "77130",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants",
+        "féminines"
+      ],
+      "labels": [],
+      "equipements": [
+        "Ring"
+      ],
+      "salles": [
+        {
+          "nom": "Complexe sportif",
+          "adresse": "8 rue Pierre de Montereau, 77130 Montereau-Fault-Yonne"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 21 88 30 56",
+        "email": "yanisou77@hotmail.fr",
+        "correspondant": "Mehdy Delezenne"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/cs-montereau-bf/"
+      },
+      "aCompleter": true,
+      "commentaire": "La ville indique aussi la salle de boxe Richelieu comme lieu d'entraînement, à confirmer",
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      }
+    },
+    {
+      "slug": "pontault-combault",
+      "nom": "SPASS Boxe Française Savate Pontault-Combault",
+      "ville": "Pontault-Combault",
+      "codePostal": "77340",
+      "adresseSiege": "107 avenue de la République, 77340 Pontault-Combault",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase Boisramé",
+          "adresse": "85 avenue Rouxel, 77340 Pontault-Combault"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Jeunes",
+          "jour": "Mardi",
+          "creneau": "18h30 - 19h30",
+          "type": "Loisir et compétition"
+        },
+        {
+          "public": "Jeunes",
+          "jour": "Jeudi",
+          "creneau": "18h30 - 19h30",
+          "type": null
+        },
+        {
+          "public": "Ados et adultes",
+          "jour": "Mardi",
+          "creneau": "19h45 - 21h00",
+          "type": "Loisir et compétition"
+        },
+        {
+          "public": "Ados et adultes",
+          "jour": "Jeudi",
+          "creneau": "19h45 - 21h00",
+          "type": null
+        }
+      ],
+      "contact": {
+        "telephone": "06 44 81 23 27",
+        "email": null,
+        "correspondant": "Stéphane Vartanian"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/spass-boxe-francaise-savate-pontault-combault/",
+        "instagram": "https://www.instagram.com/spass.sbf"
+      },
+      "aCompleter": false,
+      "nouveau": true,
+      "couleurs": {
+        "primaire": "#212121",
+        "accent": "#ff6b2b"
+      }
+    },
+    {
+      "slug": "ama-academy",
+      "nom": "AMA Academy",
+      "ville": "Serris",
+      "codePostal": "77700",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Salle Apollo Val d'Europe (360 m²)",
+          "adresse": "Près du centre commercial Val d'Europe, 77700 Serris"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": null,
+        "email": null,
+        "correspondant": null
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/apollo-sporting-club-val-deurope/"
+      },
+      "aCompleter": true,
+      "commentaire": "Ex-Apollo Sporting Club Val d'Europe (page Wix /apollo). Adresse exacte à confirmer suite au changement de nom. Attention : deuxième club à Serris avec SVES",
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      }
+    },
+    {
+      "slug": "evry-gregy",
+      "nom": "Uppercut",
+      "ville": "Évry-Grégy-sur-Yerre",
+      "codePostal": "77166",
+      "adresseSiege": "Gymnase d'Évry-Grégy-sur-Yerre, 77166 Évry-Grégy-sur-Yerre",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "equipements": [
+        "Ring d'entraînement"
+      ],
+      "salles": [],
+      "horaires": [],
+      "contact": {
+        "telephone": "01 64 06 64 00",
+        "correspondant": "Olivier Magnin",
+        "email": "olivier.magni0421@orange.fr"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/uppercut/",
+        "facebook": "https://www.facebook.com/share/1Aby7ia91V/"
+      },
+      "aCompleter": true,
+      "commentaire": "Horaires non renseignés sur ffsavate.com. Absent du site Wix actuel",
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      }
+    },
+    {
+      "slug": "grandpuits",
+      "nom": "BFS Ancoeur Grandpuits",
+      "ville": "Grandpuits-Bailly-Carrois",
+      "codePostal": "77720",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Foyer rural",
+          "adresse": "77720 Grandpuits-Bailly-Carrois"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "01 64 08 36 79",
+        "telephone2": "06 89 03 45 75",
+        "email": "bvidal77@free.fr"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/bfs-ancoeur-grandpuits/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#c41218",
+        "accent": "#e31e24"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209197991?h=a4925e93a2"
+        }
+      ]
+    },
+    {
+      "slug": "neufmoutiers",
+      "nom": "FetJ Boxing",
+      "ville": "Neufmoutiers-en-Brie",
+      "codePostal": "77610",
+      "adresseSiege": "9 rue du Général de Gaulle, 77610 Neufmoutiers-en-Brie",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Salle communale Alain Peyrefitte",
+          "adresse": "4 rue des Mésanges, 77610 Neufmoutiers-en-Brie"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Ados",
+          "jour": "Lundi",
+          "creneau": "18h45 - 20h15",
+          "type": "Loisir"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Lundi",
+          "creneau": "20h30 - 22h00",
+          "type": "Loisir"
+        },
+        {
+          "public": "Jeunes",
+          "jour": "Jeudi",
+          "creneau": "18h45 - 19h45",
+          "type": "Loisir"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Jeudi",
+          "creneau": "20h00 - 21h30",
+          "type": "Loisir"
+        }
+      ],
+      "contact": {
+        "telephone": "06 62 63 98 53",
+        "email": null,
+        "correspondant": "Julia Dubé"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/fetj-boxing/"
+      },
+      "aCompleter": false,
+      "nouveau": true,
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      }
+    },
+    {
+      "slug": "avon",
+      "nom": "Boxe Française Canne de Combat Avon",
+      "ville": "Avon",
+      "codePostal": "77210",
+      "disciplines": [
+        "Savate boxe française",
+        "Canne de combat"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase des Terrasses",
+          "adresse": "77210 Avon"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 18 20 66 05",
+        "email": "jeanluc.auzou@gmail.com",
+        "correspondant": "Jean-Luc Auzou",
+        "telephone2": "06 62 50 49 68"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/boxe-francaise-canne-de-combat-avon/",
+        "site": "https://sites.google.com/site/avonboxe/",
+        "facebook": "https://www.facebook.com/Boxe.francaise.Canne.de.combat.Avon"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#16213e",
+        "accent": "#e94560"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209198748?h=eea3132792"
+        }
+      ],
+      "commentaire": "Entraînements lundi, mardi et jeudi soir (créneaux exacts à confirmer auprès du club)",
+      "logo": "https://i.postimg.cc/RVyBCmVC/473267608-982246077289838-2693505187298910525-n.jpg"
+    },
+    {
+      "slug": "ozoir",
+      "nom": "S-Pass Boxes",
+      "ville": "Ozoir-la-Ferrière",
+      "codePostal": "77330",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase Jacques Anquetil",
+          "adresse": "77330 Ozoir-la-Ferrière"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 44 81 23 27",
+        "email": "vartanian.stef@gmail.com",
+        "correspondant": "Stéphane Vartanian"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/s-pass-boxes/",
+        "instagram": "https://www.instagram.com/spass.sbf/"
+      },
+      "aCompleter": false,
+      "commentaire": "Ville déduite de la page Wix /ozoir, à confirmer",
+      "couleurs": {
+        "primaire": "#212121",
+        "accent": "#ff6b2b"
+      }
+    },
+    {
+      "slug": "rebais",
+      "nom": "SBF Rebais 77",
+      "ville": "Rebais",
+      "codePostal": "77510",
+      "adresseSiege": "2 rue de l'Hôtel de Ville, 77510 Rebais",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase",
+          "adresse": "Rue Gaspard Monge, 77510 Rebais"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Jeunes",
+          "jour": "Mardi",
+          "creneau": "18h30 - 20h00",
+          "type": "Loisir"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Mardi",
+          "creneau": "20h30 - 22h00",
+          "type": "Loisir"
+        }
+      ],
+      "contact": {
+        "telephone": "06 10 07 53 69",
+        "email": null,
+        "correspondant": "Stéphane Jouy"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/sbf-rebais-77/"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209197827?h=e945d9d19d"
+        }
+      ]
+    },
+    {
+      "slug": "gouaix",
+      "nom": "Gouaix Savate Boxe Française",
+      "ville": "Gouaix",
+      "codePostal": "77114",
+      "disciplines": [
+        "Savate boxe française",
+        "Canne de combat"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [
+        "Jeunes : Bronze"
+      ],
+      "salles": [
+        {
+          "nom": "Gymnase de Gouaix",
+          "adresse": "Rue des Sports, 77114 Gouaix"
+        },
+        {
+          "nom": "Salle route de Bray",
+          "adresse": "Route de Bray, 77114 Gouaix"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Ados",
+          "jour": "Vendredi",
+          "creneau": "19h00 - 20h30",
+          "type": "Boxe française et canne"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Vendredi",
+          "creneau": "20h30 - 22h30",
+          "type": "Boxe française"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Mercredi",
+          "creneau": "21h00 - 22h30",
+          "type": "Boxe française et canne (route de Bray)"
+        }
+      ],
+      "contact": {
+        "telephone": "06 22 86 57 54",
+        "email": "gsbf77114@gmail.com",
+        "correspondant": "Éric Genonceau"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/gouaix-savate-boxe-francaise/",
+        "facebook": "https://www.facebook.com/profile.php?id=100063787770940",
+        "instagram": "https://www.instagram.com/gsbf77114"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#05005c",
+        "accent": "#3a36ff"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209206245?h=e59ae96830",
+          "titre": "Présentation par Éric Genonceau, président du club"
+        }
+      ]
+    },
+    {
+      "slug": "st-soupplets",
+      "nom": "AJS Saint-Soupplets",
+      "ville": "Saint-Soupplets",
+      "codePostal": "77165",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [],
+      "salles": [],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 03 20 01 25"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/ajs/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#1a1a2e",
+        "accent": "#e94560"
+      }
+    },
+    {
+      "slug": "fontenay-tresigny",
+      "nom": "ASTS (Association Sportive Trésifontaine de Savate)",
+      "ville": "Fontenay-Trésigny",
+      "codePostal": "77610",
+      "adresseSiege": "1e rue Olivier, 77610 Marles-en-Brie",
+      "disciplines": [
+        "Savate boxe française",
+        "Savate Forme"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Centre sportif (salle de combat)",
+          "adresse": "84 rue de Verdun, 77610 Fontenay-Trésigny"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Adultes",
+          "jour": "Lundi",
+          "creneau": "19h00 - 20h30",
+          "type": "Loisir"
+        }
+      ],
+      "contact": {
+        "telephone": "07 86 83 82 22",
+        "telephone2": "01 64 42 60 90",
+        "email": null,
+        "correspondant": "Arnaud Fabre"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/asts/",
+        "site": "https://www.boxe77610.fr"
+      },
+      "aCompleter": false,
+      "commentaire": "Club né à Marles-en-Brie en 2009, environ 220 licenciés, cours enfants dès 9 ans, ados, adultes et fitness. Grille horaire complète à récupérer sur boxe77610.fr",
+      "couleurs": {
+        "primaire": "#003399",
+        "accent": "#e94560"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1097120900"
+        }
+      ]
+    },
+    {
+      "slug": "collegien",
+      "nom": "Collégien BFS",
+      "ville": "Collégien",
+      "codePostal": "77090",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase",
+          "adresse": "Allée du Parc, 77090 Collégien"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 44 10 85 92",
+        "email": "bfscollegien@gmail.com"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/collegien-bfs/",
+        "site": "https://www.bfscollegien.fr/",
+        "facebook": "https://www.facebook.com/people/Bfs-Collegien/pfbid038CE1LDyoxmZFW7WVSu7Y29AMD8gn1m8iy3WmYzqZtYZqNdoBHxPPshZnww4HVtsHl/",
+        "instagram": "https://www.instagram.com/bfscollegien/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#000000",
+        "accent": "#C0C0C0"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1059305330?h=3b39ea4117"
+        }
+      ],
+      "commentaire": "Trois créneaux hebdomadaires (adultes et enfants), grille exacte à confirmer sur bfscollegien.fr"
+    },
+    {
+      "slug": "dampmart",
+      "nom": "Dampmart Boxe Française",
+      "ville": "Dampmart",
+      "codePostal": "77400",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase Roby",
+          "adresse": "77400 Dampmart"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 62 23 32 09",
+        "email": "michelpiris@yahoo.fr",
+        "correspondant": "Michel Piris"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/dampmart-boxe-francaise/",
+        "site": "http://www.dampmart-bf.fr/",
+        "instagram": "https://www.instagram.com/dampmartbfdampmart/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      }
+    },
+    {
+      "slug": "la-ferte-sous-jouarre",
+      "nom": "Kangaroo Club",
+      "ville": "La Ferté-sous-Jouarre",
+      "codePostal": "77260",
+      "disciplines": [
+        "Savate boxe française",
+        "Canne de combat"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Salle de boxe",
+          "adresse": "127 rue Pierre Marx, 77260 La Ferté-sous-Jouarre"
+        },
+        {
+          "nom": "Complexe Valérien Baudry",
+          "adresse": "17 bis rue de Reuil, 77260 La Ferté-sous-Jouarre"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Enfants (8-11 ans)",
+          "jour": "Samedi",
+          "creneau": "13h30 - 14h30",
+          "type": "Loisir"
+        },
+        {
+          "public": "Enfants (12-15 ans)",
+          "jour": "Samedi",
+          "creneau": "14h30 - 15h30",
+          "type": "Loisir"
+        },
+        {
+          "public": "Ados",
+          "jour": "Samedi",
+          "creneau": "15h30 - 16h45",
+          "type": "Loisir"
+        },
+        {
+          "public": "Adultes (17 ans et +)",
+          "jour": "Mardi et vendredi",
+          "creneau": "20h15 - 22h15",
+          "type": "Loisir et compétition"
+        }
+      ],
+      "contact": {
+        "telephone": "06 13 18 54 89",
+        "email": "christophe.hericourt@gmail.com",
+        "correspondant": "Christophe Héricourt"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/kangaroo-club/",
+        "facebook": "https://www.facebook.com/kangaroo.club.77/",
+        "instagram": "https://www.instagram.com/kangarooclub77/",
+        "site": "http://www.kangaroo-club.fr"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#1A1A1A",
+        "accent": "#FF0000"
+      }
+    },
+    {
+      "slug": "coupvray",
+      "nom": "ACBF Coupvray",
+      "ville": "Coupvray",
+      "codePostal": "77700",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Complexe sportif David Douillet",
+          "adresse": "77700 Coupvray"
+        }
+      ],
+      "horaires": [],
+      "contact": {
+        "telephone": "06 49 44 55 94",
+        "email": "acbf77700@gmail.com"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/a-c-b-f/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#1976d2",
+        "accent": "#d32f2f"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1054936542"
+        }
+      ]
+    },
+    {
+      "slug": "usm",
+      "nom": "USM Boxe Pieds-Poings",
+      "ville": "Melun",
+      "codePostal": "77000",
+      "disciplines": [
+        "Savate boxe française",
+        "Canne de combat"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "Gymnase Pierre Lespiat",
+          "adresse": "72 boulevard de l'Almont, 77000 Melun"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Adultes",
+          "jour": "Lundi, mercredi et vendredi",
+          "creneau": "19h00 - 21h00",
+          "type": "Savate boxe française"
+        }
+      ],
+      "contact": {
+        "telephone": "06 78 34 10 75",
+        "email": "usmboxepiedspoings@gmail.com",
+        "correspondant": "Mohamed Dehimi"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/usm-boxe-pieds-poings/",
+        "facebook": "https://www.facebook.com/p/Boxe-Pieds-Poings-Melun-77000-100063792293713/",
+        "site": "https://usmfede.org/boxe-pieds-poings/"
+      },
+      "aCompleter": false,
+      "commentaire": "Ville confirmée : Melun",
+      "couleurs": {
+        "primaire": "#05005c",
+        "accent": "#0066cc"
+      }
+    },
+    {
+      "slug": "meaux",
+      "nom": "CS Meaux Boxe Activités Pugilistiques",
+      "ville": "Meaux",
+      "codePostal": "77100",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [
+        "Jeunes : Argent",
+        "Savate pour Tous : Bronze"
+      ],
+      "salles": [
+        {
+          "nom": "Centre sportif Tauziet",
+          "adresse": "24 avenue Franklin Roosevelt, 77100 Meaux"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Jeunes",
+          "jour": "Lundi",
+          "creneau": "18h00 - 19h15",
+          "type": "Loisir"
+        },
+        {
+          "public": "Jeunes",
+          "jour": "Jeudi",
+          "creneau": "18h00 - 19h15",
+          "type": "Loisir"
+        },
+        {
+          "public": "Jeunes",
+          "jour": "Vendredi",
+          "creneau": "18h00 - 19h15",
+          "type": "Loisir"
+        },
+        {
+          "public": "Jeunes",
+          "jour": "Samedi",
+          "creneau": "15h00 - 17h00",
+          "type": "Compétition"
+        },
+        {
+          "public": "Ados",
+          "jour": "Mardi",
+          "creneau": "18h00 - 19h15",
+          "type": "Loisir"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Mardi",
+          "creneau": "19h30 - 21h00",
+          "type": "Loisir"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Mercredi",
+          "creneau": "18h30 - 20h30",
+          "type": "Compétition"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Jeudi",
+          "creneau": "18h00 - 19h15",
+          "type": "Loisir"
+        }
+      ],
+      "contact": {
+        "telephone": "06 16 96 72 66",
+        "telephone2": "01 60 09 19 51",
+        "email": "csmeauxap@wanadoo.fr",
+        "correspondant": "Abderaman Hamouri"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/c-s-meaux-boxe-act-pugilistique/",
+        "site": "http://www.csmeauxboxe.fr",
+        "facebook": "https://www.facebook.com/csmeauxboxe/",
+        "instagram": "https://www.instagram.com/csmeauxboxeactivites/"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#1B3C59",
+        "accent": "#E63946"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1209198824?h=b795f2994c"
+        }
+      ]
+    },
+    {
+      "slug": "courtry",
+      "nom": "Courtry BFS",
+      "ville": "Courtry",
+      "codePostal": "77181",
+      "adresseSiege": "1 résidence Bel Air, 77470 Villevaudé",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "equipements": [
+        "Ring d'entraînement",
+        "Ring de compétition"
+      ],
+      "salles": [
+        {
+          "nom": "Gymnase de la Dhuys",
+          "adresse": "77181 Courtry"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Jeunes",
+          "jour": "Vendredi",
+          "creneau": "18h30 - 20h00",
+          "type": null
+        },
+        {
+          "public": "Adultes",
+          "jour": "Mardi",
+          "creneau": "20h30 - 22h00",
+          "type": null
+        }
+      ],
+      "contact": {
+        "telephone": "01 60 26 58 02",
+        "telephone2": "07 60 34 62 71",
+        "email": null,
+        "correspondant": "Pascal Roche"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/courtry-bfs/",
+        "site": "http://www.rpsboxe.com/boxe-francaise-savate-courtry.htm",
+        "facebook": "https://www.facebook.com/groups/142000392612016/",
+        "instagram": "https://www.instagram.com/courtry.clichy_sbf/"
+      },
+      "aCompleter": false,
+      "nouveau": true,
+      "couleurs": {
+        "primaire": "#0f3460",
+        "accent": "#d4af37"
+      },
+      "logo": "/logos/courtry.jpg"
+    },
+    {
+      "slug": "coulommiers",
+      "nom": "Coulommiers SBF",
+      "ville": "Coulommiers",
+      "codePostal": "77120",
+      "disciplines": [
+        "Savate boxe française",
+        "Canne de combat",
+        "Savate Forme"
+      ],
+      "publics": [
+        "enfants",
+        "handicaps"
+      ],
+      "labels": [
+        "Jeunes : Argent",
+        "Savate pour Tous : Bronze"
+      ],
+      "salles": [
+        {
+          "nom": "Gymnase des Capucins",
+          "adresse": "Rue du Bord de l’Eau, 77120 Coulommiers"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Jeunes",
+          "jour": "Mercredi",
+          "creneau": "17h15 - 18h30",
+          "type": "Loisir et compétition"
+        },
+        {
+          "public": "Ados",
+          "jour": "Lundi",
+          "creneau": "19h00 - 20h45",
+          "type": "Compétition"
+        },
+        {
+          "public": "Ados",
+          "jour": "Mardi et jeudi",
+          "creneau": "18h00 - 19h15",
+          "type": "Loisir et compétition"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Lundi",
+          "creneau": "19h00 - 20h45",
+          "type": "Compétition"
+        },
+        {
+          "public": "Adultes",
+          "jour": "Mardi et jeudi",
+          "creneau": "19h15 - 20h45",
+          "type": "Compétition"
+        }
+      ],
+      "contact": {
+        "telephone": "06 33 61 97 50",
+        "email": "derose.morgane@yahoo.fr",
+        "correspondant": "Morgane Derose"
+      },
+      "liens": {
+        "ffsavate": "https://www.ffsavate.com/club-infos/coulommiers-sbf/",
+        "facebook": "https://www.facebook.com/CSBF77/"
+      },
+      "aCompleter": false,
+      "couleurs": {
+        "primaire": "#1a1a2e",
+        "accent": "#00adb5"
+      },
+      "videos": [
+        {
+          "url": "https://player.vimeo.com/video/1056286137?h=c2c79526ee"
+        }
+      ],
+      "logo": "https://i.postimg.cc/1zchKN04/6866b3b3-9ac3-4697-ba06-8b576ba53ad4.jpg"
+    }
+  ]
+}

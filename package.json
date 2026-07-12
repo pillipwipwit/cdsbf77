@@ -1,0 +1,16 @@
+{
+  "name": "cdsbf77",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.0.0",
+    "@astrojs/sitemap": "^3.2.0",
+    "@fontsource/barlow-condensed": "^5.1.0",
+    "@fontsource/archivo": "^5.1.0"
+  }
+}

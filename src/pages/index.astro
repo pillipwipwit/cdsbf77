@@ -1,0 +1,125 @@
+---
+import Base from '../layouts/Base.astro';
+import donnees from '../data/clubs.json';
+const nbClubs = donnees.clubs.length;
+---
+<Base>
+  <!-- Vidéo de fond -->
+  <div class="hero-background">
+    <div class="video-wrapper">
+      <iframe
+        src="https://player.vimeo.com/video/1072779716?h=fe9825216e&background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+        title="Vidéo de présentation de la savate"
+      ></iframe>
+    </div>
+    <div class="gradient-overlay"></div>
+  </div>
+
+  <!-- Héros -->
+  <section class="hero-section" id="home">
+    <div class="hero-content">
+      <div class="logo-container">
+        <div class="logo-ring"></div>
+        <img src="https://i.postimg.cc/zfhFq0j9/logocdsbf.jpg" alt="Logo CDSBF77" class="logo" />
+      </div>
+      <h1 class="hero-title">CDSBF 77</h1>
+      <p class="hero-subtitle">Comité Départemental de Savate Boxe Française<br />Seine-et-Marne</p>
+    </div>
+    <div class="scroll-indicator"></div>
+  </section>
+
+  <main class="main-content">
+    <div class="container">
+
+      <section class="card" id="about">
+        <div class="card-content">
+          <h2 class="section-title">Bienvenue au CDSBF77</h2>
+          <p>
+            Le Comité Départemental de Savate Boxe Française de Seine-et-Marne vous accueille dans l'univers passionnant de la boxe française.
+            Notre mission est de promouvoir et développer la pratique de la savate dans tout le département.
+          </p>
+          <p>
+            Sport de combat d'origine française, la savate boxe française allie technique, stratégie et condition physique.
+            Elle se pratique avec les pieds et les poings dans le respect de l'adversaire et des valeurs sportives.
+          </p>
+          <p>
+            Que vous soyez débutant ou confirmé, compétiteur ou pratiquant loisir, nos {nbClubs} clubs affiliés vous accueillent
+            dans une ambiance conviviale pour vous faire découvrir ou perfectionner votre pratique.
+          </p>
+          <p style="text-align:center; margin-top:1.5rem;">
+            <a class="btn-or" href="/clubs">Trouver un club près de chez vous</a>
+          </p>
+        </div>
+      </section>
+
+      <section id="disciplines">
+        <h2 class="section-title">Nos Disciplines</h2>
+        <div class="features-grid">
+          <a class="feature-card" href="/disciplines" style="text-decoration:none;">
+            <div class="feature-icon"><i class="fas fa-fist-raised"></i></div>
+            <h3 class="feature-title">Boxe Française</h3>
+            <p class="feature-description">Sport de combat utilisant les techniques de pieds et poings, alliant élégance et efficacité.</p>
+          </a>
+          <a class="feature-card" href="/disciplines" style="text-decoration:none;">
+            <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3 class="feature-title">Savate Défense</h3>
+            <p class="feature-description">Méthode de self-défense basée sur les techniques de la savate, adaptée aux situations réelles.</p>
+          </a>
+          <a class="feature-card" href="/disciplines" style="text-decoration:none;">
+            <div class="feature-icon"><i class="fas fa-heartbeat"></i></div>
+            <h3 class="feature-title">Savate Forme</h3>
+            <p class="feature-description">Activité fitness inspirée de la savate, parfaite pour la condition physique et le bien-être.</p>
+          </a>
+          <a class="feature-card" href="/disciplines" style="text-decoration:none;">
+            <div class="feature-icon"><i class="fas fa-walking"></i></div>
+            <h3 class="feature-title">Canne de Combat</h3>
+            <p class="feature-description">Art martial français traditionnel pratiqué avec une canne, alliant tradition et modernité.</p>
+          </a>
+          <a class="feature-card" href="/formations" style="text-decoration:none;">
+            <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+            <h3 class="feature-title">Formation</h3>
+            <p class="feature-description">Formations diplômantes pour devenir moniteur de savate boxe française.</p>
+          </a>
+          <a class="feature-card" href="/competitions" style="text-decoration:none;">
+            <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+            <h3 class="feature-title">Compétition</h3>
+            <p class="feature-description">Organisation de championnats et tournois pour tous les niveaux, du débutant au confirmé.</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="partners-container">
+        <h2 class="section-title">Nos Partenaires</h2>
+        <div class="partners-grid">
+          <div class="partner-item"><img src="https://i.postimg.cc/76V7LcTQ/logoligueidf.png" alt="Ligue Île-de-France de Savate" class="partner-logo" loading="lazy" /></div>
+          <div class="partner-item"><img src="https://i.postimg.cc/fW8mnGsV/logoffsavate.jpg" alt="Fédération Française de Savate" class="partner-logo" loading="lazy" /></div>
+          <div class="partner-item"><img src="https://i.postimg.cc/YqVFjQhk/logo-d77-header.png" alt="Département de Seine-et-Marne" class="partner-logo" loading="lazy" /></div>
+          <div class="partner-item"><img src="https://i.postimg.cc/25dLHJT8/logo-agence.webp" alt="Agence Nationale du Sport" class="partner-logo" loading="lazy" /></div>
+          <div class="partner-item"><img src="https://i.postimg.cc/kGGVg5CB/Service-departemental-a-la-Jeunesse-a-l-Engagement-et-aux-Sports-de-Seine-et-Marne-large.webp" alt="SDJES 77" class="partner-logo" loading="lazy" /></div>
+          <div class="partner-item"><img src="https://i.postimg.cc/1Xd8nZRM/drajes-fdva-jpg-23566.webp" alt="DRAJES – FDVA" class="partner-logo" loading="lazy" /></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Parallaxe du héros
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.addEventListener('scroll', () => {
+        const defile = window.pageYOffset;
+        const contenu = document.querySelector('.hero-content');
+        const video = document.querySelector('.video-wrapper');
+        if (contenu) {
+          contenu.style.transform = 'translateY(' + defile * 0.5 + 'px)';
+          contenu.style.opacity = String(1 - defile / 700);
+        }
+        if (video) {
+          video.style.transform = 'translate(-50%, -50%) scale(' + (1.1 + defile * 0.0003) + ')';
+        }
+      });
+    }
+  </script>
+</Base>
