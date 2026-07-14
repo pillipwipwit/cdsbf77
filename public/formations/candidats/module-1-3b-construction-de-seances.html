@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1.3b - Construction de Séances | Formation Moniteur Fédéral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1E40AF;
+            --primary-blue-dark: #1E3A8A;
+            --primary-blue-light: #3B82F6;
+            --gold: #D4AF37;
+            --gold-light: #F4E4A6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --error: #EF4444;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header-title span {
+            color: var(--gold);
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.25rem;
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            height: 12px;
+            width: 200px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            text-align: right;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: white;
+            color: var(--primary-blue);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Main */
+        .main-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--primary-blue);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .intro-card {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .intro-card h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .time-estimate {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+        }
+
+        /* Situation Types */
+        .situation-pyramid {
+            margin: 2rem 0;
+        }
+
+        .pyramid-level {
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .pyramid-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-width: 50px;
+        }
+
+        .arrow-line {
+            width: 3px;
+            flex-grow: 1;
+            background: linear-gradient(180deg, var(--primary-blue-light) 0%, var(--primary-blue) 100%);
+        }
+
+        .arrow-head {
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-top: 15px solid var(--primary-blue);
+        }
+
+        .situation-card {
+            flex: 1;
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .situation-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .situation-card.stereotypee { background: linear-gradient(135deg, #DBEAFE 0%, #BFDBFE 100%); border-color: #3B82F6; }
+        .situation-card.simple { background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 100%); border-color: #10B981; }
+        .situation-card.intermediaire { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border-color: #F59E0B; }
+        .situation-card.complexe { background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%); border-color: #EF4444; }
+        .situation-card.reelle { background: linear-gradient(135deg, #E9D5FF 0%, #DDD6FE 100%); border-color: #8B5CF6; }
+
+        .situation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .situation-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--gray-800);
+        }
+
+        .situation-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-blue { background: #3B82F6; }
+        .badge-green { background: #10B981; }
+        .badge-yellow { background: #F59E0B; color: var(--gray-800); }
+        .badge-red { background: #EF4444; }
+        .badge-purple { background: #8B5CF6; }
+
+        .situation-desc {
+            font-size: 0.9rem;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .situation-params {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            font-style: italic;
+        }
+
+        /* Parameters Table */
+        .params-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .params-table th, .params-table td {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+        }
+
+        .params-table th {
+            background: var(--primary-blue);
+            color: white;
+            font-weight: 600;
+        }
+
+        .params-table th.tireur-a { background: #059669; }
+        .params-table th.tireur-b { background: #DC2626; }
+
+        .params-table tr:nth-child(even) {
+            background: var(--gray-50);
+        }
+
+        .param-impose {
+            background: #FEE2E2;
+            color: #991B1B;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .param-libre {
+            background: #D1FAE5;
+            color: #065F46;
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Interactive Builder */
+        .builder-container {
+            background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+            border: 2px solid var(--primary-blue-light);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .builder-title {
+            font-size: 1.25rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .builder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .builder-group {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .builder-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .builder-group select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 2px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .builder-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .builder-result {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--gold);
+        }
+
+        .builder-result h4 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .bloc-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .bloc-line {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: var(--gray-50);
+            border-radius: 8px;
+        }
+
+        .bloc-tireur {
+            font-weight: 700;
+            min-width: 80px;
+        }
+
+        .bloc-tireur.tireur-a { color: #059669; }
+        .bloc-tireur.tireur-b { color: #DC2626; }
+
+        .bloc-action {
+            flex: 1;
+            color: var(--gray-700);
+        }
+
+        /* Tips Box */
+        .tips-box {
+            background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+            border: 2px solid var(--success);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tips-title {
+            color: #065F46;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .tips-list {
+            list-style: none;
+        }
+
+        .tips-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--gray-700);
+        }
+
+        .tips-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        /* Key Concept */
+        .key-concept {
+            background: linear-gradient(135deg, var(--gold-light) 0%, #FEF3C7 100%);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .key-concept-title {
+            font-weight: 700;
+            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Progression Visual */
+        .progression-container {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--gray-50);
+            border-radius: 12px;
+        }
+
+        .progression-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .progression-step {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 0.75rem;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc {
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        .progression-arrow {
+            font-size: 2rem;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        /* Accordion */
+        .accordion {
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background: var(--gray-50);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--gray-700);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover { background: var(--gray-100); }
+        .accordion-header.active { background: var(--primary-blue); color: white; }
+        .accordion-icon { transition: transform 0.3s ease; }
+        .accordion-header.active .accordion-icon { transform: rotate(180deg); }
+
+        .accordion-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .accordion-content.show { display: block; }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .quiz-title {
+            font-size: 1.75rem;
+            color: var(--gray-800);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .quiz-question {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-number {
+            background: var(--primary-blue);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            color: var(--gray-800);
+            font-weight: 500;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-left: 2.5rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--primary-blue);
+            background: #EEF2FF;
+        }
+
+        .quiz-option input { margin-right: 1rem; width: 20px; height: 20px; cursor: pointer; }
+        .quiz-option.correct { background: #D1FAE5; border-color: var(--success); }
+        .quiz-option.incorrect { background: #FEE2E2; border-color: var(--error); }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .quiz-feedback.show { display: block; }
+        .quiz-feedback.correct { background: #D1FAE5; color: #065F46; }
+        .quiz-feedback.incorrect { background: #FEE2E2; color: #991B1B; }
+
+        .quiz-results {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            margin-top: 2rem;
+        }
+
+        .quiz-results.show { display: block; }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-weight: 700;
+        }
+
+        .score-circle.success { background: linear-gradient(135deg, var(--success) 0%, #34D399 100%); color: white; }
+        .score-circle.fail { background: linear-gradient(135deg, var(--error) 0%, #F87171 100%); color: white; }
+        .score-value { font-size: 2.5rem; }
+        .score-label { font-size: 0.9rem; opacity: 0.9; }
+
+        .submit-quiz-btn, .retry-btn, .next-module-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+
+        .submit-quiz-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, #FBBF24 100%);
+            color: var(--gray-800);
+            display: block;
+            margin: 2rem auto 0;
+        }
+
+        .submit-quiz-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4); }
+        .retry-btn { background: var(--gray-200); color: var(--gray-700); }
+        .retry-btn:hover { background: var(--gray-300); }
+
+        .next-module-btn {
+            background: linear-gradient(135deg, var(--success) 0%, #34D399 100%);
+            color: white;
+        }
+
+        .next-module-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3); }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-800);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .progress-container { width: 100%; }
+            .section { padding: 1.5rem; }
+            .intro-card h2 { font-size: 1.5rem; }
+            .progression-steps { flex-direction: column; }
+            .progression-arrow { transform: rotate(90deg); }
+            .builder-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("cdsbf77_acces")!=="ok"){location.replace("/formations/candidats/?d="+encodeURIComponent(location.pathname));}</script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <div>
+                    <h1>🏗️ UC1 - Module 1.3b : <span>Construction de Séances</span></h1>
+                    <p class="header-subtitle">Blocs de situations et progression • Formation Moniteur Fédéral</p>
+                </div>
+            </div>
+            <div class="progress-wrapper">
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+                <p class="progress-text"><span id="progressText">0</span>% complété</p>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="window.location.href='uc1_module3a_formulation-objectifs.html'">← Précédent</button>
+                <button class="nav-btn" onclick="window.location.href='uc1_accueil.html'">☰ Menu</button>
+                <button class="nav-btn" id="nextBtn" onclick="goToNextModule()" disabled>Suivant →</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Introduction -->
+        <div class="intro-card">
+            <h2>🏗️ Construire des Blocs de Situations</h2>
+            <p>Maîtrise la construction de situations d'entraînement progressives pour guider efficacement l'apprentissage de tes élèves.</p>
+            <div class="time-estimate">
+                <span>⏱️</span>
+                <span>Durée estimée : 25 minutes</span>
+            </div>
+        </div>
+
+        <!-- Section 1: Les 5 types de situations -->
+        <section class="section" id="section1">
+            <h2 class="section-title">
+                <span>📊</span>
+                Les 5 Types de Situations d'Entraînement
+            </h2>
+
+            <p>La construction de situations d'entraînement repose sur une <strong>progression logique</strong> des interactions entre les tireurs. Cette progression suit une gradation en complexité, de la situation la plus contrôlée à la plus libre.</p>
+
+            <div class="situation-pyramid">
+                <!-- Situation Stéréotypée -->
+                <div class="pyramid-level">
+                    <div class="pyramid-arrow">
+                        <div class="arrow-line"></div>
+                    </div>
+                    <div class="situation-card stereotypee" onclick="showSituationDetails('stereotypee')">
+                        <div class="situation-header">
+                            <span class="situation-title">1. Situation Stéréotypée</span>
+                            <span class="situation-badge badge-blue">Sans risque</span>
+                        </div>
+                        <p class="situation-desc"><strong>Tous les paramètres sont imposés</strong> pour les deux tireurs.</p>
+                        <p class="situation-params">Idéal pour fixer le geste technique de base.</p>
+                    </div>
+                </div>
+
+                <!-- Situation Simple -->
+                <div class="pyramid-level">
+                    <div class="pyramid-arrow">
+                        <div class="arrow-line"></div>
+                    </div>
+                    <div class="situation-card simple" onclick="showSituationDetails('simple')">
+                        <div class="situation-header">
+                            <span class="situation-title">2. Situation Simple</span>
+                            <span class="situation-badge badge-green">Risque limité</span>
+                        </div>
+                        <p class="situation-desc"><strong>1 à 2 paramètres libres</strong> pour le tireur A.</p>
+                        <p class="situation-params">Première variabilité introduite progressivement.</p>
+                    </div>
+                </div>
+
+                <!-- Situation Intermédiaire -->
+                <div class="pyramid-level">
+                    <div class="pyramid-arrow">
+                        <div class="arrow-line"></div>
+                    </div>
+                    <div class="situation-card intermediaire" onclick="showSituationDetails('intermediaire')">
+                        <div class="situation-header">
+                            <span class="situation-title">3. Situation Intermédiaire</span>
+                            <span class="situation-badge badge-yellow">Risques moyens</span>
+                        </div>
+                        <p class="situation-desc"><strong>3 à 4 paramètres libres</strong>, incertitude renforcée.</p>
+                        <p class="situation-params">Le tireur B a des réponses plus imprévisibles.</p>
+                    </div>
+                </div>
+
+                <!-- Situation Complexe -->
+                <div class="pyramid-level">
+                    <div class="pyramid-arrow">
+                        <div class="arrow-line"></div>
+                    </div>
+                    <div class="situation-card complexe" onclick="showSituationDetails('complexe')">
+                        <div class="situation-header">
+                            <span class="situation-title">4. Situation Complexe</span>
+                            <span class="situation-badge badge-red">Risques supérieurs</span>
+                        </div>
+                        <p class="situation-desc"><strong>5 à 6 paramètres libres</strong>, forte incertitude.</p>
+                        <p class="situation-params">Mix entre actions libres et imposées.</p>
+                    </div>
+                </div>
+
+                <!-- Situation Réelle -->
+                <div class="pyramid-level">
+                    <div class="pyramid-arrow">
+                        <div class="arrow-line"></div>
+                        <div class="arrow-head"></div>
+                    </div>
+                    <div class="situation-card reelle" onclick="showSituationDetails('reelle')">
+                        <div class="situation-header">
+                            <span class="situation-title">5. Situation Réelle</span>
+                            <span class="situation-badge badge-purple">Assaut libre</span>
+                        </div>
+                        <p class="situation-desc"><strong>Tous les paramètres sont libres</strong> pour les deux tireurs.</p>
+                        <p class="situation-params">Reflète la réalité du combat (assaut à thème ouvert).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-concept">
+                <div class="key-concept-title">
+                    <span>💡</span>
+                    <span>Principe fondamental</span>
+                </div>
+                <p>La progression se fait <strong>du plus imposé vers le plus libre</strong>. On commence toujours par fixer le geste technique (stéréotypé), puis on augmente progressivement l'incertitude pour développer l'adaptabilité.</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Les 8 paramètres -->
+        <section class="section" id="section2">
+            <h2 class="section-title">
+                <span>⚙️</span>
+                Les 8 Paramètres de la Situation
+            </h2>
+
+            <p>Chaque situation est définie par <strong>8 paramètres</strong> répartis entre les deux tireurs. Ces paramètres peuvent être <strong>Imposés (I)</strong> ou <strong>Libres (L)</strong>.</p>
+
+            <div style="overflow-x: auto;">
+                <table class="params-table">
+                    <thead>
+                        <tr>
+                            <th colspan="4" class="tireur-a">TIREUR A (Attaquant)</th>
+                            <th colspan="4" class="tireur-b">TIREUR B (Défenseur)</th>
+                        </tr>
+                        <tr>
+                            <th>Arme</th>
+                            <th>Cible</th>
+                            <th>Trajectoire</th>
+                            <th>Défense</th>
+                            <th>Arme</th>
+                            <th>Cible</th>
+                            <th>Trajectoire</th>
+                            <th>Mobilité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="8" style="background: #DBEAFE; font-weight: 600;">Situation Stéréotypée (0 paramètre libre)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="background: #D1FAE5; font-weight: 600;">Situation Simple (1-2 paramètres libres)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="background: #FEF3C7; font-weight: 600;">Situation Intermédiaire (3-4 paramètres libres)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="background: #FEE2E2; font-weight: 600;">Situation Complexe (5-6 paramètres libres)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                            <td><span class="param-impose">Imposé</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="8" style="background: #E9D5FF; font-weight: 600;">Situation Réelle (tous paramètres libres)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                            <td><span class="param-libre">Libre</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="accordion" style="margin-top: 1.5rem;">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📋 Détail des paramètres</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="padding: 1rem; background: var(--gray-50); border-radius: 8px;">
+                            <h4 style="color: #059669; margin-bottom: 0.5rem;">🥊 Arme</h4>
+                            <p style="font-size: 0.9rem;">Poing (direct, crochet, uppercut) ou Pied (fouetté, chassé, revers)</p>
+                        </div>
+                        <div style="padding: 1rem; background: var(--gray-50); border-radius: 8px;">
+                            <h4 style="color: #059669; margin-bottom: 0.5rem;">🎯 Cible</h4>
+                            <p style="font-size: 0.9rem;">Ligne haute (figure), médiane (corps), basse (jambes)</p>
+                        </div>
+                        <div style="padding: 1rem; background: var(--gray-50); border-radius: 8px;">
+                            <h4 style="color: #059669; margin-bottom: 0.5rem;">➡️ Trajectoire</h4>
+                            <p style="font-size: 0.9rem;">Rectiligne, circulaire, de bas en haut</p>
+                        </div>
+                        <div style="padding: 1rem; background: var(--gray-50); border-radius: 8px;">
+                            <h4 style="color: #059669; margin-bottom: 0.5rem;">🛡️ Défense</h4>
+                            <p style="font-size: 0.9rem;">Parade (bloquée, chassée), Esquive (sur place, partielle, totale)</p>
+                        </div>
+                        <div style="padding: 1rem; background: var(--gray-50); border-radius: 8px;">
+                            <h4 style="color: #DC2626; margin-bottom: 0.5rem;">🚶 Mobilité</h4>
+                            <p style="font-size: 0.9rem;">Sans déplacement, avec décalage, avec débordement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Progression de la complexification -->
+        <section class="section" id="section3">
+            <h2 class="section-title">
+                <span>📈</span>
+                Progression de la Complexification
+            </h2>
+
+            <p>Voici les <strong>4 conseils essentiels</strong> pour construire efficacement un bloc de situations :</p>
+
+            <div class="progression-container">
+                <div class="progression-steps">
+                    <div class="progression-step">
+                        <div class="step-number">1</div>
+                        <div class="step-title">Commencer stéréotypé</div>
+                        <div class="step-desc">Fixer le geste technique avec tous les paramètres imposés</div>
+                    </div>
+                    <span class="progression-arrow">→</span>
+                    <div class="progression-step">
+                        <div class="step-number">2</div>
+                        <div class="step-title">Libérer progressivement</div>
+                        <div class="step-desc">Suivre la logique de progression des gants</div>
+                    </div>
+                    <span class="progression-arrow">→</span>
+                    <div class="progression-step">
+                        <div class="step-number">3</div>
+                        <div class="step-title">Adapter au niveau</div>
+                        <div class="step-desc">Nombre de paramètres libres selon le niveau des tireurs</div>
+                    </div>
+                    <span class="progression-arrow">→</span>
+                    <div class="progression-step">
+                        <div class="step-number">4</div>
+                        <div class="step-title">Libérer A avant B</div>
+                        <div class="step-desc">Privilégier la libération du tireur A en premier</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tips-box">
+                <div class="tips-title">
+                    <span>✅</span>
+                    <span>Règles de progression</span>
+                </div>
+                <ul class="tips-list">
+                    <li><strong>Règle 1 :</strong> Toujours commencer par une situation stéréotypée pour fixer le geste</li>
+                    <li><strong>Règle 2 :</strong> Libérer les paramètres du tireur A avant ceux du tireur B</li>
+                    <li><strong>Règle 3 :</strong> Libérer d'abord l'arme, puis la cible, puis la trajectoire</li>
+                    <li><strong>Règle 4 :</strong> Adapter le nombre de paramètres libres au niveau réel des élèves</li>
+                    <li><strong>Règle 5 :</strong> Ne jamais sauter d'étape - chaque niveau prépare le suivant</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 4: Constructeur interactif -->
+        <section class="section" id="section4">
+            <h2 class="section-title">
+                <span>🔧</span>
+                Constructeur de Bloc Interactif
+            </h2>
+
+            <p>Utilise cet outil pour visualiser la construction d'un bloc de situations selon tes choix :</p>
+
+            <div class="builder-container">
+                <h3 class="builder-title">
+                    <span>⚡</span>
+                    Générateur de Bloc
+                </h3>
+
+                <div class="builder-grid">
+                    <div class="builder-group">
+                        <label>Type de situation</label>
+                        <select id="situationType" onchange="updateBlocVisual()">
+                            <option value="stereotypee">Stéréotypée</option>
+                            <option value="simple">Simple</option>
+                            <option value="intermediaire">Intermédiaire</option>
+                            <option value="complexe">Complexe</option>
+                            <option value="reelle">Réelle</option>
+                        </select>
+                    </div>
+                    <div class="builder-group">
+                        <label>Arme Tireur A</label>
+                        <select id="armeA" onchange="updateBlocVisual()">
+                            <option value="Direct MEDIAN">Direct MEDIAN</option>
+                            <option value="Fouetté MEDIAN">Fouetté MEDIAN</option>
+                            <option value="Chassé BAS">Chassé BAS</option>
+                            <option value="Libre">Libre</option>
+                        </select>
+                    </div>
+                    <div class="builder-group">
+                        <label>Défense Tireur B</label>
+                        <select id="defenseB" onchange="updateBlocVisual()">
+                            <option value="Parade bloquée">Parade bloquée</option>
+                            <option value="Parade chassée">Parade chassée</option>
+                            <option value="Esquive">Esquive</option>
+                            <option value="Libre">Libre</option>
+                        </select>
+                    </div>
+                    <div class="builder-group">
+                        <label>Riposte Tireur B</label>
+                        <select id="riposteB" onchange="updateBlocVisual()">
+                            <option value="Direct poing avant">Direct poing avant</option>
+                            <option value="Fouetté jambe avant">Fouetté jambe avant</option>
+                            <option value="Décalage + riposte">Décalage + riposte</option>
+                            <option value="Libre">Libre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="builder-result" id="blocResult">
+                    <h4>📋 Consigne du bloc :</h4>
+                    <div class="bloc-visual" id="blocVisual">
+                        <!-- Generated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Exemples concrets -->
+        <section class="section" id="section5">
+            <h2 class="section-title">
+                <span>📝</span>
+                Exemples Concrets de Blocs
+            </h2>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🔵 Exemple : Bloc niveau Gant Bleu</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Objectif :</strong> Être capable de toucher avec un fouetté médian</p>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #DBEAFE; border-radius: 8px;">
+                        <p><strong>Situation stéréotypée :</strong></p>
+                        <p>• A : Fouetté MEDIAN jambe avant</p>
+                        <p>• B : Parade bloquée, riposte direct poing avant</p>
+                        <p><em>Tous les paramètres sont imposés</em></p>
+                    </div>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #D1FAE5; border-radius: 8px;">
+                        <p><strong>Situation simple :</strong></p>
+                        <p>• A : Fouetté (arme libre : jambe av/ar)</p>
+                        <p>• B : Parade bloquée, riposte direct</p>
+                        <p><em>Libération du choix de la jambe pour A</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🟢 Exemple : Bloc niveau Gant Vert</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Objectif :</strong> Être capable de parer et riposter sur fouetté médian</p>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #DBEAFE; border-radius: 8px;">
+                        <p><strong>Situation stéréotypée :</strong></p>
+                        <p>• A : Fouetté MEDIAN</p>
+                        <p>• B : Parade bloquée + Direct poing avant</p>
+                    </div>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #D1FAE5; border-radius: 8px;">
+                        <p><strong>Situation simple :</strong></p>
+                        <p>• A : Fouetté MEDIAN</p>
+                        <p>• B : Parade (libre) + Direct</p>
+                    </div>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #FEF3C7; border-radius: 8px;">
+                        <p><strong>Situation intermédiaire :</strong></p>
+                        <p>• A : Fouetté (cible libre)</p>
+                        <p>• B : Parade ou esquive + riposte (toutes techniques)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🔴 Exemple : Bloc niveau Gant Rouge</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Objectif :</strong> Être capable de parer/esquiver avec décalage sur attaque simple</p>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #FEF3C7; border-radius: 8px;">
+                        <p><strong>Situation intermédiaire :</strong></p>
+                        <p>• A : Coup de pied (arme et cible libres)</p>
+                        <p>• B : Décalage + riposte 1 coup pied</p>
+                    </div>
+                    <div style="margin: 1rem 0; padding: 1rem; background: #FEE2E2; border-radius: 8px;">
+                        <p><strong>Situation complexe :</strong></p>
+                        <p>• A : Coup libre</p>
+                        <p>• B : Débordement + riposte 2 coups libres</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Points clés -->
+        <section class="section" id="section6">
+            <h2 class="section-title">
+                <span>🎯</span>
+                Points Clés à Retenir
+            </h2>
+
+            <div class="key-concept">
+                <div class="key-concept-title">
+                    <span>📌</span>
+                    <span>Récapitulatif</span>
+                </div>
+                <ul style="margin-left: 1.5rem; color: var(--gray-700);">
+                    <li style="margin-bottom: 0.5rem;"><strong>5 types de situations</strong> : Stéréotypée → Simple → Intermédiaire → Complexe → Réelle</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>8 paramètres</strong> pour définir une situation (4 pour A, 4 pour B)</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Paramètres Imposés ou Libres</strong> selon le niveau de complexité</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Progression logique</strong> : du plus imposé vers le plus libre</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Libérer A avant B</strong> : le tireur A gagne en liberté en premier</li>
+                </ul>
+            </div>
+
+            <div class="tips-box">
+                <div class="tips-title">
+                    <span>⚠️</span>
+                    <span>Erreurs à éviter</span>
+                </div>
+                <ul class="tips-list" style="list-style: none;">
+                    <li style="color: #991B1B;">❌ Commencer directement par une situation complexe</li>
+                    <li style="color: #991B1B;">❌ Libérer trop de paramètres d'un coup</li>
+                    <li style="color: #991B1B;">❌ Ne pas adapter au niveau réel des élèves</li>
+                    <li style="color: #991B1B;">❌ Oublier de fixer le geste technique au départ</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="quiz-section" id="quizSection">
+            <h2 class="quiz-title">
+                <span>📝</span>
+                Quiz de Validation
+            </h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: var(--gray-700);">
+                Réponds aux questions pour valider ce module. <strong>Minimum requis : 70%</strong>
+            </p>
+
+            <div id="quizContainer">
+                <!-- Q1 -->
+                <div class="quiz-question" data-question="1" data-correct="b">
+                    <div class="question-header">
+                        <span class="question-number">1</span>
+                        <span class="question-text">Par quel type de situation doit-on toujours commencer un bloc ?</span>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q1" value="a"><span>Situation simple</span></label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="b"><span>Situation stéréotypée</span></label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="c"><span>Situation intermédiaire</span></label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="d"><span>Situation réelle</span></label>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="quiz-question" data-question="2" data-correct="c">
+                    <div class="question-header">
+                        <span class="question-number">2</span>
+                        <span class="question-text">Combien de paramètres définissent une situation au total ?</span>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q2" value="a"><span>4 paramètres</span></label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="b"><span>6 paramètres</span></label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="c"><span>8 paramètres</span></label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="d"><span>10 paramètres</span></label>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="quiz-question" data-question="3" data-correct="a">
+                    <div class="question-header">
+                        <span class="question-number">3</span>
+                        <span class="question-text">Dans une situation stéréotypée, combien de paramètres sont libres ?</span>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q3" value="a"><span>0 (aucun)</span></label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="b"><span>1 à 2</span></label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="c"><span>3 à 4</span></label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="d"><span>Tous</span></label>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="quiz-question" data-question="4" data-correct="d">
+                    <div class="question-header">
+                        <span class="question-number">4</span>
+                        <span class="question-text">Quel est l'ordre correct pour libérer les paramètres ?</span>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q4" value="a"><span>Tireur B avant tireur A</span></label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="b"><span>Trajectoire, puis arme, puis cible</span></label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="c"><span>Tous les paramètres en même temps</span></label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="d"><span>Tireur A avant tireur B</span></label>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="quiz-question" data-question="5" data-correct="b">
+                    <div class="question-header">
+                        <span class="question-number">5</span>
+                        <span class="question-text">Une situation avec 3-4 paramètres libres est appelée :</span>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q5" value="a"><span>Situation simple</span></label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="b"><span>Situation intermédiaire</span></label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="c"><span>Situation complexe</span></label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="d"><span>Situation réelle</span></label>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="quiz-question" data-question="6" data-correct="c">
+                    <div class="question-header">
+                        <span class="question-number">6</span>
+                        <span class="question-text">Quel est le but principal d'une situation stéréotypée ?</span>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q6" value="a"><span>Préparer à la compétition</span></label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="b"><span>Développer l'adaptabilité</span></label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="c"><span>Fixer le geste technique</span></label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="d"><span>Créer de l'incertitude</span></label>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="quiz-question" data-question="7" data-correct="a">
+                    <div class="question-header">
+                        <span class="question-number">7</span>
+                        <span class="question-text">Parmi ces paramètres, lequel concerne le tireur B ?</span>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q7" value="a"><span>Mobilité</span></label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="b"><span>Arme d'attaque</span></label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="c"><span>Trajectoire d'attaque</span></label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="d"><span>Cible visée</span></label>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="quiz-question" data-question="8" data-correct="d">
+                    <div class="question-header">
+                        <span class="question-number">8</span>
+                        <span class="question-text">La "situation réelle" correspond à :</span>
+                    </div>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q8" value="a"><span>Un combat officiel</span></label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="b"><span>5-6 paramètres libres</span></label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="c"><span>3-4 paramètres libres</span></label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="d"><span>Tous les paramètres libres (assaut)</span></label>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+            </div>
+
+            <button class="submit-quiz-btn" onclick="submitQuiz()">📊 Valider mes réponses</button>
+
+            <div class="quiz-results" id="quizResults">
+                <div class="score-circle" id="scoreCircle">
+                    <span class="score-value" id="scoreValue">0%</span>
+                    <span class="score-label">Score</span>
+                </div>
+                <p class="result-message" id="resultMessage"></p>
+                <p class="result-details" id="resultDetails"></p>
+                <button class="retry-btn" onclick="retryQuiz()">🔄 Réessayer</button>
+                <button class="next-module-btn" id="nextModuleBtn" onclick="goToNextModule()" style="display: none;">Module suivant →</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>Formation Moniteur Fédéral - FFSbf&DA</p>
+            <p style="margin-top: 0.5rem; opacity: 0.7;">Module 1.3b : Construction de Séances et Blocs de Situations</p>
+        </div>
+    </footer>
+
+    <script>
+        const MODULE_ID = 'uc1_module3b_construction_seances';
+        const STORAGE_KEY = 'formationMoniteurFederal';
+        const PASS_THRESHOLD = 70;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProgress();
+            updateProgressBar();
+            setupScrollTracking();
+            updateBlocVisual();
+        });
+
+        function loadProgress() {
+            const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            if (!data.uc1) data.uc1 = { modules: [], overallProgress: 0 };
+            return data;
+        }
+
+        function saveProgress(status, score = null) {
+            const data = loadProgress();
+            const moduleIndex = data.uc1.modules.findIndex(m => m.id === MODULE_ID);
+            const moduleData = {
+                id: MODULE_ID,
+                status: status,
+                score: score,
+                attempts: (moduleIndex >= 0 ? data.uc1.modules[moduleIndex].attempts || 0 : 0) + (score !== null ? 1 : 0),
+                lastAccess: new Date().toISOString()
+            };
+
+            if (moduleIndex >= 0) {
+                data.uc1.modules[moduleIndex] = { ...data.uc1.modules[moduleIndex], ...moduleData };
+            } else {
+                data.uc1.modules.push(moduleData);
+            }
+
+            const totalModules = 5;
+            const completedModules = data.uc1.modules.filter(m => m.status === 'completed').length;
+            data.uc1.overallProgress = Math.round((completedModules / totalModules) * 100);
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        let maxScroll = 0;
+        function setupScrollTracking() {
+            window.addEventListener('scroll', function() {
+                const scrolled = window.scrollY;
+                const maxScrollable = document.documentElement.scrollHeight - window.innerHeight;
+                const percentage = Math.min(Math.round((scrolled / maxScrollable) * 100), 100);
+                if (percentage > maxScroll) {
+                    maxScroll = percentage;
+                    updateProgressBar();
+                }
+            });
+        }
+
+        function updateProgressBar() {
+            document.getElementById('progressBar').style.width = maxScroll + '%';
+            document.getElementById('progressText').textContent = maxScroll;
+            if (maxScroll >= 80) saveProgress('inProgress');
+        }
+
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = header.classList.contains('active');
+            document.querySelectorAll('.accordion-header').forEach(h => {
+                h.classList.remove('active');
+                h.nextElementSibling.classList.remove('show');
+            });
+            if (!isActive) {
+                header.classList.add('active');
+                content.classList.add('show');
+            }
+        }
+
+        function updateBlocVisual() {
+            const situationType = document.getElementById('situationType').value;
+            const armeA = document.getElementById('armeA').value;
+            const defenseB = document.getElementById('defenseB').value;
+            const riposteB = document.getElementById('riposteB').value;
+
+            const situationNames = {
+                'stereotypee': 'Stéréotypée (tous paramètres imposés)',
+                'simple': 'Simple (1-2 paramètres libres)',
+                'intermediaire': 'Intermédiaire (3-4 paramètres libres)',
+                'complexe': 'Complexe (5-6 paramètres libres)',
+                'reelle': 'Réelle (tous paramètres libres)'
+            };
+
+            let html = `
+                <p style="margin-bottom: 1rem; color: var(--gray-600);"><strong>Type :</strong> ${situationNames[situationType]}</p>
+                <div class="bloc-line">
+                    <span class="bloc-tireur tireur-a">Tireur A :</span>
+                    <span class="bloc-action">${armeA}</span>
+                </div>
+                <div class="bloc-line">
+                    <span class="bloc-tireur tireur-b">Tireur B :</span>
+                    <span class="bloc-action">${defenseB}, puis ${riposteB}</span>
+                </div>
+            `;
+
+            document.getElementById('blocVisual').innerHTML = html;
+        }
+
+        const correctAnswers = { q1: 'b', q2: 'c', q3: 'a', q4: 'd', q5: 'b', q6: 'c', q7: 'a', q8: 'd' };
+        const feedbackMessages = {
+            q1: { correct: "Exact ! On commence toujours par fixer le geste.", incorrect: "On doit commencer par une situation stéréotypée pour fixer le geste technique." },
+            q2: { correct: "Bien ! 4 pour le tireur A et 4 pour le tireur B.", incorrect: "Il y a 8 paramètres au total : 4 pour chaque tireur." },
+            q3: { correct: "Parfait ! Tous les paramètres sont imposés.", incorrect: "Dans une situation stéréotypée, aucun paramètre n'est libre." },
+            q4: { correct: "Correct ! On libère A avant B.", incorrect: "Il faut libérer les paramètres du tireur A avant ceux du tireur B." },
+            q5: { correct: "Oui ! 3-4 paramètres libres = intermédiaire.", incorrect: "Une situation intermédiaire comporte 3 à 4 paramètres libres." },
+            q6: { correct: "Exact ! Fixer le geste est l'objectif principal.", incorrect: "La situation stéréotypée sert à fixer le geste technique." },
+            q7: { correct: "Bien ! La mobilité est un paramètre du tireur B.", incorrect: "La mobilité (décalage, débordement) concerne le tireur B." },
+            q8: { correct: "Parfait ! Situation réelle = tous paramètres libres.", incorrect: "La situation réelle correspond à tous les paramètres libres." }
+        };
+
+        function submitQuiz() {
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            Object.keys(correctAnswers).forEach(question => {
+                const questionDiv = document.querySelector(`[data-question="${question.slice(1)}"]`);
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                const feedbackDiv = questionDiv.querySelector('.quiz-feedback');
+                const options = questionDiv.querySelectorAll('.quiz-option');
+
+                options.forEach(opt => opt.classList.remove('correct', 'incorrect'));
+
+                if (selectedOption) {
+                    const isCorrect = selectedOption.value === correctAnswers[question];
+                    const parentLabel = selectedOption.closest('.quiz-option');
+
+                    if (isCorrect) {
+                        score++;
+                        parentLabel.classList.add('correct');
+                        feedbackDiv.className = 'quiz-feedback show correct';
+                        feedbackDiv.textContent = '✅ ' + feedbackMessages[question].correct;
+                    } else {
+                        parentLabel.classList.add('incorrect');
+                        feedbackDiv.className = 'quiz-feedback show incorrect';
+                        feedbackDiv.textContent = '❌ ' + feedbackMessages[question].incorrect;
+                        options.forEach(opt => {
+                            if (opt.querySelector('input').value === correctAnswers[question]) opt.classList.add('correct');
+                        });
+                    }
+                } else {
+                    feedbackDiv.className = 'quiz-feedback show incorrect';
+                    feedbackDiv.textContent = '⚠️ Question non répondue';
+                }
+            });
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            displayResults(score, totalQuestions, percentage);
+        }
+
+        function displayResults(score, total, percentage) {
+            const resultsDiv = document.getElementById('quizResults');
+            const scoreCircle = document.getElementById('scoreCircle');
+            const scoreValue = document.getElementById('scoreValue');
+            const resultMessage = document.getElementById('resultMessage');
+            const resultDetails = document.getElementById('resultDetails');
+            const nextModuleBtn = document.getElementById('nextModuleBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            resultsDiv.classList.add('show');
+            scoreValue.textContent = percentage + '%';
+
+            if (percentage >= PASS_THRESHOLD) {
+                scoreCircle.className = 'score-circle success';
+                resultMessage.textContent = '🎉 Félicitations ! Module validé !';
+                resultDetails.textContent = `Tu as obtenu ${score}/${total} bonnes réponses.`;
+                nextModuleBtn.style.display = 'inline-block';
+                nextBtn.disabled = false;
+                saveProgress('completed', percentage);
+                createConfetti();
+            } else {
+                scoreCircle.className = 'score-circle fail';
+                resultMessage.textContent = '😕 Pas encore validé...';
+                resultDetails.textContent = `Tu as obtenu ${score}/${total}. Il faut au moins 70% pour valider.`;
+                nextModuleBtn.style.display = 'none';
+                saveProgress('inProgress', percentage);
+            }
+
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function retryQuiz() {
+            document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect'));
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            document.querySelectorAll('.quiz-feedback').forEach(fb => { fb.className = 'quiz-feedback'; fb.textContent = ''; });
+            document.getElementById('quizResults').classList.remove('show');
+            document.querySelector('.quiz-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function goToNextModule() {
+            window.location.href = 'uc1_module3c_progression-grades.html';
+        }
+
+        function createConfetti() {
+            const colors = ['#1E40AF', '#D4AF37', '#10B981', '#F59E0B', '#EF4444'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed; width: 10px; height: 10px; pointer-events: none; z-index: 1000;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${Math.random() * 100}vw; top: -10px;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                    animation: fall ${2 + Math.random() * 3}s linear forwards;
+                `;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 5000);
+            }
+            if (!document.querySelector('style[data-confetti]')) {
+                const style = document.createElement('style');
+                style.setAttribute('data-confetti', 'true');
+                style.textContent = `@keyframes fall { to { transform: translateY(100vh) rotate(720deg); opacity: 0; } }`;
+                document.head.appendChild(style);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principes de la Pratique Partagée | Guide Pédagogique Savate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #1a365d;
+            --color-primary-light: #2c5282;
+            --color-primary-dark: #0d1f3c;
+            --color-gold: #D4AF37;
+            --color-gold-light: #e8c547;
+            --color-gold-dark: #b8960f;
+            --color-success: #38a169;
+            --color-warning: #d69e2e;
+            --color-error: #e53e3e;
+            --color-bg: #f7fafc;
+            --color-card: #ffffff;
+            --color-text: #1a202c;
+            --color-text-light: #4a5568;
+            --shadow: 0 4px 6px -1px rgba(26, 54, 93, 0.15);
+            --shadow-lg: 0 10px 15px -3px rgba(26, 54, 93, 0.2);
+            --shadow-gold: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-light) 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+            border-bottom: 3px solid var(--color-gold);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .header-title span { color: var(--color-gold); }
+
+        .header-nav { display: flex; gap: 0.5rem; }
+
+        .nav-btn {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--color-gold-light);
+            border: 1px solid var(--color-gold);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: var(--color-gold);
+            color: var(--color-primary-dark);
+        }
+
+        .progress-container {
+            background: var(--color-primary-dark);
+            padding: 0.5rem 2rem;
+        }
+
+        .progress-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-gold-dark) 0%, var(--color-gold) 50%, var(--color-gold-light) 100%);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            max-width: 1200px;
+            margin: 0.25rem auto 0;
+            font-size: 0.8rem;
+            color: var(--color-gold-light);
+            text-align: right;
+        }
+
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--color-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--color-gold);
+            color: var(--color-primary-dark);
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .hero p {
+            opacity: 0.95;
+            font-size: 1.15rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            background: rgba(212, 175, 55, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid var(--color-gold);
+        }
+
+        .card {
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--color-gold);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-bg);
+        }
+
+        .card-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--color-gold);
+        }
+
+        .card-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-gold-dark);
+            font-weight: 500;
+        }
+
+        .intro-text {
+            font-size: 1.05rem;
+            color: var(--color-text);
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(to right, rgba(212, 175, 55, 0.1), transparent);
+            border-left: 3px solid var(--color-gold);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .five-domains {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .domain-card {
+            background: linear-gradient(to right, var(--color-bg), white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 5px solid var(--color-gold);
+            transition: all 0.3s ease;
+        }
+
+        .domain-card:hover {
+            transform: translateX(8px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .domain-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: var(--color-gold);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .domain-title {
+            font-weight: 700;
+            color: var(--color-primary);
+            font-size: 1.1rem;
+        }
+
+        .domain-content {
+            margin-top: 0.75rem;
+            padding-left: 2.75rem;
+        }
+
+        .domain-content ul {
+            list-style: none;
+        }
+
+        .domain-content li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .domain-content li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--color-gold);
+            font-weight: bold;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border-left: 5px solid var(--color-gold);
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1rem 0;
+        }
+
+        .key-point-title {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.05rem;
+        }
+
+        .info-box {
+            background: linear-gradient(to right, #e8f4fd, #f0f7ff);
+            border: 1px solid #90cdf4;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .info-box.warning {
+            background: linear-gradient(to right, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border-color: var(--color-gold);
+        }
+
+        .info-box.success {
+            background: linear-gradient(to right, #c6f6d5, #e6ffed);
+            border-color: #68d391;
+        }
+
+        .info-box.danger {
+            background: linear-gradient(to right, #fed7d7, #fff5f5);
+            border-color: #fc8181;
+        }
+
+        .info-box-title {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .three-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .column-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            border: 2px solid var(--color-bg);
+            transition: all 0.3s ease;
+        }
+
+        .column-card:hover {
+            border-color: var(--color-gold);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .column-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .column-title {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .column-card p {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+        }
+
+        .ritual-timeline {
+            position: relative;
+            padding-left: 2.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .ritual-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--color-gold), var(--color-primary));
+            border-radius: 2px;
+        }
+
+        .ritual-item {
+            position: relative;
+            padding: 1rem 0 1.5rem 1.5rem;
+        }
+
+        .ritual-item::before {
+            content: '';
+            position: absolute;
+            left: -0.65rem;
+            top: 1.25rem;
+            width: 16px;
+            height: 16px;
+            background: var(--color-gold);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: var(--shadow);
+        }
+
+        .ritual-item h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.35rem;
+            font-size: 1.05rem;
+        }
+
+        .ritual-item p {
+            color: var(--color-text-light);
+        }
+
+        .media-container {
+            background: linear-gradient(135deg, var(--color-bg) 0%, white 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .video-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .video-link:hover {
+            background: var(--color-gold);
+            color: var(--color-primary-dark);
+            border-color: var(--color-primary);
+        }
+
+        .media-caption {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table th:first-child {
+            border-left: 4px solid var(--color-gold);
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--color-bg);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .comparison-table .avoid {
+            color: var(--color-error);
+            font-weight: 500;
+        }
+
+        .comparison-table .recommend {
+            color: var(--color-success);
+            font-weight: 500;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-top: 2rem;
+            border: 3px solid var(--color-gold);
+        }
+
+        .quiz-section h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .quiz-section > p {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--color-gold-light);
+        }
+
+        .quiz-question {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .quiz-question h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-option:hover { background: rgba(212, 175, 55, 0.2); }
+        .quiz-option.selected { border-color: var(--color-gold); background: rgba(212, 175, 55, 0.25); }
+        .quiz-option.correct { border-color: var(--color-success); background: rgba(56, 161, 105, 0.3); }
+        .quiz-option.incorrect { border-color: var(--color-error); background: rgba(229, 62, 62, 0.3); }
+        .quiz-option input { display: none; }
+
+        .quiz-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--color-gold);
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-option.selected .quiz-radio::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--color-gold);
+            border-radius: 50%;
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .quiz-feedback.show { display: block; }
+        .quiz-feedback.correct { background: rgba(56, 161, 105, 0.2); border: 1px solid var(--color-success); }
+        .quiz-feedback.incorrect { background: rgba(229, 62, 62, 0.2); border: 1px solid var(--color-error); }
+
+        .quiz-submit {
+            background: linear-gradient(135deg, var(--color-gold-dark) 0%, var(--color-gold) 50%, var(--color-gold-light) 100%);
+            color: var(--color-primary-dark);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quiz-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show { display: block; }
+
+        .quiz-score {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--color-gold);
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .section-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 3px solid var(--color-gold);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .section-nav-btn.prev { 
+            background: white; 
+            color: var(--color-primary); 
+            border: 2px solid var(--color-primary);
+        }
+        .section-nav-btn.next { 
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%); 
+            color: white;
+            border: 2px solid var(--color-gold);
+        }
+        .section-nav-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: var(--shadow-gold); 
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .didactic-note {
+            background: linear-gradient(to right, rgba(26, 54, 93, 0.05), transparent);
+            border-left: 3px solid var(--color-primary);
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .didactic-note strong {
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 768px) {
+            .header-content { flex-direction: column; text-align: center; }
+            .hero { padding: 2rem 1.5rem; }
+            .hero h2 { font-size: 1.8rem; }
+            .main-content { padding: 1rem; }
+            .card { padding: 1.5rem; }
+            .quiz-section { padding: 1.5rem; }
+        }
+    </style>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("cdsbf77_acces")!=="ok"){location.replace("/formations/candidats/?d="+encodeURIComponent(location.pathname));}</script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <h1>Guide Pédagogique <span>Savate Boxe Française</span></h1>
+            </div>
+            <nav class="header-nav">
+                <a href="#" class="nav-btn" onclick="goToMenu()">☰ Menu</a>
+                <a href="#" class="nav-btn">← Précédent</a>
+                <a href="#" class="nav-btn">Suivant →</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text"><span id="progressText">0%</span> complété</div>
+    </div>
+
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <span class="hero-badge">📚 Guide Pédagogique</span>
+            <h2>Principes de la Pratique Partagée</h2>
+            <p>Comment créer des situations d'apprentissage accessibles à tous, en toute sécurité, tout en respectant la singularité de chaque pratiquant</p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">⏱️ 25-30 minutes</div>
+                <div class="hero-meta-item">📖 4 chapitres</div>
+                <div class="hero-meta-item">✅ Quiz final</div>
+            </div>
+        </section>
+
+        <!-- Intention Pédagogique -->
+        <section class="card" id="section1">
+            <div class="card-header">
+                <div class="card-icon">🎯</div>
+                <div>
+                    <h3 class="card-title">L'intention pédagogique au cœur de la démarche</h3>
+                    <p class="card-subtitle">Rendre accessible sans uniformiser</p>
+                </div>
+            </div>
+
+            <p class="intro-text">
+                La pratique partagée repose sur une idée simple mais puissante : <strong>permettre à chacun de progresser à son rythme</strong>, sans imposer un modèle unique. L'objectif n'est pas que tout le monde fasse la même chose, mais que chacun trouve <em>sa propre façon de réussir</em>.
+            </p>
+
+            <div class="key-point">
+                <div class="key-point-title">💡 Le principe fondamental à retenir</div>
+                <p>Chaque apprenant avance par <strong>essais successifs</strong>. Votre rôle est de créer un cadre suffisamment clair pour le <em>sécuriser</em>, et suffisamment ouvert pour qu'il puisse <em>explorer et découvrir</em> ses propres solutions motrices.</p>
+            </div>
+
+            <div class="info-box danger">
+                <div class="info-box-title">🚫 Les deux pièges à éviter absolument</div>
+                <p>Cette approche se situe entre deux extrêmes, tous deux contre-productifs :</p>
+                <div class="three-columns" style="margin-top: 1rem;">
+                    <div class="column-card" style="border-color: var(--color-error);">
+                        <div class="column-icon">😵</div>
+                        <div class="column-title">Le "laisser-faire" total</div>
+                        <p>Sans cadre ni repères, l'apprenant se perd et n'apprend pas efficacement</p>
+                    </div>
+                    <div class="column-card" style="border-color: var(--color-error);">
+                        <div class="column-icon">📏</div>
+                        <div class="column-title">Le modèle unique imposé</div>
+                        <p>Exiger que tout le monde exécute exactement de la même manière ignore les différences individuelles</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <div class="info-box-title">✅ La solution : les contraintes intelligentes</div>
+                <p>Une contrainte bien pensée n'est pas une restriction, c'est un <strong>guide</strong>. Elle crée un espace d'apprentissage où chaque pratiquant, quelles que soient ses capacités, peut expérimenter en sécurité et trouver des solutions <em>adaptées à ses propres ressources</em>.</p>
+            </div>
+
+            <div class="didactic-note">
+                <strong>💬 En pratique :</strong> Plutôt que de dire "Fais comme moi", proposez une situation avec des règles claires (par exemple : "Tu dois toucher la cible rouge") et laissez l'apprenant découvrir <em>comment</em> y parvenir.
+            </div>
+        </section>
+
+        <!-- Les 5 Domaines d'Aménagement -->
+        <section class="card" id="section2">
+            <div class="card-header">
+                <div class="card-icon">🏗️</div>
+                <div>
+                    <h3 class="card-title">Les 5 leviers pour adapter votre pédagogie</h3>
+                    <p class="card-subtitle">Une boîte à outils complète</p>
+                </div>
+            </div>
+
+            <p class="intro-text">
+                Pour créer des situations d'apprentissage vraiment accessibles, vous disposez de <strong>5 grands leviers</strong>. Chacun peut être ajusté indépendamment pour s'adapter aux besoins du groupe ou d'un individu.
+            </p>
+
+            <div class="five-domains">
+                <div class="domain-card">
+                    <div class="domain-title">
+                        <span class="domain-number">1</span>
+                        L'organisation de l'espace
+                    </div>
+                    <div class="domain-content">
+                        <p style="margin-bottom: 0.5rem; color: var(--color-text-light);">L'espace influence directement le comportement et le ressenti des pratiquants.</p>
+                        <ul>
+                            <li><strong>Créez des zones différenciées</strong> : un espace pour le travail rapproché, un autre pour le travail à distance</li>
+                            <li><strong>Matérialisez les limites</strong> : utilisez des bandes ou des marquages au sol pour aider ceux qui ont des difficultés à se repérer dans l'espace</li>
+                            <li><strong>Prévoyez un espace de décompression</strong> : un coin calme où tout pratiquant peut se retirer quelques instants si nécessaire</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="domain-card">
+                    <div class="domain-title">
+                        <span class="domain-number">2</span>
+                        La formulation des consignes
+                    </div>
+                    <div class="domain-content">
+                        <p style="margin-bottom: 0.5rem; color: var(--color-text-light);">La façon dont vous formulez une consigne change tout.</p>
+                        <table class="comparison-table" style="margin: 0.75rem 0;">
+                            <tr>
+                                <td class="avoid">❌ "Pointe bien ton coude"</td>
+                                <td class="recommend">✅ "Touche la cible rouge"</td>
+                            </tr>
+                        </table>
+                        <ul>
+                            <li><strong>Soyez bref et concret</strong> : une consigne = une action observable</li>
+                            <li><strong>Utilisez plusieurs canaux</strong> : parole + geste + image si possible</li>
+                            <li><strong>Vérifiez la compréhension</strong> : demandez à l'apprenant de reformuler, puis de faire un essai immédiat</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="domain-card">
+                    <div class="domain-title">
+                        <span class="domain-number">3</span>
+                        Le matériel utilisé
+                    </div>
+                    <div class="domain-content">
+                        <p style="margin-bottom: 0.5rem; color: var(--color-text-light);">Le bon matériel facilite l'apprentissage et renforce la motivation.</p>
+                        <ul>
+                            <li><strong>Proposez des gants de poids variés</strong> : de 10 à 16 onces selon les capacités</li>
+                            <li><strong>Variez les cibles</strong> : différentes tailles et couleurs pour rendre l'exercice plus attractif</li>
+                            <li><strong>Adaptez les protections</strong> : protège-tibias, plastrons, casques selon les besoins de chacun</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="domain-card">
+                    <div class="domain-title">
+                        <span class="domain-number">4</span>
+                        Le rythme de l'activité
+                    </div>
+                    <div class="domain-content">
+                        <p style="margin-bottom: 0.5rem; color: var(--color-text-light);">Un rythme adapté évite la surcharge et maintient l'engagement.</p>
+                        <ul>
+                            <li><strong>Privilégiez les essais courts</strong> : 30 à 60 secondes maximum, puis pause</li>
+                            <li><strong>Évitez les séquences longues</strong> : elles saturent la mémoire de travail</li>
+                            <li><strong>Signalez clairement les pauses</strong> : visuellement ET verbalement</li>
+                            <li><strong>Restez flexible</strong> : si vous observez de la fatigue ou de l'anxiété, ralentissez</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="domain-card">
+                    <div class="domain-title">
+                        <span class="domain-number">5</span>
+                        L'attribution des rôles
+                    </div>
+                    <div class="domain-content">
+                        <p style="margin-bottom: 0.5rem; color: var(--color-text-light);">Faire tourner les rôles enrichit l'apprentissage et développe les compétences sociales.</p>
+                        <div class="three-columns" style="margin: 0.75rem 0;">
+                            <div class="column-card">
+                                <div class="column-icon">🥊</div>
+                                <div class="column-title">AGIR</div>
+                                <p>Réaliser l'exercice demandé</p>
+                            </div>
+                            <div class="column-card">
+                                <div class="column-icon">👁️</div>
+                                <div class="column-title">OBSERVER</div>
+                                <p>Regarder et repérer ce qui est bien fait</p>
+                            </div>
+                            <div class="column-card">
+                                <div class="column-icon">🤝</div>
+                                <div class="column-title">ACCOMPAGNER</div>
+                                <p>Aider un camarade sous votre supervision</p>
+                            </div>
+                        </div>
+                        <div class="didactic-note">
+                            <strong>💡 Astuce :</strong> Cette rotation favorise l'apprentissage par les pairs et développe naturellement l'empathie au sein du groupe.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="media-container">
+                <p><strong>📹 Voir en vidéo : l'opposition avec contraintes d'espace</strong></p>
+                <a href="https://drive.google.com/file/d/1c-GFmXsUsmECYmQYPtxtJPc8VWOjairM/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Opposition avec rubalise (1)
+                </a>
+                <a href="https://drive.google.com/file/d/1MTZwAFQDRvb-gJOEGLZ2NejCls7hIMhD/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Opposition avec rubalise (2)
+                </a>
+                <p class="media-caption">La rubalise (bande de chantier) permet de contrôler la distance et de limiter naturellement la puissance des coups</p>
+            </div>
+        </section>
+
+        <!-- Sécurité et Ritualisation -->
+        <section class="card" id="section3">
+            <div class="card-header">
+                <div class="card-icon">🛡️</div>
+                <div>
+                    <h3 class="card-title">Sécurité et ritualisation : les fondations indispensables</h3>
+                    <p class="card-subtitle">Créer un environnement de confiance</p>
+                </div>
+            </div>
+
+            <p class="intro-text">
+                Sans sentiment de sécurité, pas d'apprentissage possible. Cette sécurité est double : elle concerne à la fois le <strong>corps</strong> (l'environnement physique) et l'<strong>esprit</strong> (le climat émotionnel).
+            </p>
+
+            <div class="key-point">
+                <div class="key-point-title">🔐 Les deux piliers de la sécurité</div>
+                <p><strong>Sécurité émotionnelle</strong> : chaque pratiquant doit se sentir en confiance, sans crainte d'être jugé ou moqué.<br><br>
+                <strong>Sécurité physique</strong> : l'environnement doit être adapté et protecteur, avec le matériel approprié.<br><br>
+                👉 <strong>Règle d'or :</strong> tout pratiquant doit pouvoir arrêter l'activité à tout moment, sans avoir à se justifier et sans être stigmatisé.</p>
+            </div>
+
+            <h4 style="color: var(--color-primary); margin: 1.5rem 0 1rem;">Comment ritualiser la fin de séance ?</h4>
+            
+            <p style="color: var(--color-text-light); margin-bottom: 1rem;">Les rituels de fin d'activité sont particulièrement importants pour les personnes ayant des difficultés avec les transitions. Ils permettent de passer en douceur de l'intensité de l'activité au calme.</p>
+
+            <div class="ritual-timeline">
+                <div class="ritual-item">
+                    <h4>Étape 1 : Annoncez clairement la fin</h4>
+                    <p>Utilisez un signal visuel ET sonore (par exemple : lever la main tout en donnant un coup de sifflet spécifique). Cette double information aide chacun à comprendre que l'activité se termine.</p>
+                </div>
+                <div class="ritual-item">
+                    <h4>Étape 2 : Guidez le retour au calme</h4>
+                    <p>Proposez des exercices de respiration simple. Invitez le groupe à s'asseoir au sol. Prenez votre temps : cette phase de transition est essentielle.</p>
+                </div>
+                <div class="ritual-item">
+                    <h4>Étape 3 : Échangez brièvement</h4>
+                    <p>Quelques mots sur ce qui s'est passé pendant la séance. Pas besoin d'un long discours : l'objectif est de "fermer" mentalement l'activité.</p>
+                </div>
+                <div class="ritual-item">
+                    <h4>Étape 4 : Valorisez chaque participant</h4>
+                    <p>Terminez en nommant <strong>un point positif observé chez CHACUN</strong>. Cette reconnaissance individuelle renforce la confiance et l'envie de revenir.</p>
+                </div>
+            </div>
+
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Que faire en cas de débordement émotionnel ?</div>
+                <p>Il peut arriver qu'un pratiquant soit submergé par ses émotions (colère, peur, tristesse intense). Dans ce cas, <strong>reconnaissez son droit à se retirer</strong> sans culpabilisation. Ne le forcez jamais à "finir" l'activité. Cette bienveillance prévient l'anxiété et renforce la confiance pour les séances suivantes.</p>
+            </div>
+        </section>
+
+        <!-- Tableau des Contraintes -->
+        <section class="card" id="section4">
+            <div class="card-header">
+                <div class="card-icon">📋</div>
+                <div>
+                    <h3 class="card-title">Tableau récapitulatif : les contraintes en pratique</h3>
+                    <p class="card-subtitle">Votre aide-mémoire pour adapter chaque situation</p>
+                </div>
+            </div>
+
+            <p class="intro-text">
+                Ce tableau synthétise les principales variables que vous pouvez ajuster pour créer des situations d'apprentissage adaptées. Gardez-le sous la main lors de vos préparations de séance !
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Axe</th>
+                            <th>Objectif visé</th>
+                            <th>Variable à ajuster</th>
+                            <th>Exemple concret</th>
+                            <th>Matériel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Individuel</strong></td>
+                            <td>Alléger la charge mentale</td>
+                            <td>Forme de la consigne</td>
+                            <td>Consignes courtes avec pictogrammes et mots-clés</td>
+                            <td>—</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Individuel</strong></td>
+                            <td>Éviter la surcharge sensorielle</td>
+                            <td>Stimulations auditives/visuelles</td>
+                            <td>Donner les consignes dans une zone calme ; utiliser des gestes plutôt que des sifflets</td>
+                            <td>Casques anti-bruit, éclairage tamisé</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tâche</strong></td>
+                            <td>Clarifier l'objectif</td>
+                            <td>Zones de frappe autorisées</td>
+                            <td>Uniquement casque et plastron</td>
+                            <td>Casques à visière, plastrons</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tâche</strong></td>
+                            <td>Simplifier pour permettre la réussite</td>
+                            <td>Types de coups</td>
+                            <td>Directs au-dessus de la rubalise ; fouettés en dessous</td>
+                            <td>Bande rubalise</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tâche</strong></td>
+                            <td>Contrôler l'intensité</td>
+                            <td>Nombre de touches, tempo</td>
+                            <td>Maximum 3 touches par échange ; utiliser un métronome pour réguler le rythme</td>
+                            <td>Métronome, minuteur</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tâche</strong></td>
+                            <td>Réduire l'incertitude</td>
+                            <td>Rôles et scénarios</td>
+                            <td>A = attaque, B = défend ; on inverse tous les 3 échanges</td>
+                            <td>Bracelets de couleur A/B</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Environnement</strong></td>
+                            <td>Canaliser les déplacements</td>
+                            <td>Organisation de l'espace</td>
+                            <td>Bande centrale, limites en profondeur, zones de repli</td>
+                            <td>Rubalise, plots, tapis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Environnement</strong></td>
+                            <td>Faciliter la perception</td>
+                            <td>Repères visuels</td>
+                            <td>Cibles de couleurs différentes, flèches au sol pour les déplacements</td>
+                            <td>Adhésifs colorés, cônes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="media-container">
+                <p><strong>📹 Exemples pratiques en vidéo</strong></p>
+                <a href="https://drive.google.com/file/d/1sRT8sFSoWuIlFYyTWChREEyUXz8q5-O2/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Le fouetté avec rubalise
+                </a>
+                <a href="https://drive.google.com/file/d/1j-iCC_eY3l4pAc-qQgU-TjQl0qj_4v4a/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Direct et chassé avec contraintes
+                </a>
+                <p class="media-caption">La rubalise guide naturellement la trajectoire du coup et encourage un réarmé correct</p>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="quiz-section" id="quiz">
+            <h3>📝 Testez vos connaissances</h3>
+            <p>Six questions pour vérifier que vous avez bien intégré les principes essentiels</p>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>1. Combien de leviers d'adaptation pédagogique avons-nous identifiés ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q1" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>3 leviers</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q1" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>4 leviers</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q1" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>5 leviers</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="b">
+                <h4>2. Quelle est la durée idéale pour un essai ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q2" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>2 à 3 minutes</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q2" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>30 à 60 secondes</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q2" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>5 minutes</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="a">
+                <h4>3. Quels sont les trois rôles que peuvent jouer les pratiquants ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q3" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>Agir, Observer, Accompagner</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q3" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>Frapper, Défendre, Compter</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q3" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>Attaquer, Parer, Arbitrer</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>4. Comment doit se terminer la phase de valorisation en fin de séance ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q4" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>En félicitant le meilleur élève de la séance</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q4" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>En demandant à chacun de s'auto-évaluer</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q4" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>En nommant un point positif pour CHAQUE participant</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="b">
+                <h4>5. À quoi sert la rubalise placée à hauteur d'épaules ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q5" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>À délimiter l'espace de compétition</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q5" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>À séparer les zones de frappe : directs au-dessus, coups de pied en dessous</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q5" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>À protéger les spectateurs</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="a">
+                <h4>6. Pourquoi est-il si important de ritualiser la fin d'activité ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q6" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>Pour prévenir l'anxiété liée à la transition entre activité intense et repos</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q6" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>Pour améliorer les performances sportives</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q6" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>Pour respecter les horaires du gymnase</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-submit" onclick="submitQuiz()">Valider mes réponses</button>
+
+            <div class="quiz-results" id="quizResults">
+                <p>Votre score :</p>
+                <div class="quiz-score" id="quizScore">0/6</div>
+                <p id="quizMessage"></p>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="section-nav">
+            <a href="#" class="section-nav-btn prev">
+                ← Chapitre précédent
+            </a>
+            <a href="#" class="section-nav-btn next">
+                Chapitre suivant →
+            </a>
+        </div>
+    </main>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        let sectionsViewed = new Set();
+        const totalSections = 4;
+
+        function updateProgress() {
+            const progress = (sectionsViewed.size / totalSections) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+            localStorage.setItem('pratique_partagee_progress', JSON.stringify([...sectionsViewed]));
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('pratique_partagee_progress');
+            if (saved) {
+                sectionsViewed = new Set(JSON.parse(saved));
+                updateProgress();
+            }
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.id;
+                    if (sectionId && sectionId.startsWith('section')) {
+                        sectionsViewed.add(sectionId);
+                        updateProgress();
+                    }
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('[id^="section"]').forEach(section => {
+            observer.observe(section);
+        });
+
+        function selectOption(option) {
+            const question = option.closest('.quiz-question');
+            question.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            option.querySelector('input').checked = true;
+        }
+
+        function submitQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            
+            questions.forEach(question => {
+                const correctAnswer = question.dataset.correct;
+                const selected = question.querySelector('input:checked');
+                const feedback = question.querySelector('.quiz-feedback');
+                
+                question.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect'));
+                
+                if (selected) {
+                    const selectedOption = selected.closest('.quiz-option');
+                    if (selected.value === correctAnswer) {
+                        correct++;
+                        selectedOption.classList.add('correct');
+                        feedback.className = 'quiz-feedback show correct';
+                        feedback.textContent = '✅ Bonne réponse !';
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        feedback.className = 'quiz-feedback show incorrect';
+                        feedback.textContent = '❌ Ce n\'est pas la bonne réponse';
+                        question.querySelectorAll('.quiz-option').forEach(opt => {
+                            if (opt.querySelector('input').value === correctAnswer) opt.classList.add('correct');
+                        });
+                    }
+                }
+            });
+            
+            const score = Math.round((correct / questions.length) * 100);
+            document.getElementById('quizScore').textContent = correct + '/' + questions.length;
+            
+            const resultsDiv = document.getElementById('quizResults');
+            const messageEl = document.getElementById('quizMessage');
+            
+            if (score >= 70) {
+                messageEl.textContent = '🎉 Bravo ! Vous maîtrisez les principes essentiels !';
+                resultsDiv.style.background = 'rgba(56, 161, 105, 0.2)';
+                localStorage.setItem('pratique_partagee_validated', 'true');
+                triggerCelebration();
+            } else {
+                messageEl.textContent = '📚 Relisez les chapitres et réessayez. Il faut au moins 70% pour valider.';
+                resultsDiv.style.background = 'rgba(229, 62, 62, 0.2)';
+            }
+            
+            resultsDiv.classList.add('show');
+            document.querySelector('.quiz-submit').style.display = 'none';
+        }
+
+        function triggerCelebration() {
+            const celebration = document.getElementById('celebration');
+            const colors = ['#D4AF37', '#1a365d', '#38a169', '#d69e2e', '#e53e3e'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.cssText = `
+                    position: absolute;
+                    left: ${Math.random() * 100}vw;
+                    width: 10px;
+                    height: 10px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    animation: fall ${2 + Math.random() * 2}s linear forwards;
+                    animation-delay: ${Math.random() * 0.5}s;
+                `;
+                celebration.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        function goToMenu() { window.location.href = 'index.html'; }
+
+        loadProgress();
+    </script>
+</body>
+</html>

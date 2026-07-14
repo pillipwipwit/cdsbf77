@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Comportements-Défis en Savate Adaptée</title>
+    <style>
+        :root {
+            --color-primary: #1e40af;
+            --color-secondary: #3b82f6;
+            --color-gold: #D4AF37;
+            --color-dark-blue: #0f172a;
+            --color-light-blue: #dbeafe;
+            --color-success: #10B981;
+            --color-warning: #F59E0B;
+            --color-error: #EF4444;
+            --color-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background: var(--color-bg);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--color-dark-blue) 0%, var(--color-primary) 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .module-title {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 2.5rem;
+            margin: 0.5rem 0;
+            font-weight: 700;
+        }
+
+        .module-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--color-gold);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.8rem;
+            color: var(--color-dark-blue);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--color-gold);
+        }
+
+        .subsection-title {
+            font-size: 1.3rem;
+            color: var(--color-primary);
+            margin: 1.5rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .accordion-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-trigger {
+            width: 100%;
+            background: #f9fafb;
+            border: none;
+            padding: 1.25rem;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-trigger:hover {
+            background: var(--color-light-blue);
+        }
+
+        .accordion-trigger::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+            color: var(--color-primary);
+        }
+
+        .accordion-trigger.active::after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .accordion-content.active {
+            max-height: 3000px;
+        }
+
+        .accordion-inner {
+            padding: 1.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid var(--color-gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box h4 {
+            color: var(--color-dark-blue);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .tip-box {
+            background: #ecfdf5;
+            border-left: 4px solid var(--color-success);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid var(--color-error);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box {
+            background: var(--color-light-blue);
+            border: 2px solid var(--color-secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.05rem;
+        }
+
+        .reflection-box {
+            background: #f0f9ff;
+            border: 2px dashed var(--color-secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .reflection-box h4 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .principle-card {
+            background: white;
+            border: 2px solid var(--color-gold);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .principle-card h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: var(--color-primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .crisis-phase {
+            background: white;
+            border-left: 4px solid var(--color-warning);
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .crisis-phase h4 {
+            color: var(--color-warning);
+            margin-bottom: 0.5rem;
+        }
+
+        .function-badge {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+
+        /* Quiz Styles */
+        .quiz-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .quiz-question {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-question h4 {
+            color: var(--color-dark-blue);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--color-gold);
+            background: #fffbeb;
+        }
+
+        .quiz-option input[type="radio"] {
+            margin-right: 0.75rem;
+            cursor: pointer;
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .quiz-feedback.correct {
+            background: #d1fae5;
+            border-left: 4px solid var(--color-success);
+            display: block;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #fee2e2;
+            border-left: 4px solid var(--color-error);
+            display: block;
+        }
+
+        .submit-quiz {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+        }
+
+        .submit-quiz:hover {
+            background: var(--color-dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .quiz-results {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            text-align: center;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .quiz-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-dark-blue);
+            margin: 1rem 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .nav-button {
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button.secondary {
+            background: #f3f4f6;
+            color: var(--color-dark-blue);
+            border: 2px solid #e5e7eb;
+        }
+
+        .nav-button.secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .nav-button.primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .nav-button.primary:hover {
+            background: var(--color-dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .key-points {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .key-points h3 {
+            color: var(--color-success);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .key-points ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .key-points li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .key-points li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .abc-model {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 3px solid var(--color-gold);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .abc-component {
+            background: white;
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            border-left: 5px solid var(--color-primary);
+        }
+
+        .abc-component h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .tool-card {
+            background: #f0f9ff;
+            border: 2px solid var(--color-secondary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .tool-card h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+    </style>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("cdsbf77_acces")!=="ok"){location.replace("/formations/candidats/?d="+encodeURIComponent(location.pathname));}</script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">Formation Savate Adaptée</div>
+            <h1 class="module-title">Gestion des Comportements-Défis</h1>
+            <p class="module-subtitle">Comprendre, prévenir et accompagner les comportements-défis en savate adaptée</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-card">
+            <p style="font-size: 1.1rem; color: #334155; margin-bottom: 2rem;">
+                <strong>Durée estimée :</strong> 40-45 minutes<br>
+                <strong>Ce que vous allez apprendre :</strong> À identifier les comportements-défis et comprendre ce qu'ils expriment, à utiliser l'analyse fonctionnelle pour mieux intervenir, et à accompagner les moments de crise avec bienveillance et efficacité.
+            </p>
+
+            <div class="highlight-box">
+                <h4>💡 Un changement de perspective essentiel</h4>
+                <p>Avant de commencer, posez-vous cette question : <strong>Et si les comportements-défis n'étaient pas un "problème" de la personne, mais une façon de communiquer un besoin non satisfait ?</strong></p>
+                <p>Ces comportements ne sont pas une caractéristique de l'autisme ou de la déficience intellectuelle. Ils émergent d'une interaction entre la personne et son environnement. Notre rôle ? Adapter cet environnement plutôt que de vouloir "corriger" la personne.</p>
+            </div>
+
+            <div class="tip-box">
+                <h4>📚 Sur quoi s'appuie ce module ?</h4>
+                <p>Les méthodes présentées ici sont issues des recommandations officielles de la <strong>Haute Autorité de Santé (HAS)</strong> et de l'<strong>ANESM</strong>, validées par la recherche internationale.</p>
+            </div>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="content-card">
+            <h2 class="section-title">1. Comprendre les Comportements-Défis</h2>
+
+            <div class="reflection-box">
+                <h4>🤔 Question de départ</h4>
+                <p>Avant de lire cette section, prenez un moment pour réfléchir : <strong>Avez-vous déjà observé un comportement difficile lors d'une séance de savate ?</strong> Qu'avez-vous ressenti ? Qu'avez-vous fait ?</p>
+            </div>
+
+            <p><strong>Commençons par définir :</strong> Un comportement-défi, selon l'ANESM et les travaux d'Emerson (2001), c'est un comportement dont l'intensité, la fréquence ou la durée met en danger la sécurité de la personne ou d'autrui, ou limite son accès aux activités ordinaires.</p>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Comment se manifestent-ils en savate ?</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Saviez-vous que jusqu'à <strong>50% des personnes avec troubles du neurodéveloppement</strong> peuvent présenter des comportements-défis en contexte sportif ? Le gymnase, avec ses stimulations intenses, peut être particulièrement challengeant.</p>
+
+                        <p><strong>Observons ensemble les manifestations les plus fréquentes :</strong></p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type de comportement</th>
+                                    <th>À quoi ça ressemble ?</th>
+                                    <th>Qu'est-ce qui peut le déclencher ?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Crises comportementales</strong></td>
+                                    <td>Pleurs intenses, cris, agitation motrice, prostration</td>
+                                    <td>Trop de bruits, de lumières, changements imprévus</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gestes dirigés vers autrui</strong></td>
+                                    <td>Frappes, coups, poussées</td>
+                                    <td>Incompréhension des règles, frustration, besoin d'espace</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gestes dirigés vers soi</strong></td>
+                                    <td>Se frapper, se mordre, se cogner la tête</td>
+                                    <td>Douleur non exprimée, besoin d'autorégulation</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Refus de participation</strong></td>
+                                    <td>Rester immobile, se cacher, quitter la zone</td>
+                                    <td>Tâche trop difficile, anxiété, hypersensibilité</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Stéréotypies intenses</strong></td>
+                                    <td>Balancements prolongés, répétitions verbales, mouvements des mains</td>
+                                    <td>Besoin d'autorégulation (c'est positif !)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Errance / Fugue</strong></td>
+                                    <td>Quitter l'espace sans prévenir, courir vers la sortie</td>
+                                    <td>Surcharge sensorielle, confusion</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="warning-box">
+                            <h4>⚠️ Une nuance importante sur les stéréotypies</h4>
+                            <p>Vous avez remarqué qu'on parle de "stéréotypies intenses" comme comportement-défi ? C'est important de comprendre que les balancements, les mouvements des mains (flapping), ou les répétitions verbales <strong>sont souvent des stratégies d'autorégulation essentielles</strong>.</p>
+                            <p>La HAS (2009) le souligne : "Certaines stéréotypies ont une fonction importante pour la personne. On ne peut pas envisager leur disparition totale sans lui donner d'autres moyens pour répondre à ce besoin."</p>
+                            <p><strong>Question à vous poser :</strong> Ce comportement gêne-t-il vraiment l'apprentissage, ou est-ce qu'il aide la personne à gérer son stress ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Qu'est-ce qui peut déclencher ces comportements en savate ?</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Pour mieux accompagner, il faut d'abord comprendre. Explorons ensemble les déclencheurs courants :</p>
+
+                        <h3 class="subsection-title">L'environnement sensoriel</h3>
+                        <p>Le gymnase est un lieu de stimulations intenses. Réfléchissez à votre propre expérience :</p>
+                        <ul>
+                            <li><strong>Les sons :</strong> Échos, sifflets, encouragements criés... Imaginez si votre ouïe était hypersensible</li>
+                            <li><strong>Les lumières :</strong> Néons qui clignotent, reflets brillants sur le sol</li>
+                            <li><strong>Le contact :</strong> Recevoir des coups même contrôlés, la proximité avec d'autres corps</li>
+                            <li><strong>Les odeurs :</strong> Transpiration, matériel neuf, produits de nettoyage</li>
+                        </ul>
+
+                        <h3 class="subsection-title">Les défis sociaux et cognitifs</h3>
+                        <ul>
+                            <li><strong>L'imprévisibilité :</strong> Qui va attaquer ? De quel côté ? Les échanges rapides peuvent être anxiogènes</li>
+                            <li><strong>Les règles implicites :</strong> "Être fair-play", "encourager son partenaire"... Ces concepts abstraits ne vont pas de soi</li>
+                            <li><strong>Les temps d'attente :</strong> Que faire entre deux tours ? Comment gérer ce temps non structuré ?</li>
+                            <li><strong>Les vestiaires :</strong> Moment social intense et peu structuré</li>
+                        </ul>
+
+                        <h3 class="subsection-title">L'organisation de la séance</h3>
+                        <ul>
+                            <li><strong>Les transitions :</strong> Passer d'un exercice à l'autre, changer de zone</li>
+                            <li><strong>Les modifications :</strong> Changement d'horaire, absence d'un encadrant habituel</li>
+                            <li><strong>La nouveauté :</strong> Un nouvel exercice, du nouveau matériel, un nouveau partenaire</li>
+                        </ul>
+
+                        <div class="example-box">
+                            <h4>📖 Voyons un cas concret</h4>
+                            <p><strong>La situation :</strong> Karim (12 ans, TSA) refuse brutalement de participer et se met à crier.</p>
+                            <p><strong>Que s'est-il passé ?</strong> L'entraîneur a modifié l'ordre des exercices sans prévenir. Le planning visuel indiquait "travail au sac", mais l'entraîneur a commencé par "opposition avec partenaire". Cette imprévisibilité a déclenché une crise d'anxiété.</p>
+                            <p><strong>Comment prévenir ?</strong> Annoncer tout changement 5 minutes à l'avance, modifier le planning visuel devant Karim en expliquant clairement : "On change l'ordre. D'abord partenaires, après les sacs."</p>
+                            <p><strong>À votre tour :</strong> Pensez-vous à d'autres situations où l'imprévisibilité pourrait poser problème ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Pourquoi ces comportements se produisent-ils ? Les 4 fonctions</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Voici une clé essentielle : <strong>tout comportement-défi remplit une fonction pour la personne</strong>. Il ne survient pas "par hasard" ou "pour embêter". C'est une forme de communication.</p>
+
+                        <div class="reflection-box">
+                            <h4>🤔 Avant de continuer...</h4>
+                            <p>Pensez à un comportement-défi que vous avez observé. Selon vous, que cherchait à obtenir ou à éviter la personne ?</p>
+                        </div>
+
+                        <div class="abc-model">
+                            <h3 style="color: var(--color-dark-blue); margin-bottom: 1.5rem; text-align: center;">Les 4 Fonctions Universelles</h3>
+                            
+                            <div class="abc-component">
+                                <h4>1. Obtenir de l'attention</h4>
+                                <p><strong>De quoi s'agit-il ?</strong> Le comportement permet d'obtenir l'attention d'autrui (même si cette attention est négative, comme une réprimande)</p>
+                                <p><strong>Exemple concret :</strong> Malik frappe un camarade → l'entraîneur accourt et s'occupe de lui pendant 10 minutes</p>
+                                <p><strong>Comment le reconnaître ?</strong> Le comportement apparaît quand la personne est peu sollicitée ou ignorée</p>
+                                <div class="function-badge">Attention</div>
+                            </div>
+
+                            <div class="abc-component">
+                                <h4>2. Éviter ou échapper à quelque chose de désagréable</h4>
+                                <p><strong>De quoi s'agit-il ?</strong> Le comportement permet de fuir ou d'éviter une situation inconfortable</p>
+                                <p><strong>Exemple concret :</strong> Sarah pleure dès qu'on annonce l'opposition avec contact → on la dispense de cet exercice</p>
+                                <p><strong>Comment le reconnaître ?</strong> Le comportement survient systématiquement avant ou pendant une activité précise</p>
+                                <div class="function-badge">Évitement</div>
+                            </div>
+
+                            <div class="abc-component">
+                                <h4>3. Accéder à un objet ou une activité</h4>
+                                <p><strong>De quoi s'agit-il ?</strong> Le comportement permet d'obtenir quelque chose de tangible</p>
+                                <p><strong>Exemple concret :</strong> Jordan crie et tape → on lui donne les gants rouges qu'il voulait (au lieu des bleus)</p>
+                                <p><strong>Comment le reconnaître ?</strong> Le comportement cesse immédiatement dès que l'objet ou l'activité est obtenu(e)</p>
+                                <div class="function-badge">Accès</div>
+                            </div>
+
+                            <div class="abc-component">
+                                <h4>4. S'autoréguler (stimulation sensorielle)</h4>
+                                <p><strong>De quoi s'agit-il ?</strong> Le comportement procure une sensation agréable ou aide à réguler son état interne</p>
+                                <p><strong>Exemple concret :</strong> Tom se balance intensément pendant 5 minutes après un exercice stressant</p>
+                                <p><strong>Comment le reconnaître ?</strong> Le comportement se produit même seul, sans personne autour ni conséquence externe</p>
+                                <div class="function-badge">Sensoriel</div>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <h4>💡 Pourquoi c'est important de connaître la fonction ?</h4>
+                            <p>Parce que <strong>votre intervention sera différente selon la fonction</strong>. Voyez plutôt :</p>
+                            <ul>
+                                <li>Si la fonction = attention → Apprenez à la personne comment demander de l'attention de manière appropriée</li>
+                                <li>Si la fonction = évitement → Ajustez la difficulté de la tâche ou enseignez comment demander une pause</li>
+                                <li>Si la fonction = accès → Enseignez à demander verbalement ou avec un pictogramme</li>
+                                <li>Si la fonction = autorégulation → Proposez des alternatives sensorielles acceptables</li>
+                            </ul>
+                            <p><strong>Question :</strong> Imaginez que vous intervenez sans connaître la fonction. Que pourrait-il se passer ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="content-card">
+            <h2 class="section-title">2. Analyse Fonctionnelle : Le Modèle ABC</h2>
+
+            <p>Maintenant que vous comprenez qu'il existe 4 fonctions possibles, comment identifier LA fonction d'un comportement spécifique ? C'est là qu'intervient l'analyse fonctionnelle, recommandée par la HAS comme le <strong>"gold standard"</strong>.</p>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Qu'est-ce que le modèle ABC ?</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Pensez au modèle ABC comme à une loupe qui vous permet d'observer ce qui se passe <strong>avant, pendant et après</strong> un comportement. C'est un outil d'enquête !</p>
+
+                        <div class="abc-model">
+                            <h3 style="color: var(--color-dark-blue); text-align: center; margin-bottom: 1.5rem;">A → B → C</h3>
+                            
+                            <div class="abc-component">
+                                <h4>A = ANTÉCÉDENT (ce qui vient avant)</h4>
+                                <p><strong>La question à se poser :</strong> Qu'est-ce qui s'est passé JUSTE AVANT le comportement ?</p>
+                                <p>C'est le contexte, le déclencheur. Soyez précis dans votre observation.</p>
+                                <p><strong>Exemples concrets :</strong></p>
+                                <ul>
+                                    <li>Une consigne donnée : "Mets-toi en binôme avec Sarah"</li>
+                                    <li>Un événement sensoriel : Un coup de sifflet fort</li>
+                                    <li>Un changement : Passage à un nouvel exercice</li>
+                                    <li>Une durée : 30 minutes sans pause</li>
+                                </ul>
+                            </div>
+
+                            <div class="abc-component">
+                                <h4>B = COMPORTEMENT (ce qui est observable)</h4>
+                                <p><strong>La question à se poser :</strong> Que fait exactement la personne ? Décrivez comme si vous filmiez.</p>
+                                <p>Attention : on décrit factuellement, sans interpréter ni juger.</p>
+                                <p><strong>Bonne description :</strong> "Karim a crié 'Non !', a jeté ses gants au sol et s'est assis dos à l'entraîneur"</p>
+                                <p><strong>Description à éviter :</strong> "Karim a fait une crise", "Karim était en colère" (ce sont des interprétations !)</p>
+                                <p><strong>À votre tour :</strong> Comment décririez-vous un comportement que vous avez observé ?</p>
+                            </div>
+
+                            <div class="abc-component">
+                                <h4>C = CONSÉQUENCE (ce qui vient après)</h4>
+                                <p><strong>La question à se poser :</strong> Qu'est-ce qui s'est passé JUSTE APRÈS le comportement ?</p>
+                                <p>Cette conséquence peut maintenir ou renforcer le comportement si elle est "payante" pour la personne.</p>
+                                <p><strong>Exemples de conséquences :</strong></p>
+                                <ul>
+                                    <li>Attention obtenue : L'entraîneur s'occupe de la personne pendant 10 min</li>
+                                    <li>Évitement réussi : On dispense la personne de l'exercice difficile</li>
+                                    <li>Accès obtenu : La personne obtient les gants rouges qu'elle voulait</li>
+                                    <li>Stimulation : La personne se balance seule dans un coin</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📋 Analysons ensemble un exemple complet</h4>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>A - Antécédent</th>
+                                        <th>B - Comportement</th>
+                                        <th>C - Conséquence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>L'entraîneur annonce "Maintenant, assaut avec contact léger"</td>
+                                        <td>Sophie se met à pleurer fort, se recroqueville au sol</td>
+                                        <td>L'entraîneur dit "Ok, tu peux aller te reposer" → Sophie va dans la zone calme</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p><strong>Quelle est la fonction selon vous ?</strong> <span class="function-badge">Évitement</span></p>
+                            <p><strong>Pourquoi ?</strong> Le comportement (pleurer, se recroqueviller) a permis à Sophie d'éviter l'assaut qui lui fait peur. La conséquence (aller se reposer) "récompense" le comportement.</p>
+                            <p><strong>Comment intervenir ?</strong> Ne pas dispenser de l'exercice (car cela renforce l'évitement), mais adapter : commencer par un contact très léger avec un partenaire rassurant, augmenter très progressivement.</p>
+                        </div>
+
+                        <div class="reflection-box">
+                            <h4>🤔 Exercice de réflexion</h4>
+                            <p>Si on avait dispensé Sophie systématiquement de l'exercice, que se serait-il passé selon vous ? Le comportement aurait-il augmenté ou diminué ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Comment utiliser une fiche ABC en pratique ?</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>L'observation systématique est votre meilleur outil. Voici comment procéder :</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date/Heure</th>
+                                    <th>Antécédent (A)</th>
+                                    <th>Comportement (B)</th>
+                                    <th>Conséquence (C)</th>
+                                    <th>Fonction probable</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>15/11 14h20</td>
+                                    <td>Consigne "Change de partenaire"</td>
+                                    <td>Refuse, crie "Non !", jette gants</td>
+                                    <td>Reste finalement avec le même partenaire</td>
+                                    <td>Évitement du changement</td>
+                                </tr>
+                                <tr>
+                                    <td>15/11 14h45</td>
+                                    <td>Groupe travaille, Malik seul dans un coin</td>
+                                    <td>Court vers l'entraîneur, le tire par le bras</td>
+                                    <td>Entraîneur lui parle 5 min, le guide vers exercice</td>
+                                    <td>Attention sociale</td>
+                                </tr>
+                                <tr>
+                                    <td>15/11 15h00</td>
+                                    <td>Exercice de précision sur petite cible</td>
+                                    <td>Se met à se balancer d'avant en arrière</td>
+                                    <td>Continue 2 min, puis reprend l'exercice calmement</td>
+                                    <td>Autorégulation</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>💡 Conseils pour une observation efficace</h4>
+                            <ul>
+                                <li><strong>Observez pendant 2 semaines minimum</strong> pour repérer des patterns répétitifs</li>
+                                <li><strong>Notez immédiatement</strong> après le comportement (notre mémoire nous joue des tours !)</li>
+                                <li><strong>Impliquez toute l'équipe</strong> pour avoir différents points de vue</li>
+                                <li><strong>Restez factuel</strong> dans la colonne B : décrivez ce que vous voyez, pas ce que vous pensez</li>
+                                <li><strong>Cherchez les répétitions :</strong> Le comportement survient-il toujours dans les mêmes circonstances ?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">De l'analyse à l'action : comment intervenir ?</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Une fois la fonction identifiée, vous pouvez agir intelligemment sur trois niveaux. Explorons-les ensemble :</p>
+
+                        <h3 class="subsection-title">1. Agir sur l'ANTÉCÉDENT (Prévenir en amont)</h3>
+                        <p>C'est comme enlever les obstacles avant qu'on ne trébuche. Quelques exemples :</p>
+                        <ul>
+                            <li>Le déclencheur = transitions → <strong>Annoncer 5 min à l'avance</strong>, utiliser un timer visuel</li>
+                            <li>Le déclencheur = consigne complexe → <strong>Simplifier</strong>, utiliser des pictogrammes</li>
+                            <li>Le déclencheur = surcharge sensorielle → <strong>Réduire les stimuli</strong>, proposer un casque anti-bruit</li>
+                            <li>Le déclencheur = attente → <strong>Donner une activité</strong> (shadow boxing, étirements...)</li>
+                        </ul>
+
+                        <h3 class="subsection-title">2. Enseigner un COMPORTEMENT de remplacement</h3>
+                        <p>Donnez à la personne un moyen approprié d'obtenir ce qu'elle cherche :</p>
+                        <ul>
+                            <li>Si fonction = attention → Apprenez à <strong>lever la main</strong> ou utiliser une carte "J'ai besoin d'aide"</li>
+                            <li>Si fonction = évitement → Apprenez à <strong>demander une pause</strong> avec un pictogramme STOP</li>
+                            <li>Si fonction = accès → Apprenez à <strong>demander</strong> verbalement ou en pointant</li>
+                            <li>Si fonction = autorégulation → Proposez <strong>des alternatives</strong> (balle anti-stress, espace de balancement...)</li>
+                        </ul>
+
+                        <h3 class="subsection-title">3. Modifier la CONSÉQUENCE (Ne pas renforcer le comportement-défi)</h3>
+                        <p>C'est délicat mais essentiel. Le principe : le comportement-défi ne doit plus "payer".</p>
+                        <ul>
+                            <li>Si fonction = attention → <strong>Ne donnez pas d'attention</strong> pendant le comportement-défi, donnez-en massivement quand le comportement est approprié</li>
+                            <li>Si fonction = évitement → <strong>Ne dispensez pas de l'activité</strong>, mais adaptez-la à la baisse tout en maintenant la participation</li>
+                            <li>Si fonction = accès → <strong>Ne donnez pas l'objet</strong> suite au comportement-défi, donnez-le quand la demande est appropriée</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <h4>⚠️ À quoi s'attendre : "l'extinction burst"</h4>
+                            <p>Voici quelque chose d'important à comprendre : quand vous cessez de renforcer un comportement, il y a souvent une <strong>aggravation temporaire</strong> avant l'amélioration. On appelle ça "l'extinction burst".</p>
+                            <p><strong>Exemple :</strong> Si vous cessez de céder quand Malik crie, il criera probablement PLUS FORT les 2-3 premières fois. C'est comme un dernier test : "Ça marche vraiment plus ?"</p>
+                            <p><strong>C'est normal et temporaire.</strong> Si vous cédez à ce moment-là, vous aurez renforcé un comportement encore plus intense. Tenez bon !</p>
+                        </div>
+
+                        <div class="reflection-box">
+                            <h4>🤔 Mettez-vous en pratique</h4>
+                            <p>Pensez à un comportement-défi que vous pourriez rencontrer. Comment agiriez-vous sur les trois niveaux (antécédent, comportement de remplacement, conséquence) ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 (anciennement 4) -->
+        <div class="content-card">
+            <h2 class="section-title">3. Gestion de Crise : Protocole Low Arousal</h2>
+
+            <p>Même avec la meilleure prévention du monde, des crises peuvent survenir. Et c'est normal. Votre rôle n'est pas de les empêcher à 100%, mais de savoir comment les accompagner avec bienveillance et sécurité.</p>
+
+            <div class="reflection-box">
+                <h4>🤔 Avant de commencer</h4>
+                <p>Avez-vous déjà été vous-même en situation de grande détresse émotionnelle ? Qu'est-ce qui vous a aidé ? Qu'est-ce qui a empiré les choses ?</p>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Les 5 phases d'une crise : savoir où on en est</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Comprendre les phases d'une crise vous permet d'adapter votre intervention. C'est comme une vague : il y a une montée, un pic, puis une descente.</p>
+
+                        <div class="crisis-phase">
+                            <h4>Phase 1 : CALME (État de base)</h4>
+                            <p>La personne est engagée dans l'activité, détendue, communique normalement.</p>
+                            <p><strong>Votre rôle :</strong> Maintenir les conditions favorables, renforcer positivement</p>
+                        </div>
+
+                        <div class="crisis-phase">
+                            <h4>Phase 2 : DÉCLENCHEMENT / ESCALADE 🔴 ZONE D'INTERVENTION CLÉ</h4>
+                            <p><strong>Signes précurseurs :</strong> Agitation motrice, verbalisations anxieuses, regard fuyant, mains tremblantes, respiration rapide</p>
+                            <p><strong>C'est ICI qu'il faut intervenir pour éviter le pic !</strong></p>
+                            <ul>
+                                <li>Réduisez les demandes : "Ok, on fait une pause"</li>
+                                <li>Proposez la zone de calme : "Tu veux aller dans l'espace bleu ?"</li>
+                                <li>Éloignez les spectateurs : "Les autres, on continue l'exercice là-bas"</li>
+                                <li>Adoptez une posture non-menaçante (on va y revenir)</li>
+                            </ul>
+                            <p><strong>Question :</strong> Pourquoi pensez-vous qu'il vaut mieux intervenir tôt plutôt qu'attendre le pic ?</p>
+                        </div>
+
+                        <div class="crisis-phase">
+                            <h4>Phase 3 : PIC (Crise aiguë)</h4>
+                            <p><strong>Manifestations :</strong> Cris, pleurs intenses, gestes brusques, fuite, automutilation</p>
+                            <p><strong>Priorité absolue : LA SÉCURITÉ</strong></p>
+                            <ul>
+                                <li>Évacuez calmement les autres pratiquants</li>
+                                <li>Un adulte reste avec la personne (à distance sécuritaire)</li>
+                                <li>Communication minimale (on y revient juste après)</li>
+                                <li>Ne tentez PAS de raisonner (les fonctions cognitives sont "hors ligne")</li>
+                            </ul>
+                            <p><strong>Point clé :</strong> Pendant le pic émotionnel, le cerveau rationnel est inaccessible. Toute tentative d'explication ne fait qu'aggraver la surcharge.</p>
+                        </div>
+
+                        <div class="crisis-phase">
+                            <h4>Phase 4 : DÉSESCALADE</h4>
+                            <p><strong>Signes :</strong> L'intensité diminue, respiration ralentit, contact visuel redevient possible</p>
+                            <p><strong>Votre rôle :</strong> Accompagner en douceur</p>
+                            <ul>
+                                <li>Restez calme et présent</li>
+                                <li>Proposez (sans imposer) de l'eau, un mouchoir</li>
+                                <li>Respectez le besoin de silence</li>
+                                <li>Attendez que la personne signale qu'elle va mieux</li>
+                            </ul>
+                        </div>
+
+                        <div class="crisis-phase">
+                            <h4>Phase 5 : RÉCUPÉRATION</h4>
+                            <p><strong>Durée nécessaire :</strong> Minimum 15-30 minutes avant toute reprise d'activité</p>
+                            <p><strong>Ce qu'il faut faire :</strong></p>
+                            <ul>
+                                <li>Débriefing adapté (avec supports visuels si besoin)</li>
+                                <li>Analyse en équipe : Qu'est-ce qui a déclenché ? Comment prévenir ?</li>
+                                <li>Pas de retour immédiat à l'activité intense</li>
+                                <li>Valorisez le retour au calme : "Bravo, tu as réussi à te calmer"</li>
+                            </ul>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>❌ L'erreur à ne JAMAIS faire</h4>
+                            <p>Tenter de raisonner ou d'enseigner pendant le pic de la crise. <strong>En état de détresse émotionnelle intense, les fonctions exécutives sont inaccessibles.</strong> C'est physiologique, pas un choix.</p>
+                            <p>Tout ce que vous direz ne fera qu'augmenter la surcharge. Restez calme, assurez la sécurité, et attendez patiemment la désescalade.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Les 4 principes Low Arousal : réduire l'activation</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>L'approche Low Arousal (Dr Andrew McDonnell, Studio 3) est la référence internationale pour accompagner les crises sans ajouter de stress. Le principe ? <strong>Réduire l'activation émotionnelle</strong> plutôt que de contrôler la personne.</p>
+
+                        <div class="principle-card">
+                            <h4>1. Réduire toutes les demandes</h4>
+                            <p>Arrêtez d'exiger quoi que ce soit. Ne demandez pas à la personne de "se calmer", de "s'expliquer", de "s'asseoir", de "regarder".</p>
+                            <p><strong>Que dire ?</strong> Simplement : "Ok, c'est bon, prends ton temps"</p>
+                            <p><strong>Pourquoi ?</strong> Chaque demande est une pression supplémentaire sur un système déjà surchargé.</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>2. Éviter les déclencheurs physiologiques</h4>
+                            <p>Certains comportements de notre part sont perçus comme des menaces par le cerveau en alerte :</p>
+                            <ul>
+                                <li><strong>Pas de contact visuel direct prolongé</strong> (ressenti comme menaçant)</li>
+                                <li><strong>Pas de toucher</strong> sauf si la personne le demande explicitement</li>
+                                <li><strong>Pas de spectateurs</strong> (évacuez calmement les autres)</li>
+                                <li><strong>Pas de gestes brusques</strong></li>
+                            </ul>
+                            <p><strong>Question :</strong> Pourquoi le contact visuel direct peut-il être perçu comme menaçant selon vous ?</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>3. Adopter une posture non-menaçante</h4>
+                            <p>Votre langage corporel doit communiquer la sécurité :</p>
+                            <ul>
+                                <li>Position <strong>ouverte</strong> (pas de bras croisés)</li>
+                                <li>Mains <strong>visibles</strong> et détendues</li>
+                                <li>Positionnement à <strong>45 degrés</strong> par rapport à la personne (pas face à face)</li>
+                                <li>Distance de <strong>minimum 90 cm</strong> (respecter l'espace personnel)</li>
+                                <li>Si possible, <strong>assis ou accroupi</strong> (moins imposant que debout)</li>
+                            </ul>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>4. Examiner son propre comportement</h4>
+                            <p>L'auto-observation est essentielle. Posez-vous ces questions :</p>
+                            <ul>
+                                <li>Mon ton de voix est-il vraiment calme ou suis-je énervé ?</li>
+                                <li>Est-ce que je parle trop ?</li>
+                                <li>Ma présence aggrave-t-elle la situation ?</li>
+                                <li>Suis-je dans le contrôle ou dans l'accompagnement ?</li>
+                            </ul>
+                            <p><strong>Réflexion :</strong> Avez-vous déjà ressenti que votre propre stress influençait une situation ?</p>
+                        </div>
+
+                        <h3 class="subsection-title">Comment communiquer pendant le pic ?</h3>
+                        <p>Votre communication doit être minimaliste et apaisante :</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>À FAIRE ✓</th>
+                                    <th>À NE PAS FAIRE ✗</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Phrases ultra-courtes : "C'est ok", "Je suis là"</td>
+                                    <td>Longues explications, questions multiples</td>
+                                </tr>
+                                <tr>
+                                    <td>Instructions positives : "Assieds-toi"</td>
+                                    <td>Instructions négatives : "Ne cours pas"</td>
+                                </tr>
+                                <tr>
+                                    <td>Ton monotone et rassurant</td>
+                                    <td>Ton énervé, saccadé, fort</td>
+                                </tr>
+                                <tr>
+                                    <td>Respecter le silence</td>
+                                    <td>Parler en continu "pour calmer"</td>
+                                </tr>
+                                <tr>
+                                    <td>Montrer des pictogrammes (émotions, "respire")</td>
+                                    <td>Compter uniquement sur les mots</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Organisation pratique en savate</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <h3 class="subsection-title">Équipe minimale : 2 encadrants</h3>
+                        <p>La gestion de crise nécessite du personnel. Voici comment vous organiser :</p>
+
+                        <p><strong>Encadrant 1 - Reste avec la personne en crise :</strong></p>
+                        <ul>
+                            <li>Applique le protocole Low Arousal</li>
+                            <li>Assure la sécurité immédiate</li>
+                            <li>Observe l'évolution (escalade ou désescalade)</li>
+                        </ul>
+
+                        <p><strong>Encadrant 2 - Prend en charge le reste du groupe :</strong></p>
+                        <ul>
+                            <li>Évacue calmement : "On va continuer l'exercice dans la zone verte"</li>
+                            <li>Lance une activité de substitution préparée à l'avance</li>
+                            <li>Rassure les autres si nécessaire, sans dramatiser</li>
+                        </ul>
+
+                        <h3 class="subsection-title">La zone de calme-retrait</h3>
+                        <p>C'est un espace sécurisant où la personne peut se ressaisir. La HAS précise que c'est une <strong>procédure d'exception</strong> :</p>
+                        <ul>
+                            <li><strong>Emplacement :</strong> Zone délimitée du gymnase, visible mais à l'écart des stimulations</li>
+                            <li><strong>Accompagnement :</strong> La personne n'est jamais seule (pas d'isolement)</li>
+                            <li><strong>Porte :</strong> Toujours ouverte (jamais fermée à clé)</li>
+                            <li><strong>Durée :</strong> Le temps nécessaire au retour au calme (généralement 5-20 min)</li>
+                            <li><strong>Suivi :</strong> Observation continue, vérifications régulières</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <h4>🚫 Ce qui est STRICTEMENT INTERDIT</h4>
+                            <p>Selon la HAS/ANESM et la loi du 26 janvier 2016 :</p>
+                            <ul>
+                                <li><strong>Contention physique</strong> sauf danger immédiat, et seulement le temps nécessaire (quelques minutes max), jamais comme punition</li>
+                                <li><strong>Isolement punitif</strong> (enfermer dans un local)</li>
+                                <li><strong>Humiliation publique</strong></li>
+                                <li><strong>Privation de repas ou d'eau</strong></li>
+                            </ul>
+                            <p><strong>Principe fondamental :</strong> "La dignité de la personne doit être respectée en toutes circonstances."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4 (anciennement 5 sans la partie précautions) -->
+        <div class="content-card">
+            <h2 class="section-title">4. Adaptations Spécifiques à la Savate</h2>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Pourquoi la savate peut être bénéfique ?</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>La recherche montre que les arts martiaux adaptés, dont la savate, peuvent avoir des effets positifs remarquables. Voyons quelques données :</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Discipline</th>
+                                    <th>Bénéfices documentés</th>
+                                    <th>Étude de référence</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Judo adapté</strong></td>
+                                    <td>Amélioration des compétences motrices, réduction des stéréotypies, augmentation des interactions sociales</td>
+                                    <td>AutJudo, Espagne, 6 mois</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Karaté (katas)</strong></td>
+                                    <td>Séquences répétitives rassurantes, amélioration du langage</td>
+                                    <td>Études récentes TSA</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Arts martiaux mixtes adaptés</strong></td>
+                                    <td>Amélioration des fonctions exécutives (inhibition, mémoire de travail, flexibilité)</td>
+                                    <td>Phung & Goldberg (2019)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>💡 Ce qui fait la différence</h4>
+                            <p>Les arts martiaux offrent un cadre <strong>structuré et ritualisé</strong>. Le salut, les techniques répétées, les grades progressifs... Tout cela crée un environnement prévisible favorable à l'apprentissage et à la régulation émotionnelle.</p>
+                            <p><strong>La savate en particulier</strong> combine technique (pieds-poings), respect du code (tenue, salut) et progression claire. C'est un terreau idéal pour l'adaptation !</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Désensibilisation progressive au contact physique</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Le contact physique est au cœur de la savate, mais il peut être source d'anxiété. La clé ? <strong>Y aller progressivement</strong>, en respectant le rythme de chacun.</p>
+
+                        <div class="reflection-box">
+                            <h4>🤔 Avant de lire la progression</h4>
+                            <p>Imaginez que vous avez peur du contact physique. Que voudriez-vous qu'on fasse pour vous aider à dépasser cette peur ?</p>
+                        </div>
+
+                        <h3 class="subsection-title">Phase 1 : Jeux sans contact (2-3 séances)</h3>
+                        <p>On commence par développer la conscience du partenaire sans se toucher :</p>
+                        <ul>
+                            <li>Shadow boxing face à un partenaire (distance 2m)</li>
+                            <li>Jeu du miroir : imiter les mouvements sans contact</li>
+                            <li>Passer une balle mousse sans la lâcher</li>
+                        </ul>
+
+                        <h3 class="subsection-title">Phase 2 : Contacts brefs et prévisibles (3-4 séances)</h3>
+                        <p>Introduction de contacts très contrôlés :</p>
+                        <ul>
+                            <li>Toucher le plastron de l'entraîneur (qui reste immobile)</li>
+                            <li>High-five après chaque exercice</li>
+                            <li>Toucher la cible (pao) tenue par le partenaire</li>
+                        </ul>
+
+                        <h3 class="subsection-title">Phase 3 : Contacts légers avec mouvement (4-5 séances)</h3>
+                        <p>On ajoute la dimension dynamique :</p>
+                        <ul>
+                            <li>Toucher le plastron du partenaire qui se déplace lentement</li>
+                            <li>Esquiver en reculant les coups très lents de l'entraîneur</li>
+                            <li>Poser sa main sur l'épaule du partenaire pendant l'exercice</li>
+                        </ul>
+
+                        <h3 class="subsection-title">Phase 4 : Opposition contrôlée (5-6 séances)</h3>
+                        <p>Introduction progressive de l'aspect compétitif :</p>
+                        <ul>
+                            <li>Assaut à thème : "Seulement directs du bras avant"</li>
+                            <li>Opposition à 30% de puissance maximum</li>
+                            <li>Possibilité de dire STOP à tout moment (carte rouge visible)</li>
+                        </ul>
+
+                        <h3 class="subsection-title">Phase 5 : Assaut adapté (progressif)</h3>
+                        <p>Quand la personne est prête :</p>
+                        <ul>
+                            <li>Assaut libre mais avec règles simplifiées</li>
+                            <li>Durée courte au début (30 secondes)</li>
+                            <li>Protections complètes : casque, gants 16oz minimum</li>
+                        </ul>
+
+                        <div class="warning-box">
+                            <h4>⚠️ Règle d'or</h4>
+                            <p><strong>Ne jamais forcer le passage à l'étape suivante.</strong> Certaines personnes resteront plusieurs mois à la phase 2 ou 3, et c'est parfaitement acceptable.</p>
+                            <p>L'objectif est le bien-être et le développement personnel, pas la performance compétitive. Chacun avance à son rythme.</p>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>📖 Un exemple concret</h4>
+                            <p><strong>Lucas, 14 ans</strong>, est resté 6 mois à la phase 2. Il adorait toucher le plastron de son entraîneur mais paniquait dès qu'on introduisait du mouvement.</p>
+                            <p><strong>Solution :</strong> On a créé une phase intermédiaire : l'entraîneur bougeait très lentement avec des mouvements prévisibles (trois pas à droite, trois pas à gauche, toujours le même pattern).</p>
+                            <p><strong>Résultat :</strong> Après deux mois dans cette phase transitoire, Lucas a pu passer à la phase 3. Aujourd'hui, il participe à des assauts adaptés avec grand plaisir !</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Points clés -->
+        <div class="key-points">
+            <h3>🎯 Les Essentiels à Retenir</h3>
+            <ul>
+                <li>Les comportements-défis sont une forme de communication, pas un "problème" de la personne - cherchez toujours ce qu'ils expriment</li>
+                <li>Le modèle ABC (Antécédent-Comportement-Conséquence) est votre outil principal pour comprendre et intervenir efficacement</li>
+                <li>Il existe 4 fonctions possibles : attention, évitement, accès, autorégulation. Identifier la fonction change tout !</li>
+                <li>En crise, l'approche Low Arousal : réduire les demandes, éviter les déclencheurs, posture non-menaçante, examiner son propre comportement</li>
+                <li>La dignité de la personne est toujours prioritaire - contention et isolement sont exceptionnels, jamais punitifs</li>
+                <li>En savate adaptée : progression très lente sur le contact physique, respecter le rythme individuel, 2 encadrants minimum</li>
+                <li>Les stéréotypies aident souvent à réguler le stress - ne pas chercher à les supprimer systématiquement</li>
+            </ul>
+        </div>
+
+        <!-- Quiz -->
+        <div class="quiz-section">
+            <h2 class="section-title">📝 Testez Votre Compréhension</h2>
+            <p style="margin-bottom: 2rem;">Ces questions vous aident à vérifier que vous avez bien intégré les concepts clés. Pas de stress, l'objectif est d'apprendre ! Score minimum pour valider : 70% (7/10 bonnes réponses)</p>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>Question 1 : Malik frappe un camarade → l'entraîneur accourt et s'occupe de lui pendant 10 minutes. Quelle est la fonction la plus probable ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q1" value="a">
+                        <span>Éviter une tâche difficile</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q1" value="b">
+                        <span>Accéder à un objet qu'il veut</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q1" value="c">
+                        <span>Obtenir de l'attention</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q1" value="d">
+                        <span>S'autoréguler (stimulation sensorielle)</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="b">
+                <h4>Question 2 : Dans le modèle ABC, que représente le "A" ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q2" value="a">
+                        <span>L'action que la personne a faite</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q2" value="b">
+                        <span>Ce qui s'est passé juste AVANT le comportement (le déclencheur)</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q2" value="c">
+                        <span>L'analyse du comportement</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q2" value="d">
+                        <span>L'attitude de l'entraîneur</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="d">
+                <h4>Question 3 : Que dit la HAS sur les stéréotypies (balancements, flapping) ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q3" value="a">
+                        <span>Il faut toujours les supprimer car elles empêchent l'apprentissage</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q3" value="b">
+                        <span>Il faut les supprimer uniquement en public</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q3" value="c">
+                        <span>Elles sont socialement inappropriées donc à éliminer</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q3" value="d">
+                        <span>Elles ont souvent une fonction d'autorégulation essentielle à respecter</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>Question 4 : Pendant le PIC d'une crise, quelle est la MEILLEURE action ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q4" value="a">
+                        <span>Tenter de raisonner la personne et lui expliquer son erreur</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q4" value="b">
+                        <span>La prendre dans ses bras pour la réconforter</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q4" value="c">
+                        <span>Assurer la sécurité, évacuer les autres, communication minimale, attendre la désescalade</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q4" value="d">
+                        <span>L'isoler immédiatement dans une pièce fermée à clé</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="a">
+                <h4>Question 5 : Quelle posture recommande l'approche Low Arousal ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q5" value="a">
+                        <span>Position ouverte, mains visibles, angle 45°, distance minimum 90 cm</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q5" value="b">
+                        <span>Face à face, bras croisés, regard fixe pour montrer l'autorité</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q5" value="c">
+                        <span>Tourner le dos pour ne pas provoquer</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q5" value="d">
+                        <span>Se rapprocher très près pour montrer qu'on n'a pas peur</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="d">
+                <h4>Question 6 : Sarah refuse systématiquement les assauts avec contact (fonction = évitement). Comment intervenir ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q6" value="a">
+                        <span>La dispenser définitivement de cet exercice</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q6" value="b">
+                        <span>L'obliger à participer pour surmonter sa peur</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q6" value="c">
+                        <span>La punir quand elle refuse</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q6" value="d">
+                        <span>Désensibilisation progressive : contacts très légers au début, augmenter graduellement</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>Question 7 : Qu'est-ce que "l'extinction burst" ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q7" value="a">
+                        <span>Une technique pour calmer rapidement les crises</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q7" value="b">
+                        <span>La phase finale d'une crise</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q7" value="c">
+                        <span>L'aggravation temporaire d'un comportement quand on cesse de le renforcer</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q7" value="d">
+                        <span>Une explosion émotionnelle imprévisible</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>Question 8 : Combien d'encadrants minimum pour une séance de savate adaptée avec risque de comportements-défis ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q8" value="a">
+                        <span>1 suffit si expérimenté</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q8" value="b">
+                        <span>1, avec un téléphone pour appeler de l'aide</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q8" value="c">
+                        <span>2 (un reste avec la personne en crise, l'autre gère le groupe)</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q8" value="d">
+                        <span>3 ou plus obligatoirement</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="a">
+                <h4>Question 9 : Selon la HAS, la contention physique doit être :</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q9" value="a">
+                        <span>Exceptionnelle, brève, jamais comme punition, dignité respectée</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q9" value="b">
+                        <span>Utilisée systématiquement en cas de comportement-défi</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q9" value="c">
+                        <span>Prolongée jusqu'à ce que la personne s'excuse</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q9" value="d">
+                        <span>Utilisée comme punition éducative</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="b">
+                <h4>Question 10 : Pour la désensibilisation au contact en savate, quelle est la phase 1 ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q10" value="a">
+                        <span>Assaut contrôlé avec protections</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q10" value="b">
+                        <span>Jeux sans contact (shadow boxing face à face, miroir...)</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q10" value="c">
+                        <span>Toucher le plastron en mouvement</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q10" value="d">
+                        <span>Opposition à 30% de puissance</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="submit-quiz" onclick="submitQuiz()">Valider mes réponses</button>
+
+            <div class="quiz-results" id="quiz-results">
+                <h3>Vos Résultats</h3>
+                <div class="quiz-score" id="quiz-score"></div>
+                <p id="quiz-message"></p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="#" class="nav-button secondary">
+                ← Module précédent
+            </a>
+            <a href="#" class="nav-button primary" id="next-button">
+                Module suivant →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Progress tracking
+        let progress = 0;
+        const accordions = document.querySelectorAll('.accordion-trigger');
+        const totalSections = accordions.length;
+
+        accordions.forEach(accordion => {
+            accordion.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const wasActive = this.classList.contains('active');
+                
+                this.classList.toggle('active');
+                content.classList.toggle('active');
+
+                if (!wasActive) {
+                    progress++;
+                    updateProgress();
+                }
+            });
+        });
+
+        function updateProgress() {
+            const percentage = Math.min((progress / totalSections) * 100, 100);
+            document.getElementById('progress-bar').style.width = percentage + '%';
+        }
+
+        // Quiz functionality
+        function submitQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let score = 0;
+            let totalQuestions = questions.length;
+
+            questions.forEach(question => {
+                const correctAnswer = question.dataset.correct;
+                const selectedAnswer = question.querySelector('input[type="radio"]:checked');
+                const feedback = question.querySelector('.quiz-feedback');
+
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === correctAnswer) {
+                        score++;
+                        feedback.className = 'quiz-feedback correct';
+                        feedback.textContent = '✓ Excellent ! ' + getExplanation(question);
+                    } else {
+                        feedback.className = 'quiz-feedback incorrect';
+                        feedback.textContent = '✗ Pas tout à fait. ' + getExplanation(question);
+                    }
+                }
+            });
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const resultsDiv = document.getElementById('quiz-results');
+            const scoreDiv = document.getElementById('quiz-score');
+            const messageDiv = document.getElementById('quiz-message');
+
+            scoreDiv.textContent = score + ' / ' + totalQuestions;
+            resultsDiv.classList.add('show');
+
+            if (percentage >= 70) {
+                messageDiv.innerHTML = `<strong style="color: var(--color-success);">✓ Félicitations !</strong><br>
+                    Vous avez obtenu ${percentage}% (minimum requis : 70%).<br>
+                    Vous maîtrisez les fondamentaux de la gestion des comportements-défis. Continuez sur cette voie !`;
+                document.getElementById('next-button').classList.remove('disabled');
+            } else {
+                messageDiv.innerHTML = `<strong style="color: var(--color-error);">Continuez à apprendre</strong><br>
+                    Vous avez obtenu ${percentage}% (minimum requis : 70%).<br>
+                    Prenez le temps de revoir les sections marquées incorrectes. Chaque erreur est une opportunité d'apprentissage !`;
+                document.getElementById('next-button').classList.add('disabled');
+            }
+
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function getExplanation(question) {
+            const explanations = {
+                'Question 1': 'Le comportement est suivi d\'une attention prolongée de l\'entraîneur → la fonction est d\'obtenir de l\'attention.',
+                'Question 2': 'A = Antécédent (ce qui déclenche). B = Behavior (comportement observé). C = Consequence (ce qui suit).',
+                'Question 3': 'La HAS (2009) précise que les stéréotypies ont souvent une fonction importante d\'autorégulation.',
+                'Question 4': 'Pendant le pic, les fonctions cognitives sont inaccessibles. Sécuriser, attendre, communication minimale.',
+                'Question 5': 'Low Arousal recommande une posture non-menaçante : ouverte, mains visibles, angle 45°, distance 90cm+.',
+                'Question 6': 'Si fonction = évitement, ne pas dispenser (renforce l\'évitement) mais adapter progressivement.',
+                'Question 7': 'L\'extinction burst est l\'aggravation temporaire avant l\'amélioration quand on cesse de renforcer.',
+                'Question 8': '2 encadrants minimum : un avec la personne en crise, l\'autre gère le groupe.',
+                'Question 9': 'La HAS est claire : contention exceptionnelle, brève, jamais punitive, dignité toujours respectée.',
+                'Question 10': 'La désensibilisation commence toujours par des jeux SANS contact physique.'
+            };
+            
+            const questionTitle = question.querySelector('h4').textContent;
+            return explanations[questionTitle.split(':')[0]] || 'Relisez la section correspondante.';
+        }
+    </script>
+</body>
+</html>

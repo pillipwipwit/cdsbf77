@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication et Valorisation en Savate Adaptée</title>
+    <style>
+        :root {
+            --color-primary: #1e3a8a;
+            --color-secondary: #2563eb;
+            --color-gold: #D4AF37;
+            --color-dark-blue: #0f172a;
+            --color-light-blue: #dbeafe;
+            --color-success: #10B981;
+            --color-warning: #F59E0B;
+            --color-error: #EF4444;
+            --color-bg: #f8f9fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #334155;
+            background: var(--color-bg);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .module-title {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 2.5rem;
+            margin: 0.5rem 0;
+            font-weight: 700;
+        }
+
+        .module-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--color-gold);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 1.8rem;
+            color: var(--color-dark-blue);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--color-gold);
+        }
+
+        .subsection-title {
+            font-size: 1.3rem;
+            color: var(--color-primary);
+            margin: 1.5rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        .accordion-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .accordion-trigger {
+            width: 100%;
+            background: #f9fafb;
+            border: none;
+            padding: 1.25rem;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--color-dark-blue);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-trigger:hover {
+            background: var(--color-light-blue);
+        }
+
+        .accordion-trigger::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+            color: var(--color-primary);
+        }
+
+        .accordion-trigger.active::after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: white;
+        }
+
+        .accordion-content.active {
+            max-height: 3000px;
+        }
+
+        .accordion-inner {
+            padding: 1.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-left: 4px solid var(--color-gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .highlight-box h4 {
+            color: var(--color-dark-blue);
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+        }
+
+        .tip-box {
+            background: #ecfdf5;
+            border-left: 4px solid var(--color-success);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid var(--color-error);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box {
+            background: var(--color-light-blue);
+            border: 2px solid var(--color-secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+            font-size: 1.05rem;
+        }
+
+        .reflection-box {
+            background: #f0f9ff;
+            border: 2px dashed var(--color-secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .reflection-box h4 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .learning-check {
+            background: #eff6ff;
+            border: 2px solid var(--color-secondary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .learning-check h4 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        strong {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .principle-card {
+            background: white;
+            border: 2px solid var(--color-gold);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .principle-card h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Quiz Styles */
+        .quiz-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .quiz-question {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-question h4 {
+            color: var(--color-dark-blue);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-option:hover {
+            border-color: var(--color-gold);
+            background: #fffbeb;
+        }
+
+        .quiz-option input[type="radio"] {
+            margin-right: 0.75rem;
+            cursor: pointer;
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .quiz-feedback.correct {
+            background: #d1fae5;
+            border-left: 4px solid var(--color-success);
+            display: block;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #fee2e2;
+            border-left: 4px solid var(--color-error);
+            display: block;
+        }
+
+        .submit-quiz {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+        }
+
+        .submit-quiz:hover {
+            background: var(--color-dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .quiz-results {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            text-align: center;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .quiz-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-dark-blue);
+            margin: 1rem 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .nav-button {
+            padding: 0.875rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button.secondary {
+            background: #f3f4f6;
+            color: var(--color-dark-blue);
+            border: 2px solid #e5e7eb;
+        }
+
+        .nav-button.secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .nav-button.primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .nav-button.primary:hover {
+            background: var(--color-dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .key-points {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .key-points h3 {
+            color: var(--color-success);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
+
+        .key-points ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .key-points li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .key-points li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--color-success);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: var(--color-primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .communication-phase {
+            background: white;
+            border-left: 4px solid var(--color-primary);
+            padding: 1.25rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .communication-phase h4 {
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .communication-phase strong {
+            color: var(--color-dark-blue);
+        }
+    </style>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("cdsbf77_acces")!=="ok"){location.replace("/formations/candidats/?d="+encodeURIComponent(location.pathname));}</script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="breadcrumb">Formation Savate Adaptée</div>
+            <h1 class="module-title">Communication et Valorisation</h1>
+            <p class="module-subtitle">Apprendre à communiquer efficacement et valoriser chaque progrès pour créer un environnement d'apprentissage inclusif</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="content-card">
+            <p style="font-size: 1.1rem; color: #334155; margin-bottom: 2rem;">
+                <strong>Durée estimée :</strong> 30-35 minutes<br>
+                <strong>Objectifs d'apprentissage :</strong> À la fin de ce module, vous serez capable de mettre en œuvre une communication multimodale adaptée, de formuler des consignes claires et efficaces, de vérifier la compréhension réelle de vos apprenants, et d'utiliser des stratégies de valorisation qui renforcent vraiment l'apprentissage.
+            </p>
+
+            <div class="highlight-box">
+                <h4>💡 Pourquoi ce module est essentiel pour vous</h4>
+                <p>Imaginez deux scénarios : dans le premier, vous donnez une consigne verbale complexe et vous vous demandez pourquoi la moitié du groupe ne fait pas ce que vous avez demandé. Dans le second, vous combinez gestes, démonstrations et mots simples - et tout le monde comprend du premier coup.</p>
+                <p>La communication adaptée et la valorisation systématique ne sont pas des "extras" sympathiques - ce sont les piliers absolus d'un enseignement inclusif réussi. Pour les personnes avec troubles du neurodéveloppement, <strong>la manière dont vous communiquez peut faire toute la différence</strong> entre progresser avec plaisir ou se sentir perdu et découragé. Ce module vous donnera des outils concrets et immédiatement applicables.</p>
+            </div>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="content-card">
+            <h2 class="section-title">1. L'Approche Multimodale : Parler à Tous les Sens</h2>
+            
+            <div class="reflection-box">
+                <h4>🤔 Commençons par une expérience personnelle</h4>
+                <p>Pensez à un moment où quelqu'un vous a expliqué quelque chose de complexe (peut-être un itinéraire, une recette, ou une règle de jeu). Qu'est-ce qui vous a le plus aidé à comprendre ? Était-ce uniquement les mots ? Ou aussi les gestes, un schéma dessiné, une démonstration ?</p>
+                <p>Cette réflexion personnelle va nous aider à comprendre pourquoi l'approche multimodale est si puissante.</p>
+            </div>
+
+            <p>La communication efficace avec les personnes présentant des troubles du neurodéveloppement repose sur un principe que vous allez vite comprendre : <strong>aucun canal de communication unique n'est suffisant</strong>. Chaque personne traite l'information différemment, et combiner plusieurs modalités maximise considérablement les chances que votre message soit compris.</p>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Comprendre pourquoi la multimodalité est nécessaire</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Explorons ensemble les réalités cognitives qui rendent la multimodalité essentielle :</p>
+
+                        <p>Les personnes avec troubles du neurodéveloppement présentent des profils sensoriels et cognitifs extrêmement variés. Voici ce que cela signifie concrètement :</p>
+                        <ul>
+                            <li><strong>Certaines personnes</strong> traitent beaucoup mieux l'information visuelle (images, gestes, démonstrations) que l'information verbale (mots parlés)</li>
+                            <li><strong>D'autres personnes</strong> ont absolument besoin d'une démonstration physique pour comprendre un mouvement - les mots ne suffisent pas</li>
+                            <li><strong>Beaucoup de personnes</strong> bénéficient énormément de la redondance : recevoir le même message par plusieurs canaux différents renforce la compréhension</li>
+                        </ul>
+                        
+                        <div class="example-box">
+                            <h4>📚 Ce que nous dit la science</h4>
+                            <p>Forbes et Yun (2023) ont analysé systématiquement 27 études scientifiques sur l'utilisation de supports visuels avec des personnes autistes. Leur conclusion est sans appel : les supports visuels améliorent significativement trois domaines clés :</p>
+                            <ul>
+                                <li>La compréhension des consignes et des situations</li>
+                                <li>L'autonomie dans les activités quotidiennes</li>
+                                <li>La réduction de l'anxiété liée à l'imprévisibilité</li>
+                            </ul>
+                            <p>Ce n'est pas une mode pédagogique - c'est une pratique validée scientifiquement.</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Vérifiez votre compréhension</h4>
+                            <p>Avant de continuer, pouvez-vous expliquer avec vos propres mots pourquoi une personne pourrait avoir besoin de voir ET d'entendre une consigne pour la comprendre ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Les trois canaux de communication à combiner</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Maintenant que vous comprenez le "pourquoi", découvrons ensemble le "comment". Il existe trois grands canaux de communication que vous devez apprendre à orchestrer :</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Canal</th>
+                                    <th>Concrètement, cela signifie</th>
+                                    <th>Pourquoi c'est utile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Verbal</strong></td>
+                                    <td>Consignes orales courtes et simples, mots clés prononcés clairement</td>
+                                    <td>Communication immédiate, permet des ajustements rapides, crée une connexion humaine</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Visuel</strong></td>
+                                    <td>Gestes explicites, démonstrations physiques, pictogrammes affichés, photos de référence, schémas simples</td>
+                                    <td>L'information reste visible et consultable, réduit la charge sur la mémoire, plus concret que les mots</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Kinesthésique</strong></td>
+                                    <td>Guidance physique douce (si acceptée), essais immédiats après la consigne, manipulation du matériel</td>
+                                    <td>Apprentissage par le corps, permet de vérifier immédiatement la compréhension motrice</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>✅ Séquence pratique à mémoriser et appliquer</h4>
+                            <p><strong>Voici une séquence type que vous pouvez utiliser dès votre prochaine séance :</strong></p>
+                            <ol>
+                                <li><strong>Montrer</strong> (démonstration physique du mouvement) <strong>+ Dire</strong> (consigne courte de 2-3 mots maximum)</li>
+                                <li><strong>Faire répéter</strong> la consigne par l'apprenant (vérification de la mémorisation verbale)</li>
+                                <li><strong>Laisser essayer</strong> immédiatement sans plus d'explications (passage à l'action)</li>
+                                <li><strong>Observer</strong> le premier essai sans intervenir ni corriger (évaluation de la compréhension réelle)</li>
+                            </ol>
+                            <p><strong>Question pour vous :</strong> Pourquoi pensez-vous qu'il est important d'observer le premier essai SANS intervenir ?</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Exercice d'application mentale</h4>
+                            <p>Imaginez que vous devez enseigner un direct du bras avant. Comment combineriez-vous concrètement les trois canaux (verbal, visuel, kinesthésique) ? Essayez de détailler votre approche avant de passer à la suite.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Les 3 phases de communication : avant, pendant, après</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Une communication efficace ne se limite pas au moment où vous parlez. Elle s'organise en trois phases distinctes que nous allons explorer ensemble :</p>
+
+                        <div class="communication-phase">
+                            <h4>📢 Phase 1 : AVANT de donner votre information</h4>
+                            <p><strong>L'objectif de cette phase :</strong> Créer les conditions optimales pour que l'attention soit maximale</p>
+                            <p><strong>Actions concrètes à réaliser :</strong></p>
+                            <ul>
+                                <li>Faire cesser toutes les activités en cours (donner un signal clair : sifflet, geste, "STOP")</li>
+                                <li>Obtenir le silence complet avant de commencer à parler</li>
+                                <li>Vous placer physiquement devant les apprenants (position centrale et visible)</li>
+                                <li>Pour les enfants : les faire asseoir pour stabiliser leur corps et leur attention</li>
+                                <li>Chercher à établir un contact visuel avec ceux qui le peuvent (sans forcer)</li>
+                            </ul>
+                            <p><strong>Pourquoi c'est crucial :</strong> Donner une consigne pendant que les gens sont en mouvement ou distraits, c'est perdre 50% de votre efficacité avant même de commencer.</p>
+                        </div>
+
+                        <div class="communication-phase">
+                            <h4>💬 Phase 2 : PENDANT votre transmission d'information</h4>
+                            <p><strong>L'objectif de cette phase :</strong> Multiplier les canaux pour maximiser la compréhension</p>
+                            <p><strong>Actions concrètes à réaliser :</strong></p>
+                            <ul>
+                                <li>Illustrer vos mots par des dessins simples ou écrire les mots-clés au tableau</li>
+                                <li>Démontrer physiquement ce que vous expliquez (montrez, ne vous contentez pas de décrire)</li>
+                                <li>Répéter les consignes clés ou les faire répéter par quelqu'un</li>
+                                <li>Utiliser des images mentales concrètes : "imagine une pierre au bout d'une corde qui tourne"</li>
+                                <li>Parler lentement, distinctement, en articulant bien chaque mot</li>
+                            </ul>
+                            <p><strong>Piège à éviter :</strong> Parler trop vite en supposant que "c'est évident" - ce qui est évident pour vous ne l'est pas forcément pour tout le monde.</p>
+                        </div>
+
+                        <div class="communication-phase">
+                            <h4>✓ Phase 3 : APRÈS votre transmission d'information</h4>
+                            <p><strong>L'objectif de cette phase :</strong> Vérifier que le message est vraiment passé (pas juste supposer)</p>
+                            <p><strong>Actions concrètes à réaliser :</strong></p>
+                            <ul>
+                                <li>Demander à quelqu'un de verbaliser l'objectif à atteindre : "Qu'est-ce qu'on va faire ?"</li>
+                                <li>Observer attentivement le premier essai de chacun SANS intervenir ni corriger</li>
+                                <li>Identifier mentalement le pourcentage d'apprenants qui réalisent correctement du premier coup</li>
+                                <li>Avoir des critères de réussite clairs et observables (pas vagues)</li>
+                                <li>Accepter le silence ou la non-réponse verbale (certains comprennent sans pouvoir l'exprimer)</li>
+                            </ul>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>⚠️ L'erreur que presque tout le monde fait</h4>
+                            <p><strong>Ne JAMAIS demander :</strong> "Tu as compris ?" ou "C'est bon, tout le monde a compris ?"</p>
+                            <p><strong>Pourquoi c'est problématique :</strong> Cette question génère un "oui" automatique par conformisme social, même quand la personne n'a absolument rien compris. Vous aurez une fausse impression que tout va bien.</p>
+                            <p><strong>Ce qu'il faut faire à la place :</strong> "Montre-moi ce que tu vas faire" ou simplement observer le premier essai en silence. Les actions révèlent la compréhension réelle, pas les "oui" polis.</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Application à votre pratique</h4>
+                            <p>Pensez à votre dernière séance d'enseignement. Laquelle de ces trois phases était la moins bien maîtrisée ? Comment pourriez-vous l'améliorer dès la prochaine fois ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="content-card">
+            <h2 class="section-title">2. Formuler des Consignes Efficaces</h2>
+
+            <p>Vous est-il déjà arrivé de donner une consigne que vous pensiez parfaitement claire, pour vous rendre compte que personne n'avait compris ? Vous n'êtes pas seul. Formuler des consignes efficaces est un véritable art qui s'apprend. Pour les personnes avec déficience intellectuelle ou trouble du spectre de l'autisme, la <strong>simplicité et la clarté absolues</strong> ne sont pas des options - ce sont des nécessités fondamentales.</p>
+
+            <div class="reflection-box">
+                <h4>🤔 Exercice de mise en situation</h4>
+                <p>Imaginez que vous devez expliquer à quelqu'un comment faire un direct du bras avant, mais vous n'avez droit qu'à <strong>3 mots maximum</strong>. Quels mots choisiriez-vous ?</p>
+                <p>Cet exercice vous aide à comprendre le principe clé : aller à l'essentiel en éliminant tout le superflu.</p>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Les 6 caractéristiques d'une consigne vraiment efficace</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Une consigne efficace possède six caractéristiques précises. Découvrons-les ensemble en détail :</p>
+
+                        <div class="principle-card">
+                            <h4>Caractéristique 1 : BRÈVE</h4>
+                            <p><strong>Le principe :</strong> Maximum 1 à 3 mots-clés pour respecter les limites de la mémoire de travail</p>
+                            <p><strong>Pourquoi c'est important :</strong> La mémoire de travail (qui retient temporairement les informations) est souvent limitée chez les personnes avec troubles du neurodéveloppement. Plus votre consigne est longue, plus il y a de risques qu'elle soit oubliée avant même d'être appliquée.</p>
+                            <p><strong>Voyons la différence concrète :</strong></p>
+                            <p>✓ <strong>Consigne efficace :</strong> "Frappe la cible"</p>
+                            <p>✗ <strong>Consigne à éviter :</strong> "Tu dois exécuter un coup de poing direct en extension complète du bras pour atteindre avec précision la zone cible rouge qui se trouve devant toi"</p>
+                            <p><strong>Question pour vous :</strong> Laquelle de ces deux consignes pourriez-vous retenir après avoir entendu une seule fois ?</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Caractéristique 2 : CLAIRE</h4>
+                            <p><strong>Le principe :</strong> Un seul objectif à la fois, jamais plusieurs en même temps</p>
+                            <p><strong>Pourquoi c'est important :</strong> Le cerveau ne peut se concentrer efficacement que sur une seule tâche principale à la fois. Multiplier les objectifs crée de la confusion et de la surcharge cognitive.</p>
+                            <p><strong>Voyons la différence concrète :</strong></p>
+                            <p>✓ <strong>Consigne efficace :</strong> "Touche le plastron rouge"</p>
+                            <p>✗ <strong>Consigne à éviter :</strong> "Frappe fort avec une bonne technique en te déplaçant latéralement et en gardant ta garde haute"</p>
+                            <p><strong>Stratégie pratique :</strong> Travaillez un seul aspect à la fois sur plusieurs exercices successifs. D'abord la distance, puis dans l'exercice suivant la puissance, puis la garde.</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Caractéristique 3 : SIMPLE</h4>
+                            <p><strong>Le principe :</strong> Vocabulaire concret et imagé, pas de métaphores abstraites</p>
+                            <p><strong>Pourquoi c'est important :</strong> L'abstraction et les images mentales complexes sont difficiles à traiter pour beaucoup de personnes avec TND. Le concret est toujours plus accessible.</p>
+                            <p><strong>Voyons la différence concrète :</strong></p>
+                            <p>✓ <strong>Consigne efficace :</strong> "Lève le genou avant de frapper"</p>
+                            <p>⚠️ <strong>Consigne risquée :</strong> "Arme ton fouetté comme un fléau" (l'image d'un fléau médiéval est trop abstraite pour certains apprenants)</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Caractéristique 4 : PEU NOMBREUSES</h4>
+                            <p><strong>Le principe :</strong> Une consigne principale par exercice, pas plus</p>
+                            <p><strong>Pourquoi c'est important :</strong> Bombarder d'informations crée de l'anxiété et de la confusion. Mieux vaut une consigne bien appliquée que quatre consignes à moitié comprises.</p>
+                            <p><strong>Voyons la différence concrète :</strong></p>
+                            <p>✓ <strong>Approche efficace :</strong> Focus uniquement sur "distance de sécurité" dans cet exercice. PUIS, dans l'exercice suivant, focus sur "contrôle de la force"</p>
+                            <p>✗ <strong>Approche à éviter :</strong> "Respecte la distance, contrôle ta force, garde ta garde haute, et regarde ton partenaire dans les yeux" (quatre consignes simultanées = surcharge garantie)</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Caractéristique 5 : IMAGÉE (avec prudence)</h4>
+                            <p><strong>Le principe :</strong> Analogies concrètes et universelles, pas de jargon technique spécialisé</p>
+                            <p><strong>Pourquoi c'est important :</strong> Les images mentales aident la compréhension, mais uniquement si elles sont simples et liées à l'expérience concrète de la personne.</p>
+                            <p><strong>Voyons la différence concrète :</strong></p>
+                            <p>✓ <strong>Consigne efficace :</strong> "Pousse avec ta jambe comme si tu repoussais une porte lourde"</p>
+                            <p>⚠️ <strong>À éviter absolument :</strong> Le jargon technique comme "neutraliser", "remiser", "feinter en profondeur" → Dites plutôt "arrêter", "riposter", "avancer en trompant"</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Caractéristique 6 : PRÉCISE dans le vocabulaire</h4>
+                            <p><strong>Le principe :</strong> Utiliser toujours les mêmes termes exacts pour éviter toute confusion</p>
+                            <p><strong>Pourquoi c'est important :</strong> L'incohérence terminologique crée de la confusion. Si vous dites "chassé" un jour et "coup de pied poussé" le lendemain pour la même technique, vous créez une ambiguïté inutile.</p>
+                            <p><strong>Voyons la différence concrète :</strong></p>
+                            <p>✓ <strong>Consigne efficace :</strong> "Contre avec un chassé" (terme technique clair et stable)</p>
+                            <p>✗ <strong>Consigne ambiguë :</strong> "Réponds en jambe" (ambigu : est-ce un contre ? une riposte ? quel type de coup ?)</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Auto-évaluation</h4>
+                            <p>Prenez une consigne que vous donnez régulièrement dans vos séances. Évaluez-la honnêtement selon ces 6 caractéristiques. Laquelle pourriez-vous améliorer en priorité ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Principe clé : se centrer sur l'objectif, pas sur la forme technique</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Voici un principe pédagogique fondamental que vous devez intégrer : pour les personnes avec troubles du neurodéveloppement, il est beaucoup plus efficace de se concentrer sur <strong>CE QUI DOIT ÊTRE ACCOMPLI</strong> (le résultat) plutôt que sur <strong>COMMENT le faire techniquement</strong> (la forme du mouvement).</p>
+
+                        <div class="reflection-box">
+                            <h4>🤔 Comprenons le principe ensemble</h4>
+                            <p>Imaginez que je vous demande : "Touchez ce bouton rouge là-haut". Vous allez naturellement trouver VOTRE manière de le faire (peut-être en sautant, peut-être en vous étirant, peut-être en montant sur quelque chose). Je n'ai pas besoin de vous dire exactement comment bouger chaque muscle - votre corps trouve la solution.</p>
+                            <p>C'est exactement le même principe en savate adaptée : donnez l'objectif clair, et le corps trouvera SA solution motrice.</p>
+                        </div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>❌ Consigne technique (forme du mouvement)</th>
+                                    <th>✅ Consigne sur l'objectif (résultat à atteindre)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>"Pointe ton coude vers l'avant à 45 degrés"</td>
+                                    <td>"Frappe la cible rouge"</td>
+                                </tr>
+                                <tr>
+                                    <td>"Fais pivoter ta hanche de 90 degrés exactement"</td>
+                                    <td>"Touche le plastron avec ton pied"</td>
+                                </tr>
+                                <tr>
+                                    <td>"Maintiens une garde haute avec les poings strictement à hauteur de menton"</td>
+                                    <td>"Protège ton visage avec tes mains"</td>
+                                </tr>
+                                <tr>
+                                    <td>"Exécute une esquive rotationnelle du buste sur un axe vertical"</td>
+                                    <td>"Évite le coup en bougeant ton corps"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>💡 Pourquoi ce principe fonctionne si bien</h4>
+                            <p>Ce que nous apprend la <strong>théorie des contraintes</strong> en pédagogie motrice : si vous créez une situation où l'objectif est parfaitement clair (toucher une cible), l'apprenant trouvera naturellement SA propre solution motrice, celle qui est adaptée à SES capacités physiques spécifiques.</p>
+                            <p>Vous n'avez pas besoin (et ce n'est souvent même pas souhaitable) de dicter la forme exacte du mouvement. Laissez le corps explorer et trouver.</p>
+                            <p><strong>Votre rôle :</strong> Créer des situations claires avec des objectifs précis, puis observer et ajuster si nécessaire.</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Exercice pratique</h4>
+                            <p>Transformez cette consigne technique en consigne centrée sur l'objectif : "Fléchis les genoux à 90 degrés, penche ton buste en avant, et lève tes bras parallèles au sol pour te protéger"</p>
+                            <p>Quelle serait votre consigne simple centrée sur l'objectif ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Adapter vos consignes selon les profils : déficience intellectuelle et TSA</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Tous les apprenants ne sont pas identiques, et vos consignes doivent s'adapter aux spécificités de chaque profil. Découvrons ensemble les adaptations essentielles :</p>
+
+                        <h3 class="subsection-title">Adaptations pour les personnes avec déficience intellectuelle</h3>
+                        <p>Voici les principes spécifiques à appliquer :</p>
+                        <ul>
+                            <li><strong>Consignes ultra-courtes :</strong> Visez 1 à 2 mots maximum, vraiment pas plus. Exemple : "Frappe" ou "Touche rouge"</li>
+                            <li><strong>Répétition sans impatience :</strong> Répétez la même consigne exactement de la même manière autant de fois que nécessaire, calmement</li>
+                            <li><strong>Privilégier les essais multiples courts :</strong> 12 essais de 15 secondes chacun fonctionnent BEAUCOUP mieux que 2 essais de 3 minutes (l'attention se maintient mieux sur de courtes périodes)</li>
+                            <li><strong>Concret uniquement :</strong> Pas d'abstraction, pas de métaphores, pas de "comme si". Seulement du factuel et du visible</li>
+                        </ul>
+
+                        <h3 class="subsection-title">Adaptations pour les personnes avec trouble du spectre de l'autisme (TSA)</h3>
+                        <p>Les spécificités du TSA demandent des ajustements différents :</p>
+                        <ul>
+                            <li><strong>Littéralité absolue :</strong> Dites EXACTEMENT ce que vous voulez sans aucun sous-entendu. Si vous dites "Tu peux frapper maintenant", certains comprendront que c'est optionnel. Dites plutôt "Frappe maintenant"</li>
+                            <li><strong>Instructions toujours positives :</strong> "Marche lentement" est bien meilleur que "Ne cours pas" (le cerveau traite moins bien les négations)</li>
+                            <li><strong>Séquence visuelle de la séance :</strong> Affichez l'emploi du temps visuel avec les différentes étapes de la séance dans l'ordre</li>
+                            <li><strong>Prévisibilité maximale :</strong> Annoncez TOUJOURS les changements à l'avance : "Dans 2 minutes, on change d'exercice"</li>
+                        </ul>
+
+                        <div class="example-box">
+                            <h4>📖 Exemple concret d'adaptation pour TSA</h4>
+                            <p><strong>Situation :</strong> Vous devez faire une transition entre l'échauffement et l'exercice technique</p>
+                            <p><strong>❌ Consigne inadaptée :</strong> "Bon, on va passer à autre chose maintenant" (trop vague, pas de prévisibilité)</p>
+                            <p><strong>✅ Consigne adaptée :</strong> "Dans 2 minutes [montrer le timer], on arrête l'échauffement. Ensuite, on fait l'exercice avec les cibles rouges. Regarde [pointer le pictogramme affiché au mur qui montre les cibles]"</p>
+                            <p><strong>Pourquoi c'est mieux :</strong> Temporalité claire, description précise de ce qui vient, support visuel en renfort</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Application pratique</h4>
+                            <p>Vous avez dans votre groupe une personne avec TSA. Vous devez lui dire de ne pas frapper trop fort. Comment formulez-vous votre consigne en respectant les principes d'adaptation pour TSA ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3 (anciennement 4) -->
+        <div class="content-card">
+            <h2 class="section-title">3. Vérifier la Compréhension Réelle</h2>
+
+            <p>Voici une vérité que vous devez absolument intégrer : vérifier la compréhension ne signifie JAMAIS demander "Tu as compris ?". Cette question, bien qu'instinctive, est l'une des moins efficaces qui existe. Découvrons ensemble pourquoi et surtout comment faire mieux.</p>
+
+            <div class="reflection-box">
+                <h4>🤔 Expérience personnelle</h4>
+                <p>Pensez à un moment où quelqu'un vous a demandé "Tu as compris ?" alors que vous n'aviez pas vraiment compris. Qu'avez-vous répondu ? Si vous êtes honnête, vous avez probablement dit "oui" par politesse ou pour ne pas paraître "lent", même si vous étiez confus.</p>
+                <p>C'est exactement ce qui se passe avec vos apprenants. Le "oui" automatique ne prouve rien.</p>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Les 4 méthodes vraiment efficaces pour vérifier la compréhension</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Oublions le "Tu as compris ?" et découvrons ensemble les méthodes qui fonctionnent vraiment :</p>
+
+                        <div class="principle-card">
+                            <h4>Méthode 1 : La reformulation par l'apprenant</h4>
+                            <p><strong>Comment procéder concrètement :</strong> Après avoir donné votre consigne, demandez : "Qu'est-ce que tu vas faire maintenant ?" ou "Redis-moi avec tes mots ce qu'il faut faire"</p>
+                            <p><strong>Ce que cette méthode vérifie :</strong> La compréhension verbale et la mémorisation de la consigne</p>
+                            <p><strong>Limite importante à connaître :</strong> Certaines personnes comprennent parfaitement sans pouvoir verbaliser (problèmes de langage expressif). Si vous n'obtenez pas de réponse verbale, passez immédiatement à la méthode 2</p>
+                            <p><strong>Ne jamais :</strong> Insister lourdement si la personne ne répond pas verbalement - vous créeriez de l'anxiété inutile</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Méthode 2 : L'observation du premier essai (la plus fiable)</h4>
+                            <p><strong>Comment procéder concrètement :</strong> Après avoir donné la consigne, observez attentivement le premier essai de chaque apprenant SANS intervenir et SANS corriger, même si ce n'est pas parfait</p>
+                            <p><strong>Ce que cette méthode vérifie :</strong> La compréhension motrice réelle, qui existe souvent même sans compréhension verbale</p>
+                            <p><strong>Principe clé à comprendre :</strong> La compréhension motrice (dans le corps) précède très souvent la compréhension verbale (dans les mots). Quelqu'un peut faire correctement sans pouvoir expliquer comment.</p>
+                            <p><strong>Avantage énorme :</strong> Cette méthode fonctionne pour TOUS les apprenants, qu'ils puissent verbaliser ou non</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Méthode 3 : L'essai à blanc (démonstration sans réalisation)</h4>
+                            <p><strong>Comment procéder concrètement :</strong> Dites "Montre-moi au ralenti comment tu vas faire, mais sans frapper vraiment"</p>
+                            <p><strong>Ce que cette méthode vérifie :</strong> La compréhension du mouvement global sans la pression de la performance réelle</p>
+                            <p><strong>Avantage psychologique :</strong> Réduit fortement l'anxiété en créant une "répétition générale" sans enjeu</p>
+                            <p><strong>Quand l'utiliser :</strong> Particulièrement utile pour les personnes anxieuses ou perfectionnistes</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Méthode 4 : Accepter le silence et la non-réponse verbale</h4>
+                            <p><strong>Principe fondamental à intégrer :</strong> Un apprenant peut parfaitement comprendre votre consigne sans pouvoir répondre verbalement à votre question. Le silence ne signifie PAS incompréhension.</p>
+                            <p><strong>Action concrète :</strong> Si vous ne recevez pas de réponse verbale, ne forcez pas. Passez directement à la méthode 2 (observation du premier essai pratique)</p>
+                            <p><strong>Ce qu'il ne faut jamais faire :</strong> Insister lourdement sur la verbalisation si elle provoque visiblement de l'anxiété ou du stress chez la personne</p>
+                            <p><strong>Rappelez-vous :</strong> L'objectif est de vérifier la compréhension, pas de forcer à parler</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Exercice de réflexion</h4>
+                            <p>Parmi ces 4 méthodes, laquelle utilisez-vous déjà naturellement ? Quelle nouvelle méthode pourriez-vous intégrer dès votre prochaine séance ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Signes observables de compréhension (ou d'incompréhension)</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Apprenons maintenant à lire les signes non-verbaux qui vous indiquent si votre consigne est comprise ou non. Voici un tableau de référence que vous pouvez mémoriser :</p>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>✅ Signe positif (compréhension probable)</th>
+                                    <th>❌ Signe négatif (incompréhension probable)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Se dirige immédiatement vers la bonne zone de travail</td>
+                                    <td>Reste immobile, regard perdu, ou va dans la mauvaise direction</td>
+                                </tr>
+                                <tr>
+                                    <td>Prend le matériel approprié spontanément</td>
+                                    <td>Prend le mauvais matériel ou ne prend rien du tout</td>
+                                </tr>
+                                <tr>
+                                    <td>Regarde le pictogramme affiché puis agit en conséquence</td>
+                                    <td>N'utilise pas du tout les supports visuels disponibles</td>
+                                </tr>
+                                <tr>
+                                    <td>Commence l'action exactement au moment du signal donné</td>
+                                    <td>Commence avant le signal ou ne commence pas du tout</td>
+                                </tr>
+                                <tr>
+                                    <td>Observe et imite un pair qui a manifestement compris</td>
+                                    <td>Regarde autour de soi avec confusion sans passer à l'action</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="tip-box">
+                            <h4>✅ Protocole d'action quand vous détectez une incompréhension</h4>
+                            <p><strong>Ce qu'il ne faut surtout PAS faire :</strong> Répéter exactement la même consigne mais plus fort ou plus lentement</p>
+                            <p><strong>Ce qu'il faut faire à la place (dans l'ordre) :</strong></p>
+                            <ol>
+                                <li>Arrêtez l'apprenant calmement et avec bienveillance : "Attends, je vais te remontrer"</li>
+                                <li>Refaites une démonstration physique claire et lente</li>
+                                <li>Pointez explicitement le pictogramme correspondant s'il existe</li>
+                                <li>Simplifiez encore davantage votre consigne (encore moins de mots)</li>
+                                <li>Si la personne l'accepte, proposez une guidance physique légère (toucher doux pour orienter)</li>
+                            </ol>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Développez votre sens de l'observation</h4>
+                            <p>Lors de votre prochaine séance, choisissez un apprenant et observez attentivement ces signes après avoir donné une consigne. Que remarquez-vous ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4 (anciennement 5) -->
+        <div class="content-card">
+            <h2 class="section-title">4. Valorisation et Renforcement Positif</h2>
+
+            <p>Nous arrivons maintenant à un élément absolument crucial que vous devez maîtriser : la valorisation systématique. Pour les personnes avec troubles du neurodéveloppement, qui ont malheureusement souvent vécu des expériences négatives répétées (échecs scolaires, rejets sociaux, frustrations quotidiennes), le renforcement positif n'est pas un "plus" sympathique - <strong>c'est une nécessité thérapeutique et pédagogique</strong>.</p>
+
+            <div class="reflection-box">
+                <h4>🤔 Exercice d'empathie</h4>
+                <p>Imaginez que vous apprenez une nouvelle compétence complexe (peut-être une langue étrangère ou un instrument de musique). Deux scénarios :</p>
+                <p><strong>Scénario A :</strong> On ne remarque que vos erreurs et on vous corrige constamment</p>
+                <p><strong>Scénario B :</strong> On célèbre chaque petit progrès, même minuscule, et on vous encourage</p>
+                <p>Dans quel scénario auriez-vous le plus envie de persévérer ? C'est exactement ce que ressentent vos apprenants.</p>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Les 5 principes fondamentaux d'une valorisation vraiment efficace</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Découvrons ensemble les cinq principes qui transforment une valorisation "gentille mais inefficace" en valorisation "puissante et structurante" :</p>
+
+                        <div class="principle-card">
+                            <h4>Principe 1 : SYSTÉMATIQUE pour absolument chaque participant</h4>
+                            <p><strong>La règle d'or inviolable :</strong> Aucune personne ne repart jamais d'une séance sans avoir reçu au minimum une reconnaissance personnelle et nominative</p>
+                            <p><strong>Moment optimal :</strong> En toute fin de séance, prenez 2-3 minutes pour nommer un point positif spécifique observé chez chacun</p>
+                            <p><strong>Exemple concret d'application :</strong></p>
+                            <ul>
+                                <li>"Karim, tu as vraiment très bien respecté la distance de sécurité aujourd'hui, bravo."</li>
+                                <li>"Sophie, j'ai remarqué que tu as fait un gros effort pour contrôler la force de tes coups, c'est excellent."</li>
+                                <li>"Malik, tu as vraiment bien écouté les consignes du début à la fin, merci."</li>
+                            </ul>
+                            <p><strong>Pourquoi c'est si puissant :</strong> Chaque personne part avec une image positive d'elle-même et une motivation pour revenir</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Principe 2 : IMMÉDIATE (dans l'instant)</h4>
+                            <p><strong>Le timing optimal :</strong> Dès qu'un progrès devient visible, réagissez dans les 3 secondes qui suivent, pas à la fin de la séance</p>
+                            <p><strong>Pourquoi le timing est crucial :</strong> Créer une association temporelle forte entre l'action réussie et la reconnaissance positive (c'est la base du conditionnement positif)</p>
+                            <p><strong>Formes de reconnaissance immédiate :</strong></p>
+                            <ul>
+                                <li>Applaudissements spontanés du groupe</li>
+                                <li>Grand sourire sincère et contact visuel positif</li>
+                                <li>Parole encourageante immédiate : "Excellent !", "Parfait !"</li>
+                                <li>Pouce levé bien visible</li>
+                                <li>High-five énergique</li>
+                            </ul>
+                            <p><strong>Exemple concret :</strong> L'apprenant touche la cible pour la première fois après 10 essais → applaudissements immédiats de tout le groupe coordonnés par vous</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Principe 3 : SPÉCIFIQUE (jamais générique)</h4>
+                            <p><strong>Le piège à éviter absolument :</strong> Les valorisations vagues et génériques type "C'est bien !" ou "Bravo !" ne sont pas assez informatives</p>
+                            <p><strong>La bonne pratique :</strong> Nommer précisément et concrètement ce qui a été bien fait</p>
+                            <p><strong>Comparons ensemble :</strong></p>
+                            <p>❌ <strong>Valorisation inefficace (trop vague) :</strong> "Bien joué !"</p>
+                            <p>✅ <strong>Valorisation efficace (spécifique) :</strong> "Tu as parfaitement gardé tes mains devant ton visage pendant tout l'exercice pour te protéger, c'est exactement ce qu'il fallait faire"</p>
+                            <p>✅ <strong>Autre exemple efficace :</strong> "Tu as attendu ton tour patiemment sans t'impatienter même si c'était long, c'est vraiment super"</p>
+                            <p><strong>Pourquoi la spécificité est importante :</strong> L'apprenant comprend EXACTEMENT ce qu'il a bien fait et peut le reproduire consciemment</p>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Principe 4 : VALORISER L'EFFORT autant (voire plus) que le résultat</h4>
+                            <p><strong>Principe fondamental à intégrer :</strong> Un petit progrès mérite autant (parfois même plus) de célébration qu'un grand progrès spectaculaire</p>
+                            <p><strong>Pourquoi c'est essentiel :</strong> Ce qui vous paraît "petit" de l'extérieur peut représenter un accomplissement énorme et un effort colossal pour la personne</p>
+                            <p><strong>Exemples concrets de "petits" progrès qui méritent une grande célébration :</strong></p>
+                            <ul>
+                                <li>La première fois qu'une personne accepte de mettre les gants (victoire sur une peur tactile)</li>
+                                <li>La première fois qu'elle ne fuit pas le contact visuel direct (progrès social majeur)</li>
+                                <li>Tenir 30 secondes d'exercice alors que la semaine dernière c'était seulement 10 secondes (progression de l'endurance)</li>
+                                <li>Demander de l'aide verbalement plutôt que s'isoler en silence (progrès en communication)</li>
+                                <li>Accepter de changer de partenaire sans crise (progrès en flexibilité mentale)</li>
+                            </ul>
+                        </div>
+
+                        <div class="principle-card">
+                            <h4>Principe 5 : IMPLIQUER l'apprenant dans sa propre évaluation</h4>
+                            <p><strong>La question magique à poser régulièrement :</strong> "Tu as remarqué que... ?"</p>
+                            <p><strong>Exemples concrets d'application :</strong></p>
+                            <ul>
+                                <li>"Tu as remarqué que tu as frappé plus fort qu'avant pendant cette séance ?"</li>
+                                <li>"Tu as senti que tu gardais mieux ton équilibre aujourd'hui ?"</li>
+                                <li>"Qu'est-ce qui était plus facile pour toi dans cette séance par rapport à la dernière fois ?"</li>
+                                <li>"À ton avis, sur quoi as-tu progressé aujourd'hui ?"</li>
+                            </ul>
+                            <p><strong>Bénéfice pédagogique majeur :</strong> Développe la métacognition (capacité à réfléchir sur son propre apprentissage) et l'autonomie</p>
+                            <p><strong>Bénéfice psychologique :</strong> La personne devient acteur de sa progression, pas seulement spectateur</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Auto-évaluation honnête</h4>
+                            <p>Parmi ces 5 principes, lequel appliquez-vous déjà bien ? Lequel devriez-vous améliorer en priorité dans votre pratique ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Techniques de renforcement validées scientifiquement</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Au-delà des principes généraux, explorons ensemble des techniques concrètes de renforcement positif qui ont fait leurs preuves :</p>
+
+                        <h3 class="subsection-title">Technique 1 : Le renforcement social</h3>
+                        <p><strong>De quoi s'agit-il :</strong> Utiliser l'interaction humaine positive comme récompense</p>
+                        <p><strong>Formes verbales :</strong> "Super !", "Excellent contrôle !", "Je vois vraiment que tu progresses", "Bravo, continue comme ça"</p>
+                        <p><strong>Formes non-verbales :</strong> Sourire sincère et chaleureux, pouce levé bien visible, high-five énergique, applaudissements coordonnés</p>
+                        <p><strong>Attention positive :</strong> S'approcher physiquement de la personne, la regarder avec intérêt et bienveillance, hocher la tête de manière encourageante</p>
+                        <p><strong>Avantages pratiques :</strong> Totalement gratuit, immédiat, peut être donné en continu sans limite</p>
+
+                        <h3 class="subsection-title">Technique 2 : L'économie de jetons (Token Economy)</h3>
+                        <p>Ce système a été identifié par Matson et Boisjoli (2009) dans leur revue de littérature scientifique comme <strong>"l'une des procédures les plus efficaces et les mieux validées pour le changement comportemental"</strong> chez les personnes avec troubles du développement.</p>
+                        
+                        <div class="example-box">
+                            <h4>📋 Exemple de système à jetons clé en main</h4>
+                            <p><strong>Comportements qui permettent de gagner un jeton :</strong></p>
+                            <ul>
+                                <li>Écouter la consigne en silence du début à la fin</li>
+                                <li>Participer activement à l'exercice proposé</li>
+                                <li>Aider spontanément un camarade en difficulté</li>
+                                <li>Respecter scrupuleusement les règles de sécurité</li>
+                            </ul>
+                            <p><strong>Récompenses échangeables (contre X jetons accumulés) :</strong></p>
+                            <ul>
+                                <li>5 jetons = Droit de choisir l'exercice de fin de séance</li>
+                                <li>10 jetons = Être capitaine d'équipe pour un exercice</li>
+                                <li>20 jetons = Certificat de progression personnalisé</li>
+                                <li>30 jetons = Badge spécial ou responsabilité honorifique</li>
+                            </ul>
+                        </div>
+
+                        <div class="tip-box">
+                            <h4>💡 Comment mettre en place concrètement</h4>
+                            <p>Utilisez des jetons physiques tangibles : jetons de poker colorés, bâtonnets de bois, ou autocollants sur une fiche individuelle cartonnée.</p>
+                            <p><strong>Critère de réussite :</strong> Rendez le système visuellement clair - créez un tableau mural avec les prénoms de chacun et le nombre de jetons accumulés visiblement affiché.</p>
+                            <p><strong>Règle d'or :</strong> On ne retire JAMAIS de jetons une fois donnés (pas de punition par retrait)</p>
+                        </div>
+
+                        <h3 class="subsection-title">Technique 3 : Les tableaux de progrès visuels</h3>
+                        <p>Créez un support visuel mural permanent où chaque apprenant peut voir concrètement sa propre progression :</p>
+                        <ul>
+                            <li><strong>Système de ceintures de couleur</strong> (comme au judo) pour marquer les différents niveaux de maîtrise atteints</li>
+                            <li><strong>Étoiles ou autocollants dorés</strong> collés sur un tableau chaque fois qu'un objectif spécifique est atteint</li>
+                            <li><strong>Graphiques de progression</strong> simples (ex : courbe du nombre de coups contrôlés réussis sur cible semaine après semaine)</li>
+                            <li><strong>Photos "avant/après"</strong> qui montrent visuellement l'évolution des compétences</li>
+                        </ul>
+
+                        <h3 class="subsection-title">Technique 4 : Les célébrations collectives ritualisées</h3>
+                        <ul>
+                            <li><strong>Rituel de groupe :</strong> Applaudissements rythmés et coordonnés quand quelqu'un réussit quelque chose de difficile</li>
+                            <li><strong>Cri d'équipe :</strong> Tous ensemble scandent "Bravo [prénom] !" de manière énergique</li>
+                            <li><strong>Photos de réussite :</strong> Prendre une photo du groupe célébrant la réussite, l'imprimer et l'afficher au mur des réussites</li>
+                            <li><strong>Sonnerie de victoire :</strong> Un son spécial (clochette, gong) qui retentit à chaque grande réussite</li>
+                        </ul>
+
+                        <div class="learning-check">
+                            <h4>✓ Planification pratique</h4>
+                            <p>Quelle technique de renforcement pourriez-vous mettre en place dès votre prochaine séance ? Que vous faut-il préparer concrètement ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-trigger">Les erreurs à ne JAMAIS commettre en matière de valorisation</button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Certaines pratiques, même bien intentionnées, peuvent être contre-productives voire nocives. Apprenons ensemble à les identifier et les éviter :</p>
+
+                        <div class="warning-box">
+                            <h4>❌ Erreur 1 : Les comparaisons entre apprenants</h4>
+                            <p><strong>Ce qu'il ne faut jamais dire :</strong> "Regarde comment Pierre fait, tu vois ? Fais exactement comme lui"</p>
+                            <p><strong>Pourquoi c'est problématique :</strong></p>
+                            <ul>
+                                <li>Crée une compétition négative et toxique dans le groupe</li>
+                                <li>Humilie la personne comparée défavorablement</li>
+                                <li>Ignore complètement les différences individuelles de capacités</li>
+                                <li>Détruit la confiance en soi de celui qui "ne fait pas aussi bien"</li>
+                            </ul>
+                            <p><strong>La bonne alternative :</strong> "Tu progresses vraiment par rapport à toi-même. La semaine dernière tu faisais X, maintenant tu réussis à faire Y, c'est une belle évolution !"</p>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>❌ Erreur 2 : La valorisation conditionnelle</h4>
+                            <p><strong>Ce qu'il ne faut jamais dire :</strong> "Tu es un bon tireur SI et SEULEMENT SI tu fais exactement comme je te dis"</p>
+                            <p><strong>Pourquoi c'est problématique :</strong> La valeur personnelle de l'individu devient dépendante de sa performance, ce qui crée une anxiété de performance et une estime de soi fragile</p>
+                            <p><strong>La bonne alternative :</strong> "J'apprécie ton effort et ton engagement, quelle que soit ta performance du jour. Parfois on réussit mieux, parfois moins bien, c'est normal et c'est ok."</p>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>❌ Erreur 3 : Ignorer systématiquement les petits progrès</h4>
+                            <p><strong>Ce qu'il ne faut jamais faire :</strong> Ne valoriser que les grandes réussites spectaculaires et visibles</p>
+                            <p><strong>Pourquoi c'est problématique :</strong> Certains apprenants mettront des semaines ou des mois avant d'avoir une "grande" réussite visible. Pendant tout ce temps, ils ne recevront aucun encouragement, ce qui tue la motivation.</p>
+                            <p><strong>La bonne alternative :</strong> Décomposer les objectifs en micro-étapes minuscules et célébrer systématiquement chaque franchissement de micro-étape, aussi petit soit-il</p>
+                        </div>
+
+                        <div class="warning-box">
+                            <h4>❌ Erreur 4 : Le renforcement incohérent et aléatoire</h4>
+                            <p><strong>Ce qu'il ne faut jamais faire :</strong> Valoriser un comportement un jour, puis ignorer exactement le même comportement le lendemain sans raison claire</p>
+                            <p><strong>Pourquoi c'est problématique :</strong> Crée une confusion totale sur ce qui est attendu et valorisé. L'apprenant ne sait plus comment obtenir une reconnaissance positive.</p>
+                            <p><strong>La bonne alternative :</strong> Être d'une constance absolue dans vos critères de valorisation. Si vous valorisez le respect de la distance aujourd'hui, valorisez-le aussi demain et après-demain.</p>
+                        </div>
+
+                        <div class="learning-check">
+                            <h4>✓ Examen de conscience honnête</h4>
+                            <p>Êtes-vous parfois tombé dans l'une de ces erreurs ? Laquelle ? Comment pourriez-vous concrètement éviter de la reproduire ?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Points clés -->
+        <div class="key-points">
+            <h3>🎯 Récapitulons les Points Essentiels</h3>
+            <p style="margin-bottom: 1rem;">Avant de terminer ce module, vérifions ensemble que vous avez bien intégré les concepts fondamentaux :</p>
+            <ul>
+                <li>La communication multimodale (verbal + visuel + kinesthésique) n'est pas un luxe pédagogique mais une absolue nécessité pour les personnes avec troubles du neurodéveloppement</li>
+                <li>Les consignes vraiment efficaces sont BRÈVES (1-3 mots max), CLAIRES (un seul objectif), SIMPLES (vocabulaire concret) et centrées sur QUOI faire (l'objectif) plutôt que COMMENT le faire (la technique)</li>
+                <li>Vérifier la compréhension par l'observation attentive du premier essai, jamais par la question piège "Tu as compris ?" qui génère un "oui" automatique sans signification</li>
+                <li>La valorisation doit être absolument SYSTÉMATIQUE (pour chaque personne), IMMÉDIATE (dans les 3 secondes), SPÉCIFIQUE (nommer précisément ce qui est bien) et valoriser l'effort autant que le résultat</li>
+                <li>Un "petit" progrès qui vous paraît minuscule peut représenter un accomplissement énorme pour la personne - célébrez-le comme tel</li>
+                <li>Ne JAMAIS comparer les apprenants entre eux - valorisez uniquement les progrès individuels par rapport à soi-même</li>
+                <li>Le renforcement positif systématique n'est pas de la "gentillesse" mais une technique pédagogique scientifiquement validée</li>
+            </ul>
+        </div>
+
+        <!-- Quiz -->
+        <div class="quiz-section">
+            <h2 class="section-title">📝 Évaluez Votre Compréhension</h2>
+            <p style="margin-bottom: 2rem;">Ces questions vous permettent de vérifier que vous avez bien intégré les concepts clés du module. Prenez votre temps pour réfléchir à chaque question. Score minimum pour valider : 70% (6 bonnes réponses sur 8)</p>
+
+            <div class="quiz-question" data-correct="b">
+                <h4>Question 1 : Pourquoi est-il essentiel d'utiliser une approche multimodale de communication ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q1" value="a">
+                        <span>C'est une tendance pédagogique à la mode actuellement</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q1" value="b">
+                        <span>Chaque personne traite l'information différemment, combiner plusieurs canaux maximise les chances de compréhension</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q1" value="c">
+                        <span>Pour gagner du temps pendant les séances</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q1" value="d">
+                        <span>Parce que les personnes avec TND ne peuvent jamais comprendre les consignes orales seules</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>Question 2 : Quelle consigne est la PLUS efficace pour un apprenant avec déficience intellectuelle ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q2" value="a">
+                        <span>"Tu dois exécuter un coup de poing direct en extension complète du bras vers la cible"</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q2" value="b">
+                        <span>"Frappe fort avec une bonne technique en te déplaçant correctement"</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q2" value="c">
+                        <span>"Frappe la cible"</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q2" value="d">
+                        <span>"Arme ton direct comme un ressort qui se détend et relâche toute son énergie sur la cible"</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="a">
+                <h4>Question 3 : Quelle est la meilleure méthode pour vérifier si votre consigne a été comprise ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q3" value="a">
+                        <span>Observer attentivement le premier essai de chaque apprenant sans intervenir</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q3" value="b">
+                        <span>Demander "Tu as compris ?" et attendre le "oui"</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q3" value="c">
+                        <span>Répéter la consigne exactement trois fois</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q3" value="d">
+                        <span>Faire un test écrit après la séance pour vérifier</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>Question 4 : Un apprenant avec TSA ne regarde jamais son partenaire dans les yeux pendant l'exercice. Que devez-vous faire ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q4" value="a">
+                        <span>L'obliger à regarder en lui tenant fermement le visage</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q4" value="b">
+                        <span>Le réprimander car il ne respecte pas votre consigne</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q4" value="c">
+                        <span>Accepter cette difficulté spécifique, pratiquer le regard dans un exercice séparé dédié, sans aucune pression</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q4" value="d">
+                        <span>Lui expliquer que s'il ne regarde pas, il ne pourra pas continuer à participer</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="b">
+                <h4>Question 5 : Parmi ces valorisations, laquelle est la MEILLEURE ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q5" value="a">
+                        <span>"C'est bien, continue"</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q5" value="b">
+                        <span>"Tu as parfaitement gardé tes mains devant ton visage pendant tout l'exercice pour te protéger"</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q5" value="c">
+                        <span>"Bravo, tu fais beaucoup mieux que Sarah maintenant"</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q5" value="d">
+                        <span>"Si tu continues exactement comme ça, tu deviendras champion un jour"</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="d">
+                <h4>Question 6 : Quel principe de valorisation est absolument ESSENTIEL ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q6" value="a">
+                        <span>Ne valoriser que les grandes réussites spectaculaires pour qu'elles aient vraiment de la valeur</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q6" value="b">
+                        <span>Comparer régulièrement les apprenants entre eux pour stimuler une saine compétition</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q6" value="c">
+                        <span>Ne valoriser que lorsque la technique d'exécution est absolument parfaite</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q6" value="d">
+                        <span>Valoriser systématiquement chaque participant à chaque séance, même pour de très petits progrès</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4>Question 7 : Qu'est-ce qui caractérise une consigne centrée sur l'objectif plutôt que sur la forme technique ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q7" value="a">
+                        <span>Elle décrit précisément comment positionner chaque partie du corps</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q7" value="b">
+                        <span>Elle utilise beaucoup de termes techniques professionnels</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q7" value="c">
+                        <span>Elle indique clairement le résultat à atteindre et laisse le corps trouver sa propre solution motrice</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q7" value="d">
+                        <span>Elle donne tous les détails biomécaniques du mouvement</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="a">
+                <h4>Question 8 : Pourquoi faut-il valoriser l'effort autant que le résultat ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option">
+                        <input type="radio" name="q8" value="a">
+                        <span>Ce qui paraît petit de l'extérieur peut représenter un accomplissement énorme pour la personne</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q8" value="b">
+                        <span>Pour être gentil et ne vexer personne</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q8" value="c">
+                        <span>Parce que l'effort n'a aucune importance, seul le résultat compte</span>
+                    </label>
+                    <label class="quiz-option">
+                        <input type="radio" name="q8" value="d">
+                        <span>Pour gagner du temps en ne vérifiant pas les résultats</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="submit-quiz" onclick="submitQuiz()">Valider mes réponses et voir mon score</button>
+
+            <div class="quiz-results" id="quiz-results">
+                <h3>Vos Résultats</h3>
+                <div class="quiz-score" id="quiz-score"></div>
+                <p id="quiz-message"></p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="#" class="nav-button secondary">
+                ← Module précédent
+            </a>
+            <a href="#" class="nav-button primary" id="next-button">
+                Module suivant →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Progress tracking
+        let progress = 0;
+        const accordions = document.querySelectorAll('.accordion-trigger');
+        const totalSections = accordions.length;
+
+        accordions.forEach(accordion => {
+            accordion.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const wasActive = this.classList.contains('active');
+                
+                this.classList.toggle('active');
+                content.classList.toggle('active');
+
+                if (!wasActive) {
+                    progress++;
+                    updateProgress();
+                }
+            });
+        });
+
+        function updateProgress() {
+            const percentage = Math.min((progress / totalSections) * 100, 100);
+            document.getElementById('progress-bar').style.width = percentage + '%';
+        }
+
+        // Quiz functionality
+        function submitQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let score = 0;
+            let totalQuestions = questions.length;
+
+            questions.forEach(question => {
+                const correctAnswer = question.dataset.correct;
+                const selectedAnswer = question.querySelector('input[type="radio"]:checked');
+                const feedback = question.querySelector('.quiz-feedback');
+
+                if (selectedAnswer) {
+                    if (selectedAnswer.value === correctAnswer) {
+                        score++;
+                        feedback.className = 'quiz-feedback correct';
+                        feedback.textContent = '✓ Excellent ! ' + getExplanation(question);
+                    } else {
+                        feedback.className = 'quiz-feedback incorrect';
+                        feedback.textContent = '✗ Pas tout à fait. ' + getExplanation(question);
+                    }
+                }
+            });
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            const resultsDiv = document.getElementById('quiz-results');
+            const scoreDiv = document.getElementById('quiz-score');
+            const messageDiv = document.getElementById('quiz-message');
+
+            scoreDiv.textContent = score + ' / ' + totalQuestions;
+            resultsDiv.classList.add('show');
+
+            if (percentage >= 70) {
+                messageDiv.innerHTML = `<strong style="color: var(--color-success);">✓ Félicitations !</strong><br>
+                    Vous avez obtenu ${percentage}% (minimum requis : 70%).<br>
+                    Vous maîtrisez bien les fondamentaux de la communication et de la valorisation. Vous êtes prêt(e) à passer au module suivant !`;
+                document.getElementById('next-button').classList.remove('disabled');
+            } else {
+                messageDiv.innerHTML = `<strong style="color: var(--color-error);">Continuez votre apprentissage</strong><br>
+                    Vous avez obtenu ${percentage}% (minimum requis : 70%).<br>
+                    Prenez le temps de revoir les sections où vous avez fait des erreurs. Chaque erreur est une excellente opportunité d'apprentissage !`;
+                document.getElementById('next-button').classList.add('disabled');
+            }
+
+            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function getExplanation(question) {
+            const explanations = {
+                'Question 1': 'La multimodalité permet à chaque personne de recevoir l\'information par son canal préférentiel et maximise la compréhension.',
+                'Question 2': 'Les consignes doivent être ultra-courtes (1-3 mots max) et centrées sur l\'objectif à atteindre, pas sur la technique.',
+                'Question 3': 'L\'observation du premier essai révèle la compréhension réelle, contrairement à "Tu as compris ?" qui génère un "oui" automatique.',
+                'Question 4': 'Le contact visuel direct est très difficile pour beaucoup de personnes avec TSA. Il faut pratiquer cette compétence séparément, sans pression.',
+                'Question 5': 'Une bonne valorisation est spécifique et nomme précisément ce qui a été bien fait.',
+                'Question 6': 'La valorisation doit être systématique pour tous, à chaque séance. Les petits progrès méritent d\'être célébrés.',
+                'Question 7': 'Une consigne centrée sur l\'objectif indique le résultat à atteindre et laisse le corps trouver naturellement sa solution motrice.',
+                'Question 8': 'Un "petit" progrès peut représenter un effort énorme pour la personne. L\'effort mérite autant de reconnaissance que le résultat.'
+            };
+            
+            const questionTitle = question.querySelector('h4').textContent;
+            return explanations[questionTitle.split(':')[0]] || 'Relisez attentivement la section correspondante pour mieux comprendre.';
+        }
+    </script>
+</body>
+</html>

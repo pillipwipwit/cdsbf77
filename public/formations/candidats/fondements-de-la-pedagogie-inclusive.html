@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fondements de la Pédagogie Inclusive | Savate Boxe Française</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #1a365d;
+            --color-primary-light: #2c5282;
+            --color-primary-dark: #0f2744;
+            --color-gold: #d69e2e;
+            --color-gold-light: #ecc94b;
+            --color-gold-dark: #b7791f;
+            --color-success: #38a169;
+            --color-warning: #dd6b20;
+            --color-error: #e53e3e;
+            --color-bg: #f7fafc;
+            --color-card: #ffffff;
+            --color-text: #1a202c;
+            --color-text-light: #4a5568;
+            --shadow: 0 4px 6px -1px rgba(26, 54, 93, 0.1);
+            --shadow-lg: 0 10px 25px -5px rgba(26, 54, 93, 0.15);
+            --shadow-gold: 0 4px 15px rgba(214, 158, 46, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.8;
+        }
+
+        /* Header élégant */
+        .header {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 50%, var(--color-primary-light) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-gold-dark), var(--color-gold), var(--color-gold-light), var(--color-gold), var(--color-gold-dark));
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header-title h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .header-title span {
+            color: var(--color-gold);
+        }
+
+        .header-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.85;
+            margin-top: 0.25rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Video Hero Section */
+        .video-hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(214, 158, 46, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .video-hero-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-badge {
+            display: inline-block;
+            background: var(--color-gold);
+            color: var(--color-primary-dark);
+            padding: 0.3rem 1rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .video-hero-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-hero-header p {
+            opacity: 0.9;
+            font-size: 1.05rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--color-card);
+            border-left: 5px solid var(--color-gold);
+            padding: 2.5rem;
+            border-radius: 0 20px 20px 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .hero-intro {
+            font-size: 1.15rem;
+            color: var(--color-text-light);
+            line-height: 1.9;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--color-gold);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-bg);
+        }
+
+        .card-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--color-gold-dark) 0%, var(--color-gold) 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--color-primary);
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* Didactic Text Styling */
+        .didactic-text {
+            background: linear-gradient(135deg, #fefcf3 0%, #fffbeb 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--color-gold);
+        }
+
+        .didactic-text p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+        }
+
+        .highlight {
+            background: linear-gradient(180deg, transparent 60%, rgba(214, 158, 46, 0.3) 60%);
+            padding: 0 2px;
+        }
+
+        /* Accordions */
+        .accordion {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accordion:hover {
+            border-color: var(--color-gold);
+        }
+
+        .accordion-header {
+            background: var(--color-bg);
+            padding: 1.25rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--color-primary);
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: #e2e8f0;
+        }
+
+        .accordion-header.active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+            background: white;
+        }
+
+        .accordion-content.active {
+            max-height: 2000px;
+        }
+
+        .accordion-inner {
+            padding: 1.5rem;
+        }
+
+        .accordion-inner ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .accordion-inner li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+
+        /* Key Points */
+        .key-point {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .key-point::before {
+            content: '💡';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            font-size: 4rem;
+            opacity: 0.15;
+        }
+
+        .key-point-title {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+            color: var(--color-gold-light);
+        }
+
+        .key-point p {
+            line-height: 1.8;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: #ebf8ff;
+            border: 2px solid #90cdf4;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .info-box.warning {
+            background: #fffaf0;
+            border-color: var(--color-gold);
+        }
+
+        .info-box.success {
+            background: #f0fff4;
+            border-color: #9ae6b4;
+        }
+
+        .info-box-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        /* Three Columns */
+        .three-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .column-card {
+            background: var(--color-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .column-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--color-gold);
+            transition: width 0.3s ease;
+        }
+
+        .column-card:hover {
+            border-color: var(--color-gold);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .column-card:hover::after {
+            width: 60%;
+        }
+
+        .column-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .column-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.15rem;
+        }
+
+        .column-card p {
+            color: var(--color-text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Media Container */
+        .media-container {
+            background: linear-gradient(135deg, var(--color-bg) 0%, #edf2f7 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 2px dashed #cbd5e0;
+        }
+
+        .video-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+            color: white;
+            padding: 0.85rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .video-link:hover {
+            background: linear-gradient(135deg, var(--color-gold-dark) 0%, var(--color-gold) 100%);
+            color: var(--color-primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .media-caption {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* Definition List */
+        .definition-list {
+            margin: 1rem 0;
+            background: var(--color-bg);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .definition-item {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .definition-item:last-child {
+            border-bottom: none;
+        }
+
+        .definition-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--color-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--color-primary-dark);
+            flex-shrink: 0;
+        }
+
+        .definition-content {
+            flex: 1;
+        }
+
+        .definition-term {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .definition-desc {
+            color: var(--color-text-light);
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quiz-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(214, 158, 46, 0.2) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .quiz-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .quiz-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .quiz-question {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .quiz-question h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-start;
+        }
+
+        .question-number {
+            background: var(--color-gold);
+            color: var(--color-primary-dark);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1.25rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-option:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .quiz-option.selected {
+            border-color: var(--color-gold);
+            background: rgba(214, 158, 46, 0.2);
+        }
+
+        .quiz-option.correct {
+            border-color: var(--color-success);
+            background: rgba(56, 161, 105, 0.3);
+        }
+
+        .quiz-option.incorrect {
+            border-color: var(--color-error);
+            background: rgba(229, 62, 62, 0.3);
+        }
+
+        .quiz-option input {
+            display: none;
+        }
+
+        .quiz-radio {
+            width: 22px;
+            height: 22px;
+            border: 2px solid white;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quiz-option.selected .quiz-radio::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--color-gold);
+            border-radius: 50%;
+        }
+
+        .quiz-feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+            font-weight: 600;
+        }
+
+        .quiz-feedback.show {
+            display: block;
+        }
+
+        .quiz-feedback.correct {
+            background: rgba(56, 161, 105, 0.25);
+            border: 1px solid var(--color-success);
+        }
+
+        .quiz-feedback.incorrect {
+            background: rgba(229, 62, 62, 0.25);
+            border: 1px solid var(--color-error);
+        }
+
+        .quiz-submit {
+            background: linear-gradient(135deg, var(--color-gold-dark) 0%, var(--color-gold) 100%);
+            color: var(--color-primary-dark);
+            border: none;
+            padding: 1.1rem 2.5rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .quiz-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(214, 158, 46, 0.4);
+        }
+
+        .quiz-results {
+            text-align: center;
+            padding: 2rem;
+            display: none;
+        }
+
+        .quiz-results.show {
+            display: block;
+        }
+
+        .quiz-score {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--color-gold);
+        }
+
+        #quizMessage {
+            margin-top: 1rem;
+            font-size: 1.15rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--color-primary-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero {
+                padding: 1.5rem;
+            }
+
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .video-hero {
+                padding: 1.5rem;
+            }
+
+            .quiz-section {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card, .hero, .video-hero {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Celebration */
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+        }
+    </style>
+<meta name="robots" content="noindex, nofollow"><script>if(sessionStorage.getItem("cdsbf77_acces")!=="ok"){location.replace("/formations/candidats/?d="+encodeURIComponent(location.pathname));}</script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="header-title">
+                <h1>Pédagogie Inclusive en <span>Savate Boxe Française</span></h1>
+                <p class="header-subtitle">Comprendre et accompagner tous les pratiquants</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <!-- Video Hero Section -->
+        <section class="video-hero">
+            <div class="video-hero-header">
+                <span class="video-badge">🎬 Introduction vidéo</span>
+                <h2>Découvrez la pédagogie inclusive</h2>
+                <p>Une approche bienveillante et adaptée pour accueillir chaque pratiquant</p>
+            </div>
+            <div class="video-container">
+                <iframe src="https://player.vimeo.com/video/1130439941?h=1f9b2b35e4&badge=0&autopause=0&player_id=0&app_id=58479" 
+                        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
+                        title="Introduction à la pédagogie inclusive">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <h2>Bienvenue dans ce parcours d'apprentissage</h2>
+            <p class="hero-intro">
+                Ce guide vous accompagne pas à pas dans la découverte de la <span class="highlight">pédagogie inclusive</span> appliquée à la savate boxe française. Vous y trouverez des explications claires, des exemples concrets et des outils pratiques pour accueillir et accompagner tous les pratiquants, quelles que soient leurs particularités.
+            </p>
+            <div class="hero-meta">
+                <div class="hero-meta-item">⏱️ Environ 25-30 minutes de lecture</div>
+                <div class="hero-meta-item">📖 4 grandes thématiques</div>
+                <div class="hero-meta-item">✅ Quiz d'auto-évaluation</div>
+            </div>
+        </section>
+
+        <!-- Introduction : Pourquoi adapter ? -->
+        <section class="card" id="section1">
+            <div class="card-header">
+                <div class="card-icon">🎯</div>
+                <div>
+                    <h3 class="card-title">Pourquoi adapter notre enseignement ?</h3>
+                    <p class="card-subtitle">Les enjeux d'une pratique ouverte à tous</p>
+                </div>
+            </div>
+
+            <div class="didactic-text">
+                <p>
+                    Imaginez un cours de savate où chaque personne, quel que soit son parcours ou ses capacités, peut progresser et s'épanouir. C'est exactement l'objectif de la pédagogie inclusive ! La savate boxe française offre des bienfaits remarquables sur <span class="highlight">trois dimensions complémentaires</span> :
+                </p>
+            </div>
+
+            <div class="three-columns">
+                <div class="column-card">
+                    <div class="column-icon">🏃</div>
+                    <div class="column-title">Le corps en mouvement</div>
+                    <p>Amélioration de la coordination, de l'équilibre et des capacités physiques générales</p>
+                </div>
+                <div class="column-card">
+                    <div class="column-icon">🧠</div>
+                    <div class="column-title">L'esprit en action</div>
+                    <p>Développement de la concentration, de la prise de décision et de la réflexion tactique</p>
+                </div>
+                <div class="column-card">
+                    <div class="column-icon">👥</div>
+                    <div class="column-title">Le lien social</div>
+                    <p>Création de liens, sentiment d'appartenance à un groupe et confiance en soi</p>
+                </div>
+            </div>
+
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Le piège de l'enseignement traditionnel</div>
+                <p>Lorsqu'on demande à tout le monde de reproduire exactement le même geste, de la même façon, on crée involontairement des situations d'échec pour ceux qui apprennent différemment. C'est un peu comme si on demandait à un gaucher d'écrire de la main droite : c'est possible, mais laborieux et décourageant !</p>
+            </div>
+
+            <div class="key-point">
+                <div class="key-point-title">💡 La bonne approche : créer les bonnes conditions</div>
+                <p>Plutôt que d'imposer "la" bonne technique, on va créer des situations où chaque pratiquant pourra découvrir SA façon efficace de réaliser l'objectif. On modifie l'environnement et les consignes pour guider l'apprentissage, sans enfermer dans un modèle unique.</p>
+            </div>
+        </section>
+
+        <!-- Théorie des Contraintes -->
+        <section class="card" id="section2">
+            <div class="card-header">
+                <div class="card-icon">⚙️</div>
+                <div>
+                    <h3 class="card-title">La méthode des contraintes : votre boîte à outils</h3>
+                    <p class="card-subtitle">Une approche scientifique simple à comprendre et à appliquer</p>
+                </div>
+            </div>
+
+            <div class="didactic-text">
+                <p>
+                    Pour comprendre comment adapter efficacement nos séances, il est utile de connaître la <span class="highlight">théorie des contraintes</span> (appelée CLA en anglais). Cette approche nous dit que tout apprentissage moteur résulte de l'interaction entre trois types de facteurs. Voyons lesquels !
+                </p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>👤 Les caractéristiques de la personne</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Ce sont toutes les particularités propres à chaque pratiquant :</p>
+                        <ul>
+                            <li><strong>Ses capacités actuelles</strong> : force, souplesse, équilibre, coordination...</li>
+                            <li><strong>Ses éventuelles particularités</strong> : troubles moteurs, sensoriels, cognitifs...</li>
+                            <li><strong>Son vécu sportif</strong> : débutant complet, ancien sportif, expérience en arts martiaux...</li>
+                            <li><strong>Sa motivation</strong> : pourquoi est-il là ? Qu'est-ce qui l'intéresse ?</li>
+                        </ul>
+                        <div class="info-box">
+                            <strong>Exemple concret :</strong> Marie a une hémiplégie (paralysie d'un côté du corps). Cette caractéristique personnelle va naturellement orienter sa façon de boxer, et c'est très bien ainsi !
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📋 La tâche à accomplir</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>C'est tout ce qui structure l'exercice que vous proposez :</p>
+                        <ul>
+                            <li><strong>L'objectif clair</strong> : que doit réussir le pratiquant ? (toucher la cible, éviter le coup...)</li>
+                            <li><strong>Les règles du jeu</strong> : qu'est-ce qui est autorisé, interdit ?</li>
+                            <li><strong>Les consignes</strong> : comment vous expliquez (paroles, gestes, démonstration...)</li>
+                            <li><strong>Les critères de réussite</strong> : comment on sait si c'est réussi ?</li>
+                        </ul>
+                        <div class="info-box">
+                            <strong>Exemple concret :</strong> "Touche le gant rouge de ton partenaire" est une tâche claire et observable. "Fais un beau direct" est trop vague et subjectif.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🏢 L'environnement de pratique</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>C'est tout ce qui entoure le pratiquant pendant l'exercice :</p>
+                        <ul>
+                            <li><strong>L'espace disponible</strong> : grand, petit, avec ou sans obstacles...</li>
+                            <li><strong>Le matériel</strong> : gants plus ou moins lourds, cibles fixes ou mobiles...</li>
+                            <li><strong>Le temps</strong> : durée des essais, pauses, rythme général...</li>
+                            <li><strong>L'ambiance</strong> : bruit, musique, nombre de personnes présentes...</li>
+                        </ul>
+                        <div class="info-box">
+                            <strong>Exemple concret :</strong> Placer une rubalise à hauteur d'épaule "oblige" naturellement à frapper au-dessus ou en dessous, sans avoir besoin de longues explications !
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="key-point-title">🎯 Le principe fondamental à retenir</div>
+                <p>Les contraintes ne dictent pas LA solution, elles orientent vers DES solutions. Votre rôle n'est pas de montrer comment faire, mais de créer une situation où le pratiquant découvre par lui-même ce qui fonctionne pour lui. C'est comme placer des balises sur un chemin : chacun trouve sa propre façon d'avancer entre les balises !</p>
+            </div>
+
+            <div class="media-container">
+                <p><strong>📹 Voyez cette approche en action</strong></p>
+                <a href="https://drive.google.com/file/d/1c-GdFCotNWgcftIaX6uDAuGPpJuIi-XA/view?usp=sharing" target="_blank" class="video-link">
+                    🎬 Travail au sac en groupe
+                </a>
+                <a href="https://drive.google.com/file/d/1QjOA-Zy8CjxUkTPXalGs0U5k2Z9H7FwP/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Pratique fauteuil et debout ensemble
+                </a>
+                <p class="media-caption">Observez comment chaque pratiquant trouve sa propre solution motrice efficace</p>
+            </div>
+        </section>
+
+        <!-- Déficience Intellectuelle -->
+        <section class="card" id="section3">
+            <div class="card-header">
+                <div class="card-icon">🧠</div>
+                <div>
+                    <h3 class="card-title">Accompagner les personnes avec déficience intellectuelle</h3>
+                    <p class="card-subtitle">Des clés concrètes pour un enseignement adapté</p>
+                </div>
+            </div>
+
+            <div class="didactic-text">
+                <p>
+                    Bonne nouvelle : les personnes présentant une déficience intellectuelle <span class="highlight">peuvent tout à fait apprendre et progresser</span> en savate ! Leur apprentissage suit simplement quelques particularités qu'il est important de connaître pour les accompagner efficacement.
+                </p>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>💭 La mémoire de travail est plus limitée</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p><strong>Ce que cela signifie :</strong> Difficulté à retenir et traiter plusieurs informations en même temps. C'est comme avoir un bureau plus petit : on ne peut pas y poser autant de dossiers à la fois.</p>
+                        <div class="info-box success">
+                            <div class="info-box-title">✅ Comment s'adapter ?</div>
+                            <ul>
+                                <li>Des consignes ultra-courtes : <strong>1 ou 2 mots-clés</strong> maximum ("Touche !", "Recule !")</li>
+                                <li>Beaucoup d'essais courts plutôt que de longues explications</li>
+                                <li>Un seul objectif à la fois : on ne mélange jamais plusieurs apprentissages</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🔄 Transférer les apprentissages est plus difficile</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p><strong>Ce que cela signifie :</strong> Ce qui est appris dans une situation ne se transfère pas automatiquement à une autre. Par exemple, savoir faire un chassé sur un sac ne garantit pas de savoir le faire avec un partenaire.</p>
+                        <div class="info-box success">
+                            <div class="info-box-title">✅ Comment s'adapter ?</div>
+                            <ul>
+                                <li>Faire pratiquer le même geste dans des <strong>contextes variés</strong> (sac, pattes d'ours, partenaire...)</li>
+                                <li>Ne jamais supposer que "c'est acquis" sans vérifier dans plusieurs situations</li>
+                                <li>Revenir régulièrement sur les apprentissages précédents</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>⏳ L'apprentissage prend plus de temps</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p><strong>Ce que cela signifie :</strong> Plus de répétitions sont nécessaires pour ancrer un apprentissage. C'est un marathon, pas un sprint !</p>
+                        <div class="info-box success">
+                            <div class="info-box-title">✅ Comment s'adapter ?</div>
+                            <ul>
+                                <li>Prévoir du <strong>temps supplémentaire</strong> pour chaque acquisition</li>
+                                <li>Répéter régulièrement sur <strong>plusieurs séances</strong></li>
+                                <li><strong>Valoriser chaque petit progrès</strong> : les encouragements sincères sont essentiels !</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📐 Un besoin fort de repères et de structure</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p><strong>Ce que cela signifie :</strong> L'environnement doit être clair, prévisible et bien organisé pour favoriser la sécurité émotionnelle et donc l'apprentissage.</p>
+                        <div class="info-box success">
+                            <div class="info-box-title">✅ Comment s'adapter ?</div>
+                            <ul>
+                                <li>Utiliser des <strong>supports visuels</strong> : photos, pictogrammes, couleurs</li>
+                                <li>Afficher le <strong>déroulé de la séance</strong> de façon visible</li>
+                                <li><strong>Prévenir des changements</strong> à l'avance pour éviter le stress</li>
+                                <li>Garder une <strong>routine stable</strong> d'une séance à l'autre</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TSA -->
+        <section class="card" id="section4">
+            <div class="card-header">
+                <div class="card-icon">🌈</div>
+                <div>
+                    <h3 class="card-title">Accueillir les personnes avec autisme (TSA)</h3>
+                    <p class="card-subtitle">Quatre axes pour une pratique sereine et épanouissante</p>
+                </div>
+            </div>
+
+            <div class="didactic-text">
+                <p>
+                    Le trouble du spectre de l'autisme (TSA) affecte principalement la communication et les interactions sociales. Les personnes autistes peuvent aussi avoir des <span class="highlight">sensibilités sensorielles particulières</span> (au bruit, au toucher, à la lumière...) et des besoins de prévisibilité. Voici comment adapter votre enseignement :
+                </p>
+            </div>
+
+            <div class="three-columns">
+                <div class="column-card">
+                    <div class="column-icon">🎯</div>
+                    <div class="column-title">Coordination motrice</div>
+                    <p>Les mouvements peuvent être moins fluides ou moins coordonnés</p>
+                </div>
+                <div class="column-card">
+                    <div class="column-icon">👂</div>
+                    <div class="column-title">Sensibilité sensorielle</div>
+                    <p>Réactions intenses ou faibles aux bruits, contacts, lumières...</p>
+                </div>
+                <div class="column-card">
+                    <div class="column-icon">📏</div>
+                    <div class="column-title">Gestion des distances</div>
+                    <p>Difficulté à évaluer l'espace personnel approprié</p>
+                </div>
+            </div>
+
+            <h4 style="color: var(--color-primary); margin: 2rem 0 1rem; font-family: 'Playfair Display', serif;">Les 4 piliers d'une pratique adaptée</h4>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>📸 Pilier 1 : Communiquer autrement</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Les consignes orales sont éphémères : une fois dites, elles disparaissent. Pour une personne autiste, c'est particulièrement difficile à traiter. La solution ?</p>
+                        <ul>
+                            <li><strong>Pictogrammes et photos</strong> montrant les étapes de l'exercice</li>
+                            <li><strong>Codes couleur</strong> pour identifier les différentes zones ou ateliers</li>
+                            <li><strong>Supports visuels affichés</strong> auxquels on peut se référer à tout moment</li>
+                            <li><strong>Démonstrations</strong> plutôt que longues explications verbales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🔇 Pilier 2 : Maîtriser l'environnement sensoriel</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Une salle de sport peut vite devenir un enfer sensoriel : échos, lumières vives, contacts imprévus... Quelques aménagements font une grande différence :</p>
+                        <ul>
+                            <li><strong>Réduire les bruits</strong> autant que possible (pas de musique forte)</li>
+                            <li><strong>Éviter les lumières trop vives</strong> ou clignotantes</li>
+                            <li><strong>Prévenir avant tout contact physique</strong></li>
+                            <li><strong>Prévoir un espace calme</strong> où la personne peut se retirer si besoin</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🤲 Pilier 3 : Adapter l'accompagnement</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>Chaque personne a besoin d'un type d'aide différent. Voici les options à votre disposition :</p>
+                        <ul>
+                            <li><strong>Guidance visuelle</strong> : montrer le mouvement, utiliser des repères visuels</li>
+                            <li><strong>Guidance physique légère</strong> : accompagner doucement le geste (avec accord !)</li>
+                            <li><strong>Modélisation par un pair</strong> : un autre pratiquant montre l'exercice</li>
+                            <li><strong>Décomposition en petites étapes</strong> : une action à la fois</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <span>🔄 Pilier 4 : Créer des rituels rassurants</span>
+                    <span class="accordion-icon">▼</span>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>L'imprévisibilité est une source majeure d'anxiété pour les personnes autistes. Les rituels apportent de la sécurité :</p>
+                        <ul>
+                            <li><strong>Même structure de séance</strong> à chaque fois (échauffement, ateliers, retour au calme...)</li>
+                            <li><strong>Rituel de début et de fin</strong> identifiables et réguliers</li>
+                            <li><strong>Prévenir des changements</strong> : "Attention, dans 5 minutes on change d'exercice"</li>
+                        </ul>
+                        <div class="info-box">
+                            <strong>💡 Pourquoi c'est si important :</strong> Quand on sait ce qui va se passer, on peut se concentrer sur l'apprentissage plutôt que sur l'inquiétude de l'inconnu. Les rituels libèrent de l'énergie mentale pour progresser !
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="media-container">
+                <p><strong>📹 Des exemples inspirants</strong></p>
+                <a href="https://drive.google.com/file/d/1EsFVJGnsLrmb1rfrAUcgFLjKG8rNrxwY/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Pratique partagée en action
+                </a>
+                <a href="https://drive.google.com/file/d/1o2ay-XSLhqIzFqCkb8ot3vUZ2YJurt9x/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Adaptations pour handicap moteur
+                </a>
+            </div>
+        </section>
+
+        <!-- Troubles Moteurs -->
+        <section class="card" id="section5">
+            <div class="card-header">
+                <div class="card-icon">♿</div>
+                <div>
+                    <h3 class="card-title">Accompagner les troubles moteurs</h3>
+                    <p class="card-subtitle">L'efficacité avant la conformité technique</p>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <div class="key-point-title">🎯 Le principe d'or à retenir</div>
+                <p>Un pratiquant peut se déplacer de façon "asymétrique" ou "atypique" tout en étant parfaitement efficace ! Ce qui compte, c'est le résultat : a-t-il atteint l'objectif ? Oui ? Alors c'est réussi, peu importe si le geste ne ressemble pas au modèle académique.</p>
+            </div>
+
+            <div class="didactic-text">
+                <p>
+                    Notre rôle n'est pas de "corriger" une façon de bouger différente, mais d'aider chaque personne à trouver <span class="highlight">SA solution efficace</span>. Voici les principes clés à garder en tête :
+                </p>
+            </div>
+
+            <div class="info-box success">
+                <div class="info-box-title">✅ Les bonnes pratiques</div>
+                <ul>
+                    <li><strong>Accepter les compensations</strong> : si une posture "différente" permet de réussir, c'est très bien !</li>
+                    <li><strong>Se concentrer sur l'objectif</strong> : "A-t-il touché la cible ?" plutôt que "Son coude était-il bien placé ?"</li>
+                    <li><strong>Adapter le matériel</strong> : hauteur des cibles, poids des gants, appuis sécurisés...</li>
+                    <li><strong>Favoriser l'autonomie</strong> : laisser la personne expérimenter et trouver ce qui marche pour elle</li>
+                </ul>
+            </div>
+
+            <h4 style="color: var(--color-primary); margin: 1.5rem 0 1rem; font-family: 'Playfair Display', serif;">Exemple : trois façons de réussir le même objectif</h4>
+            
+            <div class="definition-list">
+                <div class="definition-item">
+                    <div class="definition-icon">A</div>
+                    <div class="definition-content">
+                        <div class="definition-term">Léo (valide)</div>
+                        <div class="definition-desc">Exécute un direct classique, conforme au modèle technique traditionnel</div>
+                    </div>
+                </div>
+                <div class="definition-item">
+                    <div class="definition-icon">B</div>
+                    <div class="definition-content">
+                        <div class="definition-term">Sarah (faiblesse musculaire)</div>
+                        <div class="definition-desc">Réalise une poussée du bras moins "pure" techniquement, mais qui atteint parfaitement la cible</div>
+                    </div>
+                </div>
+                <div class="definition-item">
+                    <div class="definition-icon">C</div>
+                    <div class="definition-content">
+                        <div class="definition-term">Karim (en fauteuil)</div>
+                        <div class="definition-desc">Frappe une cible positionnée plus bas, avec un angle de bras adapté à sa position assise</div>
+                    </div>
+                </div>
+            </div>
+
+            <p style="margin-top: 1.5rem; font-style: italic; color: var(--color-text-light); text-align: center; font-size: 1.05rem;">
+                Ces trois façons de faire sont toutes <strong>également valables</strong> car elles atteignent l'objectif. C'est ça, la vraie inclusion !
+            </p>
+
+            <div class="media-container">
+                <p><strong>📹 Voyez la diversité des solutions motrices</strong></p>
+                <a href="https://drive.google.com/file/d/1eRs7sYfnI7rRNFFK3CndVuaBlmQszZiC/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Chassé en fauteuil roulant
+                </a>
+                <a href="https://drive.google.com/file/d/1CcMthDkJNpPjIEtnPTlmNXt1jDnpQV18/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Chassé adapté
+                </a>
+                <a href="https://drive.google.com/file/d/1d6t9jzYI11IGtxAAnw54MuhoINkr40Df/view?usp=drive_link" target="_blank" class="video-link">
+                    🎬 Uppercut hémiplégique
+                </a>
+                <p class="media-caption">Chaque pratiquant trouve SA solution efficace — et c'est magnifique à voir !</p>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section class="quiz-section" id="quiz">
+            <h3>📝 Testez vos connaissances</h3>
+            <p class="quiz-intro">6 questions pour vérifier que vous avez bien compris les fondements de la pédagogie inclusive</p>
+
+            <div class="quiz-question" data-correct="b">
+                <h4><span class="question-number">1</span> Dans l'approche par contraintes, que signifie "CLA" ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q1" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>Contrôle des Limites d'Apprentissage</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q1" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>Constraint-Led Approach (Approche guidée par les contraintes)</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q1" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>Correction Latérale Automatique</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4><span class="question-number">2</span> Quels sont les trois types de contraintes qui influencent l'apprentissage ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q2" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>Physique, mentale, technique</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q2" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>Temps, espace, matériel</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q2" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>Individu, tâche, environnement</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="b">
+                <h4><span class="question-number">3</span> Pour une personne avec déficience intellectuelle, comment formuler les consignes ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q3" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>De façon détaillée avec toutes les explications techniques</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q3" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>Très brèves : 1 à 2 mots-clés seulement</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q3" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>Uniquement par écrit sur un tableau</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="a">
+                <h4><span class="question-number">4</span> Pourquoi les rituels sont-ils essentiels pour les personnes avec TSA ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q4" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>Ils réduisent l'anxiété liée à l'imprévisibilité</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q4" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>Ils améliorent la condition physique</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q4" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>Ils remplacent la nécessité d'un échauffement</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="c">
+                <h4><span class="question-number">5</span> Dans l'approche inclusive, qu'est-ce qui est le plus important ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q5" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>Reproduire parfaitement le geste technique académique</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q5" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>Exécuter le mouvement le plus rapidement possible</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q5" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>Atteindre l'objectif de façon efficace (quelle que soit la forme)</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <div class="quiz-question" data-correct="b">
+                <h4><span class="question-number">6</span> Qu'est-ce qu'un "espace de décompression" et à quoi sert-il ?</h4>
+                <div class="quiz-options">
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q6" value="a">
+                        <span class="quiz-radio"></span>
+                        <span>Une zone réservée aux étirements après l'effort</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q6" value="b">
+                        <span class="quiz-radio"></span>
+                        <span>Un endroit calme où se retirer en cas de surcharge sensorielle</span>
+                    </label>
+                    <label class="quiz-option" onclick="selectOption(this)">
+                        <input type="radio" name="q6" value="c">
+                        <span class="quiz-radio"></span>
+                        <span>Le vestiaire prévu pour les personnes en situation de handicap</span>
+                    </label>
+                </div>
+                <div class="quiz-feedback"></div>
+            </div>
+
+            <button class="quiz-submit" onclick="submitQuiz()">Vérifier mes réponses</button>
+
+            <div class="quiz-results" id="quizResults">
+                <p>Votre résultat :</p>
+                <div class="quiz-score" id="quizScore">0/6</div>
+                <p id="quizMessage"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Pédagogie Inclusive en Savate Boxe Française — Pour une pratique ouverte à tous</p>
+    </footer>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const isActive = header.classList.contains('active');
+            
+            // Close all accordions in the same card
+            const card = header.closest('.card');
+            if (card) {
+                card.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('active'));
+                card.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('active'));
+            }
+            
+            if (!isActive) {
+                header.classList.add('active');
+                content.classList.add('active');
+            }
+        }
+
+        // Quiz functionality
+        function selectOption(option) {
+            const question = option.closest('.quiz-question');
+            question.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            option.classList.add('selected');
+            option.querySelector('input').checked = true;
+        }
+
+        function submitQuiz() {
+            const questions = document.querySelectorAll('.quiz-question');
+            let correct = 0;
+            
+            questions.forEach(question => {
+                const correctAnswer = question.dataset.correct;
+                const selected = question.querySelector('input:checked');
+                const feedback = question.querySelector('.quiz-feedback');
+                
+                question.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                });
+                
+                if (selected) {
+                    const selectedOption = selected.closest('.quiz-option');
+                    if (selected.value === correctAnswer) {
+                        correct++;
+                        selectedOption.classList.add('correct');
+                        feedback.className = 'quiz-feedback show correct';
+                        feedback.textContent = '✅ Bravo, c\'est la bonne réponse !';
+                    } else {
+                        selectedOption.classList.add('incorrect');
+                        feedback.className = 'quiz-feedback show incorrect';
+                        feedback.textContent = '❌ Ce n\'est pas tout à fait ça...';
+                        // Show correct answer
+                        question.querySelectorAll('.quiz-option').forEach(opt => {
+                            if (opt.querySelector('input').value === correctAnswer) {
+                                opt.classList.add('correct');
+                            }
+                        });
+                    }
+                } else {
+                    feedback.className = 'quiz-feedback show incorrect';
+                    feedback.textContent = '⚠️ Vous n\'avez pas répondu à cette question';
+                }
+            });
+            
+            const score = Math.round((correct / questions.length) * 100);
+            document.getElementById('quizScore').textContent = correct + '/' + questions.length;
+            
+            const resultsDiv = document.getElementById('quizResults');
+            const messageEl = document.getElementById('quizMessage');
+            
+            if (score >= 70) {
+                messageEl.textContent = '🎉 Excellent ! Vous avez bien compris les fondements de la pédagogie inclusive !';
+                resultsDiv.style.background = 'rgba(56, 161, 105, 0.2)';
+                triggerCelebration();
+            } else if (score >= 50) {
+                messageEl.textContent = '👍 C\'est un bon début ! Relisez les sections qui vous ont posé problème.';
+                resultsDiv.style.background = 'rgba(214, 158, 46, 0.2)';
+            } else {
+                messageEl.textContent = '📚 Prenez le temps de relire ce guide pour mieux assimiler les concepts.';
+                resultsDiv.style.background = 'rgba(229, 62, 62, 0.2)';
+            }
+            
+            resultsDiv.classList.add('show');
+            document.querySelector('.quiz-submit').style.display = 'none';
+        }
+
+        // Celebration animation
+        function triggerCelebration() {
+            const celebration = document.getElementById('celebration');
+            const colors = ['#d69e2e', '#1a365d', '#38a169', '#ecc94b', '#2c5282'];
+            
+            for (let i = 0; i < 60; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animation = `fall ${2 + Math.random() * 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                celebration.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 4500);
+            }
+        }
+
+        // Add CSS animation for confetti
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Smooth scroll for sections
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
