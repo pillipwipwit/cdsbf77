@@ -1,0 +1,246 @@
+---
+import Formation from "../../../layouts/Formation.astro";
+import formation from "../../../data/formation.json";
+
+const { ucs, lecons } = formation;
+const total = lecons.length;
+const dureeTotale = lecons.reduce((s, l) => s + l.duree, 0);
+const questions = lecons.reduce((s, l) => s + l.quiz.length, 0);
+---
+
+<Formation
+  title="Espace formation"
+  description="Les modules de formation au monitorat de savate boxe française du CDSBF 77 : sciences de l'entraînement, pédagogie, environnement du club."
+>
+  <section class="hero">
+    <div class="fmt-wrap hero-in">
+      <p class="eyebrow">Préparation au monitorat</p>
+      <h1>
+        {total} leçons.<br />
+        Vingt minutes chacune.<br />
+        <span class="or">Un quiz à la fin de chaque.</span>
+      </h1>
+      <p class="hero-txt">
+        Neuf modules, dans l'ordre du programme de l'unité capitalisable. Tu peux les suivre pas à
+        pas ou piocher ce dont tu as besoin. Chaque leçon se lit en une session, se termine par une
+        vérification des acquis, et garde ton résultat sur cet appareil.
+      </p>
+      <dl class="stats">
+        <div><dt>Leçons</dt><dd>{total}</dd></div>
+        <div><dt>Minutes</dt><dd>{dureeTotale}</dd></div>
+        <div><dt>Questions</dt><dd>{questions}</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="fmt-wrap">
+    <p class="progress-line" id="progress-line" hidden></p>
+
+    {ucs.map((uc) => {
+      const items = lecons.filter((l) => l.uc === uc.id).sort((a, b) => a.ordre - b.ordre);
+      return (
+        <section class="uc" id={uc.id}>
+          <header class="uc-head">
+            <span class="uc-code">{uc.code}</span>
+            <div>
+              <h2>{uc.titre}</h2>
+              <p>{uc.chapo}</p>
+            </div>
+            <span class="uc-count">{items.length} leçons</span>
+          </header>
+
+          <ol class="liste">
+            {items.map((l) => (
+              <li>
+                <a href={`/formations/monitorat/${l.id}`} data-lecon={l.id}>
+                  <span class="rang">{String(l.ordre).padStart(2, "0")}</span>
+                  <span class="corps">
+                    <span class="titre">{l.titre}</span>
+                    <span class="chapo">{l.chapo}</span>
+                  </span>
+                  <span class="meta">
+                    <span class="etat" hidden></span>
+                    <span class="duree">{l.duree} min</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </section>
+      );
+    })}
+  </div>
+</Formation>
+
+<style>
+  .hero {
+    background: var(--marine);
+    color: var(--blanc);
+    padding: clamp(3rem, 9vw, 6rem) 0 clamp(2.5rem, 7vw, 4.5rem);
+    margin-bottom: 3.5rem;
+  }
+  .eyebrow {
+    margin: 0 0 1rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--or-clair);
+    font-weight: 600;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    max-width: 18ch;
+  }
+  .or { color: var(--or); }
+  .hero-txt {
+    margin: 1.8rem 0 0;
+    max-width: 58ch;
+    color: #c3cedb;
+  }
+  .stats {
+    display: flex;
+    gap: clamp(1.6rem, 5vw, 3.5rem);
+    margin: 2.6rem 0 0;
+    padding-top: 1.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .stats div { margin: 0; }
+  .stats dt {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8b9bb0;
+  }
+  .stats dd {
+    margin: 0.2rem 0 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2.4rem;
+    color: var(--or);
+    line-height: 1;
+  }
+
+  .progress-line {
+    margin: 0 0 2.5rem;
+    padding: 0.85rem 1.1rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-left: 3px solid var(--or);
+    border-radius: var(--rayon);
+    font-size: 0.88rem;
+    color: var(--gris);
+  }
+
+  .uc { margin-bottom: 4.5rem; }
+  .uc-head {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--marine);
+    margin-bottom: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .uc-code {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2.1rem;
+    color: var(--or);
+    line-height: 1;
+    flex: none;
+  }
+  .uc-head h2 { font-size: 1.9rem; color: var(--marine); }
+  .uc-head p { margin: 0.25rem 0 0; color: var(--gris); font-size: 0.9rem; }
+  .uc-head > div { flex: 1 1 20ch; }
+  .uc-count {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gris);
+    flex: none;
+  }
+
+  .liste { list-style: none; margin: 0; padding: 0; }
+  .liste li + li { margin-top: 0.5rem; }
+  .liste a {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1rem 1.2rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--rayon);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .liste a:hover {
+    border-color: var(--marine);
+    transform: translateX(3px);
+  }
+  .rang {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.5rem;
+    color: var(--gris-clair);
+    flex: none;
+    width: 2ch;
+  }
+  .liste a:hover .rang { color: var(--or); }
+  .corps { flex: 1; display: flex; flex-direction: column; }
+  .titre { font-weight: 600; font-size: 1.02rem; line-height: 1.35; }
+  .chapo { color: var(--gris); font-size: 0.85rem; line-height: 1.45; margin-top: 0.15rem; }
+  .meta {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .duree {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gris);
+    white-space: nowrap;
+  }
+  .etat {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+  .etat.acquis { background: #eef7f2; color: #1d5a3f; }
+  .etat.repasser { background: #fbeeec; color: #8c3123; }
+
+  @media (max-width: 620px) {
+    .chapo { display: none; }
+  }
+</style>
+
+<script>
+  type Suivi = Record<string, { note: number; total: number }>;
+  let suivi: Suivi = {};
+  try {
+    suivi = JSON.parse(localStorage.getItem("cdsbf77-formation") ?? "{}");
+  } catch {
+    suivi = {};
+  }
+
+  const liens = document.querySelectorAll<HTMLAnchorElement>("a[data-lecon]");
+  let acquis = 0;
+
+  liens.forEach((a) => {
+    const res = suivi[a.dataset.lecon!];
+    if (!res) return;
+    const badge = a.querySelector<HTMLElement>(".etat")!;
+    const reussi = res.note >= Math.ceil(res.total * 0.7);
+    if (reussi) acquis++;
+    badge.hidden = false;
+    badge.classList.add(reussi ? "acquis" : "repasser");
+    badge.textContent = `${res.note}/${res.total}`;
+  });
+
+  if (Object.keys(suivi).length > 0) {
+    const ligne = document.getElementById("progress-line")!;
+    ligne.hidden = false;
+    ligne.textContent = `${acquis} leçon(s) acquise(s) sur ${liens.length}. Ton avancement est enregistré sur cet appareil uniquement.`;
+  }
+</script>

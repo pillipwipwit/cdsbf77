@@ -1,0 +1,208 @@
+---
+export interface Props {
+  leconId: string;
+  questions: { q: string; options: string[]; r: number; e: string }[];
+}
+const { leconId, questions } = Astro.props;
+---
+
+<section class="quiz" data-lecon={leconId} aria-labelledby={`quiz-${leconId}`}>
+  <header class="quiz-head">
+    <p class="quiz-eyebrow">Vérification des acquis</p>
+    <h2 id={`quiz-${leconId}`}>{questions.length} questions</h2>
+    <p class="quiz-intro">
+      Une seule bonne réponse par question. La correction s'affiche après validation.
+    </p>
+  </header>
+
+  {questions.map((question, i) => (
+    <fieldset class="q" data-index={i} data-reponse={question.r}>
+      <legend><span class="q-num">{i + 1}</span> {question.q}</legend>
+      {question.options.map((option, j) => (
+        <label class="opt">
+          <input type="radio" name={`${leconId}-${i}`} value={j} />
+          <span class="opt-txt">{option}</span>
+        </label>
+      ))}
+      <p class="explication" hidden>{question.e}</p>
+    </fieldset>
+  ))}
+
+  <div class="quiz-actions">
+    <button type="button" class="btn btn-valider">Corriger mes réponses</button>
+    <button type="button" class="btn btn-refaire" hidden>Recommencer</button>
+  </div>
+
+  <output class="score" hidden></output>
+</section>
+
+<style>
+  .quiz {
+    margin-top: 4rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-top: 4px solid var(--or);
+    border-radius: var(--rayon);
+    padding: clamp(1.4rem, 4vw, 2.6rem);
+  }
+  .quiz-head { margin-bottom: 2rem; }
+  .quiz-eyebrow {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--or);
+    font-weight: 600;
+  }
+  .quiz-head h2 { font-size: 2rem; color: var(--marine); margin: 0.2rem 0 0.4rem; }
+  .quiz-intro { margin: 0; color: var(--gris); font-size: 0.9rem; }
+
+  .q {
+    border: 0;
+    border-top: 1px solid var(--gris-clair);
+    margin: 0;
+    padding: 1.6rem 0 0.6rem;
+  }
+  .q legend {
+    font-weight: 600;
+    padding: 0;
+    margin-bottom: 0.9rem;
+    display: flex;
+    gap: 0.7rem;
+    align-items: baseline;
+    line-height: 1.5;
+  }
+  .q-num {
+    font-family: "Bebas Neue", sans-serif;
+    color: var(--or);
+    font-size: 1.25rem;
+    flex: none;
+  }
+
+  .opt {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--rayon);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .opt:hover { border-color: var(--marine-clair); }
+  .opt input { margin-top: 0.42rem; flex: none; accent-color: var(--marine); }
+  .opt-txt { font-size: 0.94rem; }
+
+  .q.corrigee .opt { cursor: default; }
+  .q.corrigee .opt input { pointer-events: none; }
+  .opt.juste { border-color: var(--vert); background: #eef7f2; }
+  .opt.faux { border-color: var(--rouge); background: #fbeeec; }
+
+  .explication {
+    margin: 0.7rem 0 0;
+    padding: 0.8rem 1rem;
+    background: var(--creme);
+    border-left: 3px solid var(--or);
+    font-size: 0.88rem;
+    color: #3a4553;
+  }
+
+  .quiz-actions { margin-top: 2rem; display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .btn {
+    font-family: inherit;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 0.85rem 1.6rem;
+    border-radius: var(--rayon);
+    border: 1px solid var(--marine);
+    background: var(--marine);
+    color: var(--blanc);
+    cursor: pointer;
+  }
+  .btn:hover { background: var(--marine-clair); }
+  .btn-refaire { background: transparent; color: var(--marine); }
+  .btn-refaire:hover { background: var(--gris-clair); }
+
+  .score {
+    display: block;
+    margin-top: 1.6rem;
+    padding: 1rem 1.2rem;
+    border-radius: var(--rayon);
+    font-weight: 600;
+    background: var(--creme);
+    border: 1px solid var(--gris-clair);
+  }
+  .score.reussi { background: #eef7f2; border-color: var(--vert); color: #1d5a3f; }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".quiz").forEach((quiz) => {
+    const leconId = quiz.dataset.lecon!;
+    const questions = Array.from(quiz.querySelectorAll<HTMLFieldSetElement>(".q"));
+    const valider = quiz.querySelector<HTMLButtonElement>(".btn-valider")!;
+    const refaire = quiz.querySelector<HTMLButtonElement>(".btn-refaire")!;
+    const score = quiz.querySelector<HTMLOutputElement>(".score")!;
+
+    const enregistrer = (note: number, total: number) => {
+      try {
+        const brut = localStorage.getItem("cdsbf77-formation");
+        const suivi = brut ? JSON.parse(brut) : {};
+        suivi[leconId] = { note, total, date: new Date().toISOString() };
+        localStorage.setItem("cdsbf77-formation", JSON.stringify(suivi));
+      } catch {
+        /* stockage indisponible : le quiz fonctionne quand même */
+      }
+    };
+
+    valider.addEventListener("click", () => {
+      let note = 0;
+      let manquantes = 0;
+
+      questions.forEach((q) => {
+        const bonne = Number(q.dataset.reponse);
+        const choix = q.querySelector<HTMLInputElement>("input:checked");
+        if (!choix) manquantes++;
+
+        q.classList.add("corrigee");
+        q.querySelectorAll<HTMLLabelElement>(".opt").forEach((opt, j) => {
+          if (j === bonne) opt.classList.add("juste");
+          else if (choix && Number(choix.value) === j) opt.classList.add("faux");
+        });
+        q.querySelector<HTMLElement>(".explication")!.hidden = false;
+        if (choix && Number(choix.value) === bonne) note++;
+      });
+
+      const total = questions.length;
+      const seuil = Math.ceil(total * 0.7);
+      score.hidden = false;
+      score.classList.toggle("reussi", note >= seuil);
+      score.textContent =
+        `${note} / ${total}` +
+        (note >= seuil
+          ? " — acquis. Tu peux passer à la leçon suivante."
+          : ` — en dessous du seuil de ${seuil}. Relis les points « à retenir » et reprends le quiz.`) +
+        (manquantes ? ` (${manquantes} question(s) sans réponse)` : "");
+
+      enregistrer(note, total);
+      valider.hidden = true;
+      refaire.hidden = false;
+      score.scrollIntoView({ block: "nearest" });
+    });
+
+    refaire.addEventListener("click", () => {
+      questions.forEach((q) => {
+        q.classList.remove("corrigee");
+        q.querySelectorAll<HTMLInputElement>("input").forEach((i) => (i.checked = false));
+        q.querySelectorAll<HTMLElement>(".opt").forEach((o) => o.classList.remove("juste", "faux"));
+        q.querySelector<HTMLElement>(".explication")!.hidden = true;
+      });
+      score.hidden = true;
+      valider.hidden = false;
+      refaire.hidden = true;
+      quiz.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+</script>

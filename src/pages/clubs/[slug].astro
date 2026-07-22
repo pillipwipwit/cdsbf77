@@ -71,6 +71,19 @@ const description =
         </section>
       )}
 
+      {(club.photos || []).length > 0 && (
+        <section class="card visible" style="padding: 0; background: transparent; box-shadow: none; margin-top: 2rem;">
+          <div class="club-galerie">
+            {club.photos.map((p) => (
+              <figure class="club-photo">
+                <img src={p.src} alt={p.alt || 'Le club ' + club.nom + ' à l\'entraînement'} loading="lazy" decoding="async" />
+                {p.legende && <figcaption>{p.legende}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </section>
+      )}
+
       <section class="card visible" style="margin-top: 2rem;">
         <div class="card-content">
           <div class="info-grid">

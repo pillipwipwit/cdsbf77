@@ -1398,7 +1398,8 @@
         "Savate boxe française"
       ],
       "publics": [
-        "enfants"
+        "enfants",
+        "adultes"
       ],
       "labels": [],
       "equipements": [
@@ -1443,7 +1444,44 @@
         "primaire": "#0f3460",
         "accent": "#d4af37"
       },
-      "logo": "/logos/courtry.jpg"
+      "logo": "/logos/courtry.jpg",
+      "photos": [
+        {
+          "src": "/clubs/courtry/ring.jpg",
+          "alt": "Tireur en garde sur le ring du club de Courtry",
+          "legende": "En garde sur le ring du club."
+        },
+        {
+          "src": "/clubs/courtry/casque.jpg",
+          "alt": "Ajustement du casque d'un jeune tireur avant un assaut",
+          "legende": "Avant le premier assaut."
+        },
+        {
+          "src": "/clubs/courtry/technique.jpg",
+          "alt": "Correction technique entre deux tireurs à l'entraînement",
+          "legende": "Le geste se corrige à deux."
+        },
+        {
+          "src": "/clubs/courtry/demonstration.jpg",
+          "alt": "Démonstration technique devant le groupe de jeunes",
+          "legende": "Démonstration devant le groupe."
+        },
+        {
+          "src": "/clubs/courtry/groupe.jpg",
+          "alt": "Séance collective de l'école de boxe de Courtry",
+          "legende": "L'école de boxe au complet."
+        },
+        {
+          "src": "/clubs/courtry/cours-adultes.jpg",
+          "alt": "Cours adultes de savate boxe française à Courtry",
+          "legende": "Le cours adultes du mardi."
+        },
+        {
+          "src": "/clubs/courtry/competition.jpg",
+          "alt": "Jeunes tireurs enfilant les gants avant les assauts",
+          "legende": "Jour de compétition."
+        }
+      ]
     },
     {
       "slug": "coulommiers",

@@ -1,0 +1,140 @@
+---
+// Layout autonome de l'espace formation.
+//
+// POUR L'INTÉGRER À TON LAYOUT EXISTANT (Base.astro) :
+//   1. importe Base : import Base from './Base.astro';
+//   2. remplace <html>…</html> par <Base title={title} description={description}> … </Base>
+//   3. conserve le bloc <style is:global> ci-dessous.
+export interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Espace formation du Comité départemental de savate boxe française de Seine-et-Marne." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — CDSBF 77</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="fmt-top">
+      <a class="fmt-back" href="/formations">← Formations CDSBF 77</a>
+      <a class="fmt-brand" href="/formations/monitorat">Espace formation</a>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="fmt-foot">
+      <p>Comité départemental de savate boxe française de Seine-et-Marne</p>
+      <p class="fmt-foot-note">
+        Supports pédagogiques internes. Sources : documents de formation de Florian Pourhadi (2022),
+        National Strength &amp; Conditioning Association (2016), code du sport, loi du 1<sup>er</sup> juillet 1901.
+      </p>
+    </footer>
+
+    <style is:global>
+      :root {
+        --marine: #0b1f3a;
+        --marine-clair: #16355c;
+        --or: #c8a24a;
+        --or-clair: #e3c884;
+        --creme: #f7f4ee;
+        --blanc: #ffffff;
+        --encre: #1c2530;
+        --gris: #5d6b7a;
+        --gris-clair: #dfe4ea;
+        --vert: #2e7d5b;
+        --rouge: #b4402f;
+        --rayon: 4px;
+        --mesure: 68ch;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      }
+
+      body {
+        margin: 0;
+        background: var(--creme);
+        color: var(--encre);
+        font-family: "Poppins", system-ui, sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1, h2, h3, .fmt-display {
+        font-family: "Bebas Neue", "Poppins", sans-serif;
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        margin: 0;
+      }
+
+      a { color: var(--marine); }
+
+      :focus-visible {
+        outline: 3px solid var(--or);
+        outline-offset: 2px;
+      }
+
+      /* ---- Chrome ---- */
+      .fmt-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem clamp(1rem, 4vw, 3rem);
+        background: var(--marine);
+        color: var(--blanc);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+      .fmt-back,
+      .fmt-brand {
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 0.8rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      .fmt-brand { color: var(--or-clair); }
+      .fmt-back:hover, .fmt-brand:hover { text-decoration: underline; }
+
+      .fmt-foot {
+        margin-top: 5rem;
+        padding: 2.5rem clamp(1rem, 4vw, 3rem);
+        background: var(--marine);
+        color: #b9c4d2;
+        font-size: 0.85rem;
+      }
+      .fmt-foot p { margin: 0 0 0.4rem; }
+      .fmt-foot-note { color: #7f8ea1; font-size: 0.78rem; max-width: 70ch; }
+
+      /* ---- Conteneur ---- */
+      .fmt-wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 clamp(1rem, 4vw, 3rem);
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,263 @@
+---
+import Formation from "../../../layouts/Formation.astro";
+import Quiz from "../../../components/Quiz.astro";
+import formation from "../../../data/formation.json";
+
+export function getStaticPaths() {
+  return formation.lecons.map((lecon) => {
+    const memeUc = formation.lecons
+      .filter((l) => l.uc === lecon.uc)
+      .sort((a, b) => a.ordre - b.ordre);
+    const i = memeUc.findIndex((l) => l.id === lecon.id);
+    return {
+      params: { lecon: lecon.id },
+      props: {
+        lecon,
+        uc: formation.ucs.find((u) => u.id === lecon.uc),
+        precedent: memeUc[i - 1] ?? null,
+        suivant: memeUc[i + 1] ?? null,
+      },
+    };
+  });
+}
+
+const { lecon, uc, precedent, suivant } = Astro.props;
+---
+
+<Formation title={lecon.titre} description={lecon.chapo}>
+  <article>
+    <header class="tete">
+      <div class="fmt-wrap">
+        <p class="fil">
+          <a href="/formations/monitorat">Espace formation</a>
+          <span aria-hidden="true">›</span>
+          <a href={`/formations/monitorat#${uc.id}`}>{uc.code} — {uc.titre}</a>
+        </p>
+        <h1>{lecon.titre}</h1>
+        <p class="chapo">{lecon.chapo}</p>
+        <p class="duree">≈ {lecon.duree} min de lecture · {lecon.quiz.length} questions</p>
+      </div>
+    </header>
+
+    <div class="fmt-wrap corps">
+      <aside class="objectifs">
+        <h2>À la fin de cette leçon, tu sauras</h2>
+        <ul>
+          {lecon.objectifs.map((o) => <li>{o}</li>)}
+        </ul>
+      </aside>
+
+      <div class="texte" set:html={lecon.contenu} />
+
+      {lecon.schemas.length > 0 && (
+        <section class="schemas">
+          <h2>Schémas</h2>
+          {lecon.schemas.map((s) => (
+            <figure>
+              <img src={s.src} alt={s.legende} loading="lazy" />
+              <figcaption>{s.legende}</figcaption>
+            </figure>
+          ))}
+        </section>
+      )}
+
+      <section class="retenir">
+        <h2>À retenir</h2>
+        <ul>
+          {lecon.aRetenir.map((r) => <li set:html={r} />)}
+        </ul>
+      </section>
+
+      {lecon.aEnrichir && (
+        <p class="todo"><strong>À compléter :</strong> {lecon.aEnrichir}</p>
+      )}
+
+      <Quiz leconId={lecon.id} questions={lecon.quiz} />
+
+      <nav class="nav">
+        {precedent ? (
+          <a class="nav-lien prec" href={`/formations/monitorat/${precedent.id}`}>
+            <span>Leçon précédente</span>
+            <strong>{precedent.titre}</strong>
+          </a>
+        ) : (
+          <span />
+        )}
+        {suivant ? (
+          <a class="nav-lien suiv" href={`/formations/monitorat/${suivant.id}`}>
+            <span>Leçon suivante</span>
+            <strong>{suivant.titre}</strong>
+          </a>
+        ) : (
+          <a class="nav-lien suiv" href="/formations/monitorat">
+            <span>Fin de l'unité</span>
+            <strong>Revenir au sommaire</strong>
+          </a>
+        )}
+      </nav>
+    </div>
+  </article>
+</Formation>
+
+<style>
+  .tete {
+    background: var(--marine);
+    color: var(--blanc);
+    padding: clamp(2.2rem, 6vw, 4rem) 0 clamp(1.8rem, 5vw, 3rem);
+  }
+  .fil {
+    margin: 0 0 1.4rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #8b9bb0;
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .fil a { color: var(--or-clair); text-decoration: none; }
+  .fil a:hover { text-decoration: underline; }
+  .tete h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); max-width: 22ch; }
+  .tete .chapo {
+    margin: 1rem 0 0;
+    font-size: 1.05rem;
+    color: #c3cedb;
+    max-width: 58ch;
+    font-style: italic;
+  }
+  .tete .duree {
+    margin: 1.4rem 0 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7f8ea1;
+  }
+
+  .corps { padding-top: 3rem; }
+
+  .objectifs {
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-left: 4px solid var(--marine);
+    border-radius: var(--rayon);
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 3rem;
+    max-width: var(--mesure);
+  }
+  .objectifs h2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--marine);
+    margin-bottom: 0.7rem;
+  }
+  .objectifs ul { margin: 0; padding-left: 1.1rem; }
+  .objectifs li { font-size: 0.92rem; margin-bottom: 0.3rem; }
+
+  .texte { max-width: var(--mesure); }
+  .texte :global(h3) {
+    font-size: 1.7rem;
+    color: var(--marine);
+    margin: 2.8rem 0 0.9rem;
+  }
+  .texte :global(p) { margin: 0 0 1.1rem; }
+  .texte :global(ul),
+  .texte :global(ol) { margin: 0 0 1.3rem; padding-left: 1.3rem; }
+  .texte :global(li) { margin-bottom: 0.45rem; }
+  .texte :global(strong) { color: var(--marine); font-weight: 600; }
+  .texte :global(em) { color: #3a4553; }
+  .texte :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.88rem;
+    background: var(--blanc);
+  }
+  .texte :global(th),
+  .texte :global(td) {
+    border: 1px solid var(--gris-clair);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+  }
+  .texte :global(th) { background: var(--marine); color: var(--blanc); font-weight: 600; }
+
+  .schemas { margin: 3.5rem 0 0; }
+  .schemas h2 {
+    font-size: 1.7rem;
+    color: var(--marine);
+    margin-bottom: 1.2rem;
+  }
+  .schemas figure {
+    margin: 0 0 2rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--rayon);
+    padding: 1rem;
+  }
+  .schemas img { width: 100%; height: auto; display: block; }
+  .schemas figcaption {
+    margin-top: 0.7rem;
+    font-size: 0.82rem;
+    color: var(--gris);
+    line-height: 1.5;
+  }
+
+  .retenir {
+    margin-top: 3.5rem;
+    background: var(--marine);
+    color: var(--blanc);
+    border-radius: var(--rayon);
+    padding: clamp(1.4rem, 4vw, 2.2rem);
+  }
+  .retenir h2 { color: var(--or); font-size: 1.7rem; margin-bottom: 1rem; }
+  .retenir ul { margin: 0; padding-left: 1.2rem; }
+  .retenir li { margin-bottom: 0.6rem; color: #dbe3ec; }
+  .retenir :global(strong) { color: var(--blanc); }
+  .retenir :global(em) { color: var(--or-clair); font-style: normal; }
+
+  .todo {
+    margin-top: 1.6rem;
+    padding: 0.9rem 1.1rem;
+    background: #fdf6e6;
+    border: 1px dashed var(--or);
+    border-radius: var(--rayon);
+    font-size: 0.85rem;
+    color: #6b5522;
+  }
+
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 4rem;
+  }
+  .nav-lien {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1.1rem 1.3rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--rayon);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease;
+  }
+  .nav-lien:hover { border-color: var(--marine); }
+  .nav-lien span {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--or);
+    font-weight: 600;
+  }
+  .nav-lien strong { font-weight: 500; font-size: 0.95rem; line-height: 1.4; }
+  .nav-lien.suiv { text-align: right; align-items: flex-end; }
+
+  @media (max-width: 620px) {
+    .nav { grid-template-columns: 1fr; }
+    .nav-lien.suiv { text-align: left; align-items: flex-start; }
+  }
+</style>

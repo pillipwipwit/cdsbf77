@@ -889,6 +889,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* Vidéos multiples */
 .videos-grille { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); }
 
+/* Galerie photos du club */
+.club-galerie { display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+.club-galerie .club-photo:first-child { grid-column: 1 / -1; }
+.club-photo { margin: 0; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-heavy); background: var(--white); }
+.club-photo img { display: block; width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3 / 2; transition: transform 0.5s ease; }
+.club-galerie .club-photo:first-child img { aspect-ratio: 16 / 7; }
+.club-photo:hover img { transform: scale(1.04); }
+.club-photo figcaption {
+    padding: 0.7rem 1rem; font-size: 0.9rem; color: var(--white);
+    background: var(--club-primaire, var(--blue-dark));
+}
+@media (max-width: 600px) {
+    .club-galerie .club-photo:first-child img { aspect-ratio: 3 / 2; }
+}
+
 /* Logo du club et liens */
 .club-logo {
     width: 110px; height: 110px; border-radius: 50%;
