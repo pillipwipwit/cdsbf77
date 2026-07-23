@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+
+const axes = [
+  {
+    icone: 'fa-people-carry',
+    titre: "L'aller-vers",
+    texte:
+      "Le comité déploie des créneaux hors les murs dans les quartiers prioritaires de la ville et les zones de revitalisation rurale, là où l'offre sportive manque et où la licence reste un obstacle. Séances de découverte gratuites, matériel fourni, encadrement diplômé.",
+  },
+  {
+    icone: 'fa-heart',
+    titre: 'Sport-santé',
+    texte:
+      "La savate se prête bien à une pratique adaptée à la condition physique de chacun : coordination, équilibre, endurance et confiance en soi. Le comité accompagne les clubs qui souhaitent ouvrir un créneau sport-santé et former leurs encadrants.",
+  },
+  {
+    icone: 'fa-school',
+    titre: 'Milieu scolaire et universitaire',
+    texte:
+      "Interventions en établissement, sections sportives, cycles d'initiation en éducation physique et sportive, partenariats avec l'UNSS et la FFSU. Une porte d'entrée vers le club pour des jeunes qui n'y seraient jamais venus d'eux-mêmes.",
+  },
+  {
+    icone: 'fa-briefcase',
+    titre: 'Savate en entreprise',
+    texte:
+      "Séances de savate forme et d'initiation sur le temps de travail ou à proximité immédiate, au service de la qualité de vie au travail et de la cohésion des équipes.",
+  },
+  {
+    icone: 'fa-hands-helping',
+    titre: 'Insertion et remobilisation',
+    texte:
+      "Parcours construits avec France Travail et les missions locales pour des demandeurs d'emploi éloignés de l'activité : reprise du rythme, confiance, travail en groupe et mise en relation avec les employeurs du territoire.",
+  },
+  {
+    icone: 'fa-seedling',
+    titre: 'Création et accompagnement de clubs',
+    texte:
+      "Le comité aide les porteurs de projet à créer leur association, à trouver un créneau et une salle, à former un encadrant et à monter leurs premiers dossiers de subvention.",
+  },
+];
+---
+
+<Base
+  title="Développement de la pratique – CDSBF77"
+  description="Développement de la savate en Seine-et-Marne et actions à fort impact social : aller-vers, sport-santé, milieu scolaire, entreprise, insertion et création de clubs."
+>
+  <section class="page-hero">
+    <p class="kicker">Développement</p>
+    <h1>Développer la pratique, agir sur le territoire</h1>
+    <p class="sous-titre">
+      Faire grandir la savate en Seine-et-Marne suppose d'aller chercher celles et ceux qui ne
+      poussent pas spontanément la porte d'un club. C'est le sens des actions à fort impact social
+      que le comité conduit avec ses clubs affiliés et ses partenaires institutionnels.
+    </p>
+  </section>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="info-grid">
+        {axes.map((a) => (
+          <div class="info-card">
+            <h3><i class={'fas ' + a.icone}></i>{a.titre}</h3>
+            <p>{a.texte}</p>
+          </div>
+        ))}
+      </div>
+
+      <section class="card visible" style="margin-top:2.5rem;">
+        <div class="card-content">
+          <h2 class="section-title">Vous portez un projet ?</h2>
+          <p>
+            Club affilié, collectivité, établissement scolaire, structure médico-sociale ou
+            entreprise : le comité peut vous accompagner dans le montage de l'action, la recherche
+            d'encadrement et l'identification des financements mobilisables.
+          </p>
+          <p style="text-align:center; margin-top:1.5rem;">
+            <a class="btn-or" href="/contact">Nous soumettre un projet</a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+</Base>

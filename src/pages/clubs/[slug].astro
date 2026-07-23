@@ -26,6 +26,7 @@ const styleClub = [
   '--club-primaire-clair:' + eclaircir(couleurs.primaire, 0.25),
   '--club-accent:' + couleurs.accent,
   '--club-halo:' + couleurs.accent + '40',
+  '--club-logo-fond:' + (club.logoFond || '#ffffff'),
 ].join(';');
 const titre = club.nom + (club.ville ? ' – Savate à ' + club.ville : '') + ' | CDSBF77';
 const description =
@@ -36,7 +37,12 @@ const description =
   <div class="club-scope" style={styleClub}>
   <section class="page-hero">
     {club.logo && (
-      <img class="club-logo" src={club.logo} alt={'Logo ' + club.nom} loading="eager" />
+      <div class="club-logo-bloc">
+        <div class="club-logo-cadre">
+          <img class="club-logo" src={club.logo} alt={'Logo ' + club.nom} loading="eager" />
+          <span class="club-logo-reflet" aria-hidden="true"></span>
+        </div>
+      </div>
     )}
     {club.logo && (liens.site || liens.facebook || liens.instagram || liens.youtube) && (
       <div class="logo-liens">
@@ -91,7 +97,12 @@ const description =
               <h3><i class="fas fa-map-marker-alt"></i>Salle</h3>
               {salles.length > 0 ? (
                 salles.map((salle) => (
-                  <p><strong>{salle.nom}</strong><br />{salle.adresse}</p>
+                  <p>
+                    <strong>{salle.nom}</strong><br />{salle.adresse}
+                    {(salle.disciplines || []).length > 0 && (
+                      <><br /><span class="salle-disciplines">{salle.disciplines.join(' · ')}</span></>
+                    )}
+                  </p>
                 ))
               ) : (
                 <p>Lieu d'entraînement en cours de mise à jour.</p>
@@ -103,6 +114,7 @@ const description =
               {contact.telephone && <p><a href={'tel:' + contact.telephone.replace(/\s/g, '')}><i class="fas fa-phone"></i> {contact.telephone}</a></p>}
               {contact.telephone2 && <p><a href={'tel:' + contact.telephone2.replace(/\s/g, '')}><i class="fas fa-phone"></i> {contact.telephone2}</a></p>}
               {contact.email && <p><a href={'mailto:' + contact.email}><i class="fas fa-envelope"></i> {contact.email}</a></p>}
+              {club.adresseSiege && <p class="siege"><i class="fas fa-inbox"></i> Courrier : {club.adresseSiege}</p>}
               {!contact.correspondant && !contact.telephone && !contact.email && <p>Coordonnées en cours de mise à jour.</p>}
             </div>
             <div class="info-card">

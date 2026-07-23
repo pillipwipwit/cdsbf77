@@ -1,5 +1,6 @@
 ---
 import '../styles/comite.css';
+import { ClientRouter } from 'astro:transitions';
 
 const {
   title = 'CDSBF77 – Savate boxe française en Seine-et-Marne',
@@ -12,7 +13,7 @@ const nav = [
   { href: '/disciplines', label: 'Disciplines' },
   { href: '/competitions', label: 'Compétitions' },
   { href: '/formations', label: 'Formations' },
-  { href: '/savate-adaptee', label: 'Savate adaptée' },
+  { href: '/developpement', label: 'Développement' },
   { href: '/actualites', label: 'Actualités' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -33,7 +34,9 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
     <meta property="og:type" content="website" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-    <noscript><style>.card { opacity: 1 !important; transform: none !important; }</style></noscript>
+    <noscript><style>.card { opacity: 1 !important; transform: none !important; }
+      .anim-cascade > * { opacity: 1 !important; transform: none !important; }</style></noscript>
+    <ClientRouter />
   </head>
   <body>
     <div class="particles" id="particles" aria-hidden="true"></div>
@@ -80,9 +83,18 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
     </footer>
 
     <script>
-      // Particules flottantes
-      const conteneur = document.getElementById('particles');
-      if (conteneur && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const sobre = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const tactile = () => window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+      // Barre de navigation : posée une seule fois, l'élément est requestionné à chaque appel
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navigation');
+        if (nav) nav.classList.toggle('scrolled', window.pageYOffset > 100);
+      }, { passive: true });
+
+      function particules() {
+        const conteneur = document.getElementById('particles');
+        if (!conteneur || sobre() || conteneur.childElementCount > 0) return;
         for (let i = 0; i < 20; i++) {
           const p = document.createElement('div');
           p.className = 'particle';
@@ -96,23 +108,101 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
         }
       }
 
-      // Effet de scroll sur la navigation
-      const nav = document.getElementById('navigation');
-      window.addEventListener('scroll', () => {
-        nav.classList.toggle('scrolled', window.pageYOffset > 100);
-      });
+      function apparitions() {
+        // Cartes pleine largeur
+        const obsCartes = new IntersectionObserver((entrees) => {
+          entrees.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); obsCartes.unobserve(e.target); } });
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+        document.querySelectorAll('.card').forEach((c) => obsCartes.observe(c));
 
-      // Apparition des cartes au défilement
-      const observer = new IntersectionObserver((entrees) => {
-        entrees.forEach((e) => { if (e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
-      document.querySelectorAll('.card').forEach((c) => observer.observe(c));
+        // Grilles : apparition en cascade, un enfant après l'autre
+        const grilles = document.querySelectorAll('.features-grid, .info-grid, .clubs-grid, .club-galerie');
+        const obsGrilles = new IntersectionObserver((entrees) => {
+          entrees.forEach((e) => {
+            if (!e.isIntersecting) return;
+            Array.from(e.target.children).forEach((enfant) => enfant.classList.add('revele'));
+            obsGrilles.unobserve(e.target);
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+        grilles.forEach((g) => {
+          g.classList.add('anim-cascade');
+          Array.from(g.children).forEach((enfant, i) => enfant.style.setProperty('--i', String(i)));
+          obsGrilles.observe(g);
+        });
+      }
 
-      // Année dynamique
-      const annee = new Date().getFullYear();
-      document.querySelectorAll('footer p').forEach((p) => {
-        if (p.textContent.includes('©')) p.textContent = p.textContent.replace('2026', String(annee));
-      });
+      function inclinaison3d() {
+        if (sobre() || tactile()) return;
+        const cartes = document.querySelectorAll('.feature-card, .club-card, .info-card, .partner-item');
+        const AMPLITUDE = 7;   // degrés maximum
+        const ELEVATION = 10;  // pixels de soulèvement
+        cartes.forEach((carte) => {
+          carte.classList.add('carte-3d');
+          let trame = null;
+          carte.addEventListener('pointermove', (ev) => {
+            if (trame) return;
+            trame = requestAnimationFrame(() => {
+              trame = null;
+              const r = carte.getBoundingClientRect();
+              const x = (ev.clientX - r.left) / r.width - 0.5;
+              const y = (ev.clientY - r.top) / r.height - 0.5;
+              carte.classList.add('incline');
+              carte.style.transform =
+                'perspective(1100px) rotateX(' + (-y * AMPLITUDE * 2).toFixed(2) + 'deg)' +
+                ' rotateY(' + (x * AMPLITUDE * 2).toFixed(2) + 'deg)' +
+                ' translateY(-' + ELEVATION + 'px) scale(1.02)';
+            });
+          });
+          carte.addEventListener('pointerleave', () => {
+            if (trame) { cancelAnimationFrame(trame); trame = null; }
+            carte.classList.remove('incline');
+            carte.style.transform = '';
+          });
+        });
+      }
+
+      function logoClub() {
+        if (sobre() || tactile()) return;
+        const bandeau = document.querySelector('.club-scope .page-hero');
+        const bloc = document.querySelector('.club-logo-bloc');
+        if (!bandeau || !bloc) return;
+        let trame = null;
+        bandeau.addEventListener('pointermove', (ev) => {
+          if (trame) return;
+          trame = requestAnimationFrame(() => {
+            trame = null;
+            const r = bandeau.getBoundingClientRect();
+            const x = (ev.clientX - r.left) / r.width - 0.5;
+            const y = (ev.clientY - r.top) / r.height - 0.5;
+            bloc.style.transform =
+              'perspective(900px) rotateX(' + (-y * 12).toFixed(2) + 'deg) rotateY(' + (x * 12).toFixed(2) + 'deg)';
+          });
+        });
+        bandeau.addEventListener('pointerleave', () => {
+          if (trame) { cancelAnimationFrame(trame); trame = null; }
+          bloc.style.transition = 'transform 0.6s cubic-bezier(0.22, 1.4, 0.36, 1)';
+          bloc.style.transform = '';
+          setTimeout(() => { bloc.style.transition = ''; }, 650);
+        });
+      }
+
+      function annee() {
+        const a = new Date().getFullYear();
+        document.querySelectorAll('footer p').forEach((p) => {
+          if (p.textContent.includes('©')) p.textContent = p.textContent.replace('2026', String(a));
+        });
+      }
+
+      function initialiser() {
+        particules();
+        apparitions();
+        inclinaison3d();
+        logoClub();
+        annee();
+      }
+
+      // Se déclenche au premier chargement comme après chaque transition de page
+      document.addEventListener('astro:page-load', initialiser);
     </script>
   </body>
 </html>

@@ -65,7 +65,8 @@
       "couleurs": {
         "primaire": "#0f3460",
         "accent": "#d4af37"
-      }
+      },
+      "logo": "/logos/savate-pour-tous.png"
     },
     {
       "slug": "crecy",
@@ -241,7 +242,8 @@
         {
           "url": "https://player.vimeo.com/video/1209198598?h=50dcfc15c9"
         }
-      ]
+      ],
+      "logo": "/logos/champs.png"
     },
     {
       "slug": "vulaines-sur-seine",
@@ -360,7 +362,9 @@
           "url": "https://player.vimeo.com/video/1097120804"
         }
       ],
-      "adresseSiege": "3 square Nicolas Adam, 77680 Roissy-en-Brie"
+      "adresseSiege": "3 square Nicolas Adam, 77680 Roissy-en-Brie",
+      "logo": "/logos/roissy.jpg",
+      "logoFond": "#000000"
     },
     {
       "slug": "lagny",
@@ -405,7 +409,7 @@
           "url": "https://player.vimeo.com/video/1209198117?h=6ea168bfd8"
         }
       ],
-      "logo": "https://i.postimg.cc/YSyVRfGr/452745923-950097770460749-1526358719428855874-n.jpg"
+      "logo": "/logos/lagny.png"
     },
     {
       "slug": "moussy",
@@ -439,7 +443,8 @@
         {
           "url": "https://player.vimeo.com/video/1209198159?h=2e8e955124"
         }
-      ]
+      ],
+      "logo": "/logos/moussy.jpg"
     },
     {
       "slug": "presles-en-brie",
@@ -524,7 +529,8 @@
           "titre": "SVES – Marc Rodier"
         }
       ],
-      "logo": "https://i.postimg.cc/j2BFTs6G/logoSVES.png"
+      "logo": "/logos/serris.jpg",
+      "logoFond": "#000000"
     },
     {
       "slug": "montereau",
@@ -731,7 +737,8 @@
         {
           "url": "https://player.vimeo.com/video/1209197991?h=a4925e93a2"
         }
-      ]
+      ],
+      "logo": "/logos/grandpuits.png"
     },
     {
       "slug": "neufmoutiers",
@@ -808,21 +815,31 @@
       "labels": [],
       "salles": [
         {
-          "nom": "Gymnase des Terrasses",
-          "adresse": "77210 Avon"
+          "nom": "Gymnase Les Terrasses",
+          "adresse": "27 avenue du Général de Gaulle, 77210 Avon",
+          "disciplines": [
+            "Savate boxe française"
+          ]
+        },
+        {
+          "nom": "Gymnase Sportif de la Vallée",
+          "adresse": "2 rue Georges Clemenceau, 77210 Avon",
+          "disciplines": [
+            "Canne de combat"
+          ]
         }
       ],
       "horaires": [],
       "contact": {
-        "telephone": "06 18 20 66 05",
-        "email": "jeanluc.auzou@gmail.com",
-        "correspondant": "Jean-Luc Auzou",
-        "telephone2": "06 62 50 49 68"
+        "correspondant": "Brice Thiron",
+        "telephone": "07 49 11 69 49",
+        "email": "bfccavon@gmail.com"
       },
       "liens": {
         "ffsavate": "https://www.ffsavate.com/club-infos/boxe-francaise-canne-de-combat-avon/",
         "site": "https://sites.google.com/site/avonboxe/",
-        "facebook": "https://www.facebook.com/Boxe.francaise.Canne.de.combat.Avon"
+        "facebook": "https://www.facebook.com/Boxe.francaise.Canne.de.combat.Avon",
+        "instagram": "https://www.instagram.com/avon_boxe/"
       },
       "aCompleter": true,
       "couleurs": {
@@ -834,8 +851,9 @@
           "url": "https://player.vimeo.com/video/1209198748?h=eea3132792"
         }
       ],
-      "commentaire": "Entraînements lundi, mardi et jeudi soir (créneaux exacts à confirmer auprès du club)",
-      "logo": "https://i.postimg.cc/RVyBCmVC/473267608-982246077289838-2693505187298910525-n.jpg"
+      "logo": "/logos/avon.jpg",
+      "adresseSiege": "2 rue des Yèbles, 77210 Avon",
+      "logoFond": "#2f9683"
     },
     {
       "slug": "ozoir",
@@ -870,7 +888,8 @@
       "couleurs": {
         "primaire": "#212121",
         "accent": "#ff6b2b"
-      }
+      },
+      "logo": "/logos/ozoir.jpg"
     },
     {
       "slug": "rebais",
@@ -922,7 +941,9 @@
         {
           "url": "https://player.vimeo.com/video/1209197827?h=e945d9d19d"
         }
-      ]
+      ],
+      "logo": "/logos/rebais.jpg",
+      "logoFond": "#241e20"
     },
     {
       "slug": "gouaix",
@@ -989,7 +1010,8 @@
           "url": "https://player.vimeo.com/video/1209206245?h=e59ae96830",
           "titre": "Présentation par Éric Genonceau, président du club"
         }
-      ]
+      ],
+      "logo": "/logos/gouaix.jpg"
     },
     {
       "slug": "st-soupplets",
@@ -1016,7 +1038,8 @@
       "couleurs": {
         "primaire": "#1a1a2e",
         "accent": "#e94560"
-      }
+      },
+      "logo": "/logos/st-soupplets.jpg"
     },
     {
       "slug": "fontenay-tresigny",
@@ -1067,7 +1090,8 @@
         {
           "url": "https://player.vimeo.com/video/1097120900"
         }
-      ]
+      ],
+      "logo": "/logos/fontenay-tresigny.jpg"
     },
     {
       "slug": "collegien",
@@ -1108,7 +1132,9 @@
           "url": "https://player.vimeo.com/video/1059305330?h=3b39ea4117"
         }
       ],
-      "commentaire": "Trois créneaux hebdomadaires (adultes et enfants), grille exacte à confirmer sur bfscollegien.fr"
+      "commentaire": "Trois créneaux hebdomadaires (adultes et enfants), grille exacte à confirmer sur bfscollegien.fr",
+      "logo": "/logos/collegien.jpg",
+      "logoFond": "#101010"
     },
     {
       "slug": "dampmart",
@@ -1143,7 +1169,9 @@
       "couleurs": {
         "primaire": "#0f3460",
         "accent": "#d4af37"
-      }
+      },
+      "logo": "/logos/dampmart.jpg",
+      "logoFond": "#101729"
     },
     {
       "slug": "la-ferte-sous-jouarre",
@@ -1209,7 +1237,8 @@
       "couleurs": {
         "primaire": "#1A1A1A",
         "accent": "#FF0000"
-      }
+      },
+      "logo": "/logos/la-ferte-sous-jouarre.jpg"
     },
     {
       "slug": "coupvray",
@@ -1246,7 +1275,8 @@
         {
           "url": "https://player.vimeo.com/video/1054936542"
         }
-      ]
+      ],
+      "logo": "/logos/coupvray.jpg"
     },
     {
       "slug": "usm",
@@ -1291,7 +1321,8 @@
       "couleurs": {
         "primaire": "#05005c",
         "accent": "#0066cc"
-      }
+      },
+      "logo": "/logos/usm.jpg"
     },
     {
       "slug": "meaux",
@@ -1386,7 +1417,8 @@
         {
           "url": "https://player.vimeo.com/video/1209198824?h=b795f2994c"
         }
-      ]
+      ],
+      "logo": "/logos/meaux.png"
     },
     {
       "slug": "courtry",
@@ -1558,7 +1590,7 @@
           "url": "https://player.vimeo.com/video/1056286137?h=c2c79526ee"
         }
       ],
-      "logo": "https://i.postimg.cc/1zchKN04/6866b3b3-9ac3-4697-ba06-8b576ba53ad4.jpg"
+      "logo": "/logos/coulommiers.jpg"
     }
   ]
 }

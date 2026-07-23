@@ -807,6 +807,7 @@ table.horaires tr:last-child td { border-bottom: 0; }
 /* Cartes clubs (annuaire) */
 .clubs-grid { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
 .club-card {
+    position: relative;
     background: var(--white); border-radius: 20px; padding: 1.7rem;
     box-shadow: var(--shadow-light); transition: var(--transition);
     display: flex; flex-direction: column; gap: 0.5rem;
@@ -818,6 +819,8 @@ table.horaires tr:last-child td { border-bottom: 0; }
     font-size: 0.8rem; font-weight: 600; letter-spacing: 2px;
     text-transform: uppercase; color: var(--gold-dark);
 }
+.club-card:has(.club-vignette-logo) .ville,
+.club-card:has(.club-vignette-logo) h3 { padding-right: 62px; }
 .club-card h3 { font-family: 'Bebas Neue', cursive; font-size: 1.5rem; letter-spacing: 1.5px; color: var(--blue-dark); margin: 0; }
 .club-card .disciplines { font-size: 0.85rem; color: var(--gray-medium); }
 .club-card .pied { margin-top: auto; display: flex; justify-content: space-between; align-items: center; padding-top: 0.8rem; }
@@ -905,13 +908,80 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 /* Logo du club et liens */
-.club-logo {
-    width: 110px; height: 110px; border-radius: 50%;
-    object-fit: cover; background: var(--white);
-    border: 3px solid var(--club-accent, var(--gold));
-    box-shadow: 0 8px 25px rgba(0,0,0,0.35);
-    position: relative; z-index: 1;
+/* ---- Logo du club : anneau tournant, halo, reflet et entrée à ressort ---- */
+.club-logo-bloc {
+    position: relative;
+    width: clamp(170px, 26vw, 220px);
+    aspect-ratio: 1;
+    margin: 0 auto 0.4rem;
+    display: grid; place-items: center;
+    z-index: 1;
 }
+.club-logo-bloc::before {
+    content: ''; position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(from 0turn,
+        transparent 0turn,
+        var(--club-accent, var(--gold)) 0.18turn,
+        transparent 0.42turn,
+        var(--club-primaire-clair, var(--blue)) 0.68turn,
+        transparent 0.92turn);
+    animation: anneau-club 7s linear infinite;
+}
+.club-logo-bloc::after {
+    content: ''; position: absolute; inset: 7%; border-radius: 50%;
+    box-shadow: 0 0 0 0 var(--club-halo, rgba(212,175,55,0.4));
+    animation: halo-club 3s ease-out infinite;
+    pointer-events: none;
+}
+.club-logo-cadre {
+    position: relative; z-index: 1;
+    width: 86%; aspect-ratio: 1;
+    border-radius: 50%; overflow: hidden;
+    background: var(--club-logo-fond, var(--white));
+    box-shadow: 0 10px 30px rgba(0,0,0,0.38);
+    transition: transform 0.5s cubic-bezier(0.22, 1.4, 0.36, 1);
+    animation: entree-logo 0.9s cubic-bezier(0.22, 1.4, 0.36, 1) both;
+}
+.club-logo {
+    width: 100%; height: 100%; display: block;
+    object-fit: contain; padding: 11px;
+}
+.club-logo-reflet {
+    position: absolute; inset: -20%;
+    background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.78) 50%, transparent 62%);
+    transform: translateX(-140%);
+    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+}
+.club-logo-bloc:hover .club-logo-reflet { transform: translateX(140%); }
+.club-logo-bloc:hover .club-logo-cadre { transform: scale(1.05); }
+
+@keyframes anneau-club { to { transform: rotate(1turn); } }
+@keyframes halo-club {
+    0%   { box-shadow: 0 0 0 0 var(--club-halo, rgba(212,175,55,0.4)); }
+    70%  { box-shadow: 0 0 0 26px rgba(0,0,0,0); }
+    100% { box-shadow: 0 0 0 0 rgba(0,0,0,0); }
+}
+@keyframes entree-logo {
+    0%   { opacity: 0; transform: scale(0.62) rotate(-14deg); }
+    62%  { opacity: 1; transform: scale(1.09) rotate(4deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* ---- Logo miniature dans l'annuaire ---- */
+.club-vignette-logo {
+    position: absolute; top: 1rem; right: 1rem;
+    width: 54px; height: 54px; border-radius: 50%;
+    object-fit: contain; padding: 5px; background: var(--vignette-fond, var(--white));
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    filter: grayscale(1); opacity: 0.55;
+    transition: filter 0.45s ease, opacity 0.45s ease, transform 0.5s cubic-bezier(0.22, 1.4, 0.36, 1);
+}
+.club-card:hover .club-vignette-logo {
+    filter: grayscale(0); opacity: 1; transform: scale(1.12) rotate(-4deg);
+}
+.salle-disciplines { font-size: 0.85rem; opacity: 0.75; font-style: italic; }
+.siege { font-size: 0.9rem; opacity: 0.85; }
 .logo-liens {
     display: flex; gap: 0.9rem; justify-content: center;
     margin: 0.8rem 0 1rem; position: relative; z-index: 1;
@@ -926,3 +996,49 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     backdrop-filter: blur(4px);
 }
 .logo-liens a:hover { background: var(--club-accent, var(--gold)); border-color: var(--club-accent, var(--gold)); transform: translateY(-3px); }
+
+/* ============================================
+   EFFETS D'INTERFACE
+   Cascade au défilement, inclinaison 3D au survol.
+   Tout est neutralisé par prefers-reduced-motion.
+   ============================================ */
+
+.features-grid, .info-grid, .clubs-grid, .partners-grid { perspective: 1100px; }
+
+.anim-cascade > * {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i, 0) * 80ms);
+}
+.anim-cascade > .revele { opacity: 1; transform: none; }
+
+.carte-3d {
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 0.55s cubic-bezier(0.22, 1.4, 0.36, 1), box-shadow 0.4s ease;
+}
+.carte-3d.incline { transition: transform 0.1s linear, box-shadow 0.4s ease; }
+.carte-3d > * { transform: translateZ(0.01px); }
+
+@media (hover: none), (pointer: coarse) {
+    .carte-3d { transform: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .anim-cascade > * { opacity: 1 !important; transform: none !important; }
+    .carte-3d { transform: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) { animation: none !important; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    .club-logo-bloc::before, .club-logo-bloc::after, .club-logo-cadre { animation: none !important; }
+    .club-logo-reflet { display: none; }
+}

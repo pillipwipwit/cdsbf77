@@ -36,6 +36,7 @@ const disciplines = [...new Set(clubs.flatMap((c) => c.disciplines || []))];
             data-ville={(club.ville || '').toLowerCase()}
             data-disciplines={(club.disciplines || []).join('|')}
           >
+            {club.logo && <img class="club-vignette-logo" src={club.logo} alt="" loading="lazy" decoding="async" style={club.logoFond ? '--vignette-fond:' + club.logoFond : undefined} />}
             <p class="ville" style={'color:' + (club.couleurs?.primaire || '#b8941f')}>{club.ville || 'Commune à confirmer'}</p>
             <h3>{club.nom}</h3>
             <p class="disciplines">{(club.disciplines || []).join(' · ')}</p>
