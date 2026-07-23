@@ -2,6 +2,16 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/savate-adaptee",
+      "destination": "/developpement",
+      "permanent": true
+    },
+    {
+      "source": "/para-savate",
+      "destination": "/developpement",
+      "permanent": false
+    },
+    {
       "source": "/blank-2",
       "destination": "/disciplines",
       "permanent": true
