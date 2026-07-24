@@ -5,43 +5,7 @@ import { ClientRouter } from 'astro:transitions';
 const {
   title = 'CDSBF77 – Savate boxe française en Seine-et-Marne',
   description = 'Le Comité Départemental de Savate Boxe Française de Seine-et-Marne : annuaire des clubs, disciplines, compétitions et formations.',
-  jsonLd = null,
 } = Astro.props;
-
-const urlCanonique = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = 'https://i.postimg.cc/zfhFq0j9/logocdsbf.jpg';
-
-const orgJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'SportsOrganization',
-  name: 'Comité Départemental de Savate Boxe Française de Seine-et-Marne',
-  alternateName: 'CDSBF77',
-  sport: 'Savate boxe française',
-  url: 'https://www.cdsbf77.org',
-  logo: ogImage,
-  email: 'cdsbf77@gmail.com',
-  telephone: '+33626498259',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Maison des Sports, 12 B rue du Président Despatys',
-    postalCode: '77000',
-    addressLocality: 'Melun',
-    addressCountry: 'FR',
-  },
-  areaServed: {
-    '@type': 'AdministrativeArea',
-    name: 'Seine-et-Marne',
-  },
-  parentOrganization: {
-    '@type': 'SportsOrganization',
-    name: 'Fédération Française de Savate Boxe Française et Disciplines Associées',
-    url: 'https://www.ffsavate.com',
-  },
-  sameAs: [
-    'https://www.facebook.com/profile.php?id=100088440284322',
-    'https://www.instagram.com/comite_77_savate_bf/',
-  ],
-};
 
 const nav = [
   { href: '/', label: 'Accueil' },
@@ -68,15 +32,6 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={urlCanonique} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="fr_FR" />
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
-    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <noscript><style>.card { opacity: 1 !important; transform: none !important; }
@@ -110,13 +65,13 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
           <a href="https://www.instagram.com/comite_77_savate_bf/" class="social-link" aria-label="Instagram" rel="noopener">
             <i class="fab fa-instagram"></i>
           </a>
-          <a href="mailto:cdsbf77@gmail.com" class="social-link" aria-label="Email">
+          <a href="mailto:contact@cdsbf77.org" class="social-link" aria-label="Email">
             <i class="fas fa-envelope"></i>
           </a>
         </div>
         <p>© 2026 - Comité Départemental de Savate Boxe Française de Seine-et-Marne</p>
         <p>
-          <a href="mailto:cdsbf77@gmail.com" style="color: var(--gold); text-decoration: none;">cdsbf77@gmail.com</a>
+          <a href="mailto:contact@cdsbf77.org" style="color: var(--gold); text-decoration: none;">contact@cdsbf77.org</a>
           &nbsp;·&nbsp;
           <a href="/liens" style="color: var(--gold); text-decoration: none;">Liens utiles</a>
           &nbsp;·&nbsp;
