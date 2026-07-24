@@ -8,9 +8,14 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.0.0",
+    "@astrojs/react": "^6.0.1",
     "@astrojs/sitemap": "^3.2.0",
+    "@fontsource/archivo": "^5.1.0",
     "@fontsource/barlow-condensed": "^5.1.0",
-    "@fontsource/archivo": "^5.1.0"
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^5.0.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3"
   }
 }
