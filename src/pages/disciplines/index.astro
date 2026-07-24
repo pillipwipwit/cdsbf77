@@ -1,31 +1,86 @@
 ---
 import Base from '../../layouts/Base.astro';
+
 const disciplines = [
-  { icone: 'fa-fist-raised', nom: 'Savate boxe française', texte: "Sport de combat né en France au XIXe siècle : on touche avec les pieds chaussés et les poings gantés. Deux formes de pratique : l'assaut, où seule la touche compte, et le combat, réservé aux tireurs confirmés." },
-  { icone: 'fa-walking', nom: 'Canne de combat', texte: "L'escrime française à la canne de châtaignier : vitesse, précision et élégance. Une discipline patrimoniale spectaculaire, accessible dès le plus jeune âge." },
-  { icone: 'fa-heartbeat', nom: 'Savate forme', texte: "Le fitness version savate : des enchaînements pieds-poings en musique, sans opposition. Cardio, renforcement et technique, sans toucher ni être touché." },
-  { icone: 'fa-shield-alt', nom: 'Savate défense', texte: "La déclinaison self-défense de la savate : apprendre à se protéger avec des techniques simples et efficaces, dans un cadre réglementé et progressif." },
+  {
+    icone: 'fa-fist-raised',
+    nom: 'Savate boxe française',
+    texte:
+      "Sport de combat né en France au XIXe siècle : on touche avec les pieds chaussés et les poings gantés. Deux formes de pratique : l'assaut, où seule la touche compte, et le combat, réservé aux tireurs confirmés.",
+    videos: [],
+  },
+  {
+    icone: 'fa-shield-alt',
+    nom: 'Savate défense',
+    texte:
+      "La savate défense est la déclinaison self-défense de la savate. On y apprend à évaluer une situation, à se dégager, à riposter avec des techniques simples et éprouvées, dans un cadre réglementé et progressif. La pédagogie part de mises en situation concrètes, puis construit des réponses proportionnées. L'objectif n'est pas de fabriquer des combattants mais de donner à chacun des repères, de la lucidité et de la confiance.",
+    videos: [
+      { url: 'https://player.vimeo.com/video/1212576947?h=5fbc3ce719', titre: 'Savate défense en Seine-et-Marne' },
+      { url: 'https://player.vimeo.com/video/1212576894?h=ebb38e4898', titre: 'Savate défense : mises en situation' },
+    ],
+  },
+  {
+    icone: 'fa-heartbeat',
+    nom: 'Savate forme',
+    texte:
+      "La savate forme reprend les enchaînements pieds-poings de la boxe française et les transforme en séance de fitness en musique, sans opposition ni contact. Cardio, renforcement musculaire, coordination et mémoire des enchaînements : la séance sollicite le corps entier tout en restant accessible à tous les niveaux. C'est souvent la première porte d'entrée vers la savate pour un public qui ne se destinait pas aux sports de combat.",
+    videos: [
+      { url: 'https://player.vimeo.com/video/1212576912?h=2f0e7497ab', titre: 'Savate forme en club' },
+    ],
+  },
+  {
+    icone: 'fa-walking',
+    nom: 'Canne de combat',
+    texte:
+      "L'escrime française à la canne de châtaignier : vitesse, précision et élégance. Discipline patrimoniale et spectaculaire, la canne se pratique dès le plus jeune âge. Les touches sont portées avec une arme légère et les assauts se jouent autant sur le déplacement et l'esquive que sur la frappe, ce qui en fait une école remarquable de motricité et de tactique.",
+    videos: [
+      { url: 'https://player.vimeo.com/video/1212576892?h=c83fe8e458', titre: 'Canne de combat en Seine-et-Marne' },
+    ],
+  },
 ];
 ---
+
 <Base
   title="Les disciplines – CDSBF77"
-  description="Savate boxe française, canne de combat, savate forme et savate défense : quatre disciplines enseignées dans les clubs de Seine-et-Marne."
+  description="Savate boxe française, canne de combat, savate forme et savate défense : quatre disciplines enseignées dans les clubs de Seine-et-Marne, en images."
 >
   <section class="page-hero">
     <p class="kicker">Disciplines</p>
     <h1>Quatre façons de pratiquer</h1>
+    <p class="sous-titre">
+      La savate boxe française est le cœur de la pratique. Autour d'elle, trois disciplines
+      associées permettent à chacun de trouver la forme qui lui convient : se défendre, se
+      dépenser ou manier la canne. Les images ci-dessous sont tournées dans les clubs du
+      département.
+    </p>
   </section>
+
   <main class="main-content">
     <div class="container">
-      <div class="features-grid">
-        {disciplines.map((d) => (
-          <div class="feature-card">
-            <div class="feature-icon"><i class={'fas ' + d.icone}></i></div>
-            <h3 class="feature-title">{d.nom}</h3>
-            <p class="feature-description">{d.texte}</p>
+      {disciplines.map((d) => (
+        <section class="card visible" style="margin-bottom:2.5rem;">
+          <div class="card-content">
+            <h2 class="section-title"><i class={'fas ' + d.icone} style="margin-right:0.6rem;"></i>{d.nom}</h2>
+            <p>{d.texte}</p>
+            {d.videos.length > 0 && (
+              <div class={d.videos.length > 1 ? 'videos-grille' : ''} style="margin-top:1.5rem;">
+                {d.videos.map((v) => (
+                  <div class="video-embed">
+                    <iframe
+                      src={v.url}
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowfullscreen
+                      title={v.titre}
+                      loading="lazy"
+                    ></iframe>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-        ))}
-      </div>
+        </section>
+      ))}
+
       <p style="text-align:center; margin-top:2.5rem;">
         <a class="btn-or" href="/clubs">Trouver un club qui enseigne ces disciplines</a>
       </p>
