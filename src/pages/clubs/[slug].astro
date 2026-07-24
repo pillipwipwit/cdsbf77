@@ -28,12 +28,58 @@ const styleClub = [
   '--club-halo:' + couleurs.accent + '40',
   '--club-logo-fond:' + (club.logoFond || '#ffffff'),
 ].join(';');
-const titre = club.nom + (club.ville ? ' – Savate à ' + club.ville : '') + ' | CDSBF77';
+const titre = club.nom + ' – Savate boxe française à ' + (club.ville || 'Seine-et-Marne') + ' | CDSBF77';
+const listeDisciplines = (club.disciplines || []).join(', ');
 const description =
-  'Savate boxe française à ' + (club.ville || 'Seine-et-Marne') +
-  ' avec ' + club.nom + ' : disciplines, horaires et contact.';
+  'Club de savate boxe française à ' + (club.ville || 'Seine-et-Marne') + ' (Seine-et-Marne)' +
+  (listeDisciplines ? ' : ' + listeDisciplines + '.' : '.') +
+  ' Horaires, salles et contact de ' + club.nom + ', club affilié à la Fédération Française de Savate.';
+
+const urlFiche = new URL('/clubs/' + club.slug + '/', Astro.site).href;
+const salleprincipale = salles[0] || null;
+const sameAs = [liens.site, liens.facebook, liens.instagram, liens.youtube].filter(Boolean);
+
+const clubJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'SportsClub',
+      name: club.nom,
+      sport: 'Savate boxe française',
+      url: urlFiche,
+      ...(club.logo ? { image: new URL(club.logo, Astro.site).href } : {}),
+      ...(contact.telephone ? { telephone: contact.telephone.replace(/\s/g, '') } : {}),
+      ...(contact.email ? { email: contact.email } : {}),
+      ...(salleprincipale
+        ? {
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: salleprincipale.adresse,
+              ...(club.codePostal ? { postalCode: club.codePostal } : {}),
+              ...(club.ville ? { addressLocality: club.ville } : {}),
+              addressCountry: 'FR',
+            },
+          }
+        : {}),
+      ...(sameAs.length ? { sameAs } : {}),
+      memberOf: {
+        '@type': 'SportsOrganization',
+        name: 'Comité Départemental de Savate Boxe Française de Seine-et-Marne',
+        url: 'https://www.cdsbf77.org',
+      },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://www.cdsbf77.org/' },
+        { '@type': 'ListItem', position: 2, name: 'Clubs', item: 'https://www.cdsbf77.org/clubs/' },
+        { '@type': 'ListItem', position: 3, name: club.nom, item: urlFiche },
+      ],
+    },
+  ],
+};
 ---
-<Base title={titre} description={description}>
+<Base title={titre} description={description} jsonLd={clubJsonLd}>
   <div class="club-scope" style={styleClub}>
   <section class="page-hero">
     {club.logo && (

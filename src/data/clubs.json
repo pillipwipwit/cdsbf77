@@ -6,11 +6,12 @@
     "comite": {
       "nom": "Comité Départemental de Savate Boxe Française de Seine-et-Marne (CDSBF77)",
       "president": "Cédric Senez",
-      "adresse": "24 avenue Franklin Roosevelt, 77100 Meaux",
+      "adresse": "Maison des Sports, 12 B rue du Président Despatys, 77000 Melun",
       "telephone": "06 26 49 82 59",
       "instagram": "https://www.instagram.com/comite_77_savate_bf/",
       "facebook": "https://www.facebook.com/profile.php?id=100088440284322",
-      "ligue": "Île-de-France"
+      "ligue": "Île-de-France",
+      "email": "cdsbf77@gmail.com"
     },
     "notes": [
       "Sources : pages fournies par le comité (juillet 2026), ffsavate.com, sites des clubs",
@@ -359,7 +360,13 @@
       },
       "videos": [
         {
-          "url": "https://player.vimeo.com/video/1097120804"
+          "url": "https://player.vimeo.com/video/1212576879?h=ef114e5444"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1212576915?h=dcc12328fc"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1212576934?h=a6d9597e62"
         }
       ],
       "adresseSiege": "3 square Nicolas Adam, 77680 Roissy-en-Brie",
@@ -481,10 +488,13 @@
       },
       "videos": [
         {
-          "url": "https://player.vimeo.com/video/1097120452"
+          "url": "https://player.vimeo.com/video/1212576851?h=6effe2821b"
         },
         {
-          "url": "https://player.vimeo.com/video/1097120468"
+          "url": "https://player.vimeo.com/video/1212576827?h=658c46a33b"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1212576950?h=eed1b6a80d"
         }
       ]
     },
@@ -940,6 +950,15 @@
       "videos": [
         {
           "url": "https://player.vimeo.com/video/1209197827?h=e945d9d19d"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1212576951?h=51b0a4fc2e"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1212576946?h=651828e5a4"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1212576871?h=c8c68c763c"
         }
       ],
       "logo": "/logos/rebais.jpg",
@@ -1089,6 +1108,12 @@
       "videos": [
         {
           "url": "https://player.vimeo.com/video/1097120900"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1212576965?h=0a650e0609"
+        },
+        {
+          "url": "https://player.vimeo.com/video/1212576862?h=7dea303b74"
         }
       ],
       "logo": "/logos/fontenay-tresigny.jpg"
