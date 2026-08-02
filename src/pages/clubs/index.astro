@@ -1,0 +1,286 @@
+---
+import Base from '../../layouts/Base.astro';
+import donnees from '../../data/clubs.json';
+import Icone from '../../components/Icone.astro';
+
+const clubs = [...donnees.clubs].sort((a, b) =>
+  (a.ville || 'zzz').localeCompare(b.ville || 'zzz', 'fr')
+);
+const disciplines = [...new Set(clubs.flatMap((c) => c.disciplines || []))];
+---
+<Base
+  title="Les clubs de savate en Seine-et-Marne – CDSBF77"
+  description="Annuaire des clubs de savate boxe française, canne de combat, savate forme et savate défense affiliés en Seine-et-Marne."
+>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+      <p class="surtitre">Annuaire</p>
+      <h1>Trouver son club</h1>
+      <p class="accroche">
+        {clubs.length} clubs affiliés à la Fédération Française de Savate, dans
+        tout le département. Filtrez par commune ou par discipline.
+      </p>
+      <p class="bandeau-action">
+        <a class="bouton bouton--plein" href="/contacter">Horaires et tarifs des clubs</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="enveloppe">
+      <div class="filtres">
+        <label class="champ">
+          <span class="champ-icone"><Icone nom="lieu" taille="1.05rem" /></span>
+          <input id="recherche" type="search" placeholder="Ville ou nom de club…" aria-label="Rechercher un club" />
+        </label>
+        <label class="champ champ--select">
+          <select id="discipline" aria-label="Filtrer par discipline">
+            <option value="">Toutes les disciplines</option>
+            {disciplines.map((d) => <option value={d}>{d}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <p id="compteur" class="compteur" aria-live="polite" hidden></p>
+
+      <div class="grille-clubs" id="liste-clubs">
+        {clubs.map((club) => (
+          <article
+            class="club"
+            style={`--teinte: ${club.couleurs?.accent || '#d4af37'}; --teinte-fonce: ${club.couleurs?.primaire || '#0f3460'}`}
+            data-nom={club.nom.toLowerCase()}
+            data-ville={(club.ville || '').toLowerCase()}
+            data-disciplines={(club.disciplines || []).join('|')}
+          >
+            <a class="club-lien" href={'/clubs/' + club.slug}>
+              <span class="sr-only">Voir la fiche de {club.nom}</span>
+            </a>
+
+            {club.logo && (
+              <img class="club-logo" src={club.logo} alt="" loading="lazy" decoding="async"
+                   style={club.logoFond ? '--logo-fond:' + club.logoFond : undefined} />
+            )}
+
+            <p class="club-ville">{club.ville || 'Commune à confirmer'}</p>
+            <h2 class="club-nom">{club.nom}</h2>
+            <p class="club-disciplines">{(club.disciplines || []).join(' · ')}</p>
+
+            <div class="club-pied">
+              <span class="club-fiche">Voir la fiche <Icone nom="fleche-droite" taille="0.95rem" /></span>
+              <span class="club-rs">
+                {club.liens?.facebook && (
+                  <a href={club.liens.facebook} aria-label={'Facebook ' + club.nom} rel="noopener"><Icone nom="facebook" /></a>
+                )}
+                {club.liens?.instagram && (
+                  <a href={club.liens.instagram} aria-label={'Instagram ' + club.nom} rel="noopener"><Icone nom="instagram" /></a>
+                )}
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p id="aucun" hidden class="vide">
+        Aucun club ne correspond. Essayez une autre commune, ou remettez la discipline sur « Toutes ».
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const recherche = document.getElementById('recherche') as HTMLInputElement;
+    const discipline = document.getElementById('discipline') as HTMLSelectElement;
+    const cartes = Array.from(document.querySelectorAll<HTMLElement>('#liste-clubs .club'));
+    const aucun = document.getElementById('aucun')!;
+    const compteur = document.getElementById('compteur')!;
+
+    function filtrer() {
+      const q = recherche.value.trim().toLowerCase();
+      const d = discipline.value;
+      let visibles = 0;
+      for (const carte of cartes) {
+        const okTexte = !q || carte.dataset.nom!.includes(q) || carte.dataset.ville!.includes(q);
+        const okDisc = !d || carte.dataset.disciplines!.split('|').includes(d);
+        const ok = okTexte && okDisc;
+        carte.hidden = !ok;
+        if (ok) visibles++;
+      }
+      aucun.hidden = visibles > 0;
+      const filtreActif = q !== '' || d !== '';
+      compteur.hidden = !filtreActif || visibles === 0;
+      compteur.textContent = visibles > 1 ? visibles + ' clubs affichés' : visibles + ' club affiché';
+    }
+    recherche.addEventListener('input', filtrer);
+    discipline.addEventListener('change', filtrer);
+  </script>
+</Base>
+
+<style>
+  .bandeau-action { margin: 1.6rem 0 0; }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  /* ---------- Filtres ---------- */
+  .filtres { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0 0 2rem; }
+  .champ {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex: 1 1 18rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-200);
+    border-radius: 2px;
+    padding: 0 1rem;
+    transition: border-color 0.2s ease;
+  }
+  .champ:focus-within { border-color: var(--bleu-700); }
+  .champ-icone { color: var(--gris-500); display: flex; }
+  .champ input,
+  .champ select {
+    flex: 1;
+    font-family: var(--police-texte);
+    font-size: 1rem;
+    padding: 0.85rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--encre);
+  }
+  .champ input:focus, .champ select:focus { outline: none; }
+  .champ--select { flex: 0 1 16rem; }
+
+  .compteur {
+    margin: -1rem 0 1.4rem;
+    font-size: var(--txt-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--or-texte);
+  }
+
+  /* ---------- Grille des clubs ---------- */
+  .grille-clubs {
+    display: grid;
+    gap: 1px;
+    background: var(--gris-200);
+    border: 1px solid var(--gris-200);
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  }
+  .club {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    background: var(--blanc);
+    padding: 1.7rem 1.6rem 1.3rem;
+    transition: background 0.25s ease;
+  }
+  .club::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--teinte);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s var(--sortie);
+  }
+  .club:hover, .club:focus-within { background: #fbfcfd; }
+  .club:hover::before, .club:focus-within::before { transform: scaleX(1); }
+
+  /* Le lien couvre toute la carte : un seul point d'entrée au clavier.
+     Les liens de réseaux sociaux repassent au-dessus. */
+  .club-lien { position: absolute; inset: 0; z-index: 1; }
+  .club-lien:focus-visible { outline: 3px solid var(--or-400); outline-offset: -3px; }
+
+  .club-logo {
+    position: absolute;
+    top: 1.4rem;
+    right: 1.4rem;
+    width: 3rem;
+    height: 3rem;
+    object-fit: contain;
+    background: var(--logo-fond, transparent);
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: filter 0.4s ease, opacity 0.4s ease;
+  }
+  .club:hover .club-logo { filter: none; opacity: 1; }
+
+  .club-ville {
+    font-size: var(--txt-xs);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--teinte-fonce);
+    margin: 0;
+    padding-right: 3.6rem;
+  }
+  .club-nom {
+    font-family: var(--police-titre);
+    font-size: 1.5rem;
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0;
+    padding-right: 3.6rem;
+    line-height: 1.1;
+  }
+  .club-disciplines {
+    font-size: var(--txt-sm);
+    color: var(--gris-500);
+    margin: 0.4rem 0 0;
+    line-height: 1.5;
+  }
+  .club-pied {
+    margin-top: auto;
+    padding-top: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .club-fiche {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: var(--txt-sm);
+    font-weight: 600;
+    color: var(--bleu-700);
+  }
+  .club:hover .club-fiche { color: var(--teinte-fonce); }
+  .club-rs { display: flex; gap: 0.2rem; position: relative; z-index: 2; }
+  .club-rs a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    color: var(--gris-500);
+  }
+  .club-rs a:hover { color: var(--teinte-fonce); }
+
+  .vide {
+    max-width: 38ch;
+    margin: 2.5rem auto 0;
+    text-align: center;
+    line-height: 1.6;
+    color: var(--gris-500);
+  }
+
+  @media (max-width: 600px) {
+    .grille-clubs { grid-template-columns: 1fr; }
+    .club { padding: 1.3rem 1.2rem 1rem; }
+    .club-rs a { width: 2.75rem; height: 2.75rem; }
+    .champ--select { flex: 1 1 100%; }
+  }
+  @media (hover: none), (pointer: coarse) {
+    .club-logo { filter: none; opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .club, .club::before, .club-logo { transition: none; }
+  }
+</style>

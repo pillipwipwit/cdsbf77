@@ -1,0 +1,6 @@
+/* Tailwind sans preflight : seules les classes utilitaires employées par
+   BibliothequeEnergetique.jsx sont générées. Les styles globaux du site
+   (comite.css, layouts) ne sont pas affectés. */
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);

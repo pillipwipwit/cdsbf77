@@ -1,0 +1,138 @@
+---
+import Formation from "../../../layouts/Formation.astro";
+import donnees from "../../../data/savate-adaptee.json";
+
+const groupes = [
+  {
+    ancre: "savate-adaptee",
+    titre: "Savate adaptée",
+    chapo:
+      "Accueillir et faire progresser des pratiquants en situation de handicap : pédagogie inclusive, adaptation des situations et gestion du groupe.",
+  },
+  {
+    ancre: "complement",
+    titre: "Compléments moniteur fédéral",
+    chapo:
+      "Deux modules de l'UC1 sur la construction des séances et la progression technique.",
+  },
+];
+
+const par = (f) => donnees.lecons.filter((l) => l.famille === f).sort((a, b) => a.ordre - b.ordre);
+const total = donnees.lecons.length;
+const questions = donnees.lecons.reduce((n, l) => n + l.quiz.length, 0);
+const minutes = donnees.lecons.reduce((n, l) => n + l.duree, 0);
+---
+
+<Formation
+  title="Savate adaptée"
+  description="Modules de formation à la savate adaptée et compléments du monitorat fédéral : pédagogie inclusive, manipulation des contraintes, communication et gestion des comportements-défis."
+>
+  <header class="tete">
+    <div class="fmt-wrap">
+      <p class="eyebrow">Espace formation</p>
+      <h1>Savate adaptée</h1>
+      <p class="chapo">
+        {total} modules en accès libre, chacun clos par un quiz autocorrigé.
+        Comptez environ {minutes} minutes de lecture et {questions} questions au total.
+      </p>
+    </div>
+  </header>
+
+  <div class="fmt-wrap corps">
+    {groupes.map((g) => (
+      <section class="groupe" id={g.ancre}>
+        <h2>{g.titre}</h2>
+        <p class="groupe-chapo">{g.chapo}</p>
+        <ol class="liste">
+          {par(g.ancre).map((l) => (
+            <li>
+              <a href={`/formations/savate-adaptee/${l.id}`}>
+                <span class="num">{String(l.ordre).padStart(2, "0")}</span>
+                <span class="corps-lien">
+                  <strong>{l.titre}</strong>
+                  <span class="resume">{l.chapo}</span>
+                  <span class="meta">≈ {l.duree} min · {l.quiz.length} questions</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+
+    <p class="retour"><a href="/formations">← Toutes les formations du comité</a></p>
+  </div>
+</Formation>
+
+<style>
+  .tete {
+    background: var(--marine);
+    color: var(--blanc);
+    padding: clamp(2.4rem, 7vw, 4.5rem) 0 clamp(2rem, 5vw, 3rem);
+  }
+  .eyebrow {
+    margin: 0 0 0.6rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--or);
+    font-weight: 600;
+  }
+  .tete h1 { font-size: clamp(2.4rem, 6vw, 4rem); }
+  .tete .chapo {
+    margin: 1.1rem 0 0;
+    color: #c3cedb;
+    max-width: 60ch;
+    font-size: 1.02rem;
+  }
+
+  .corps { padding: 3rem 0 0; }
+
+  .groupe { margin-bottom: 3.5rem; scroll-margin-top: 5rem; }
+  .groupe h2 { font-size: 2rem; color: var(--marine); }
+  .groupe-chapo {
+    margin: 0.5rem 0 1.6rem;
+    color: var(--gris);
+    max-width: var(--mesure);
+    font-size: 0.95rem;
+  }
+
+  .liste { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.7rem; }
+  .liste a {
+    display: flex;
+    gap: 1.1rem;
+    align-items: baseline;
+    padding: 1.1rem 1.3rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-left: 4px solid var(--or);
+    border-radius: var(--rayon);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .liste a:hover { border-color: var(--marine); border-left-color: var(--marine); }
+  .num {
+    font-family: var(--police-titre);
+    font-size: 1.5rem;
+    color: var(--or-texte);
+    flex: none;
+    line-height: 1;
+  }
+  .corps-lien { display: flex; flex-direction: column; gap: 0.25rem; }
+  .corps-lien strong { font-weight: 600; font-size: 1.05rem; color: var(--marine); }
+  .resume { font-size: 0.9rem; color: var(--gris); line-height: 1.55; }
+  .meta {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gris-500);
+  }
+
+  .retour { margin: 1rem 0 0; }
+  .retour a { font-size: 0.9rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .liste a { transition: none; }
+  }
+</style>

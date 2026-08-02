@@ -1,0 +1,376 @@
+---
+import Base from '../../layouts/Base.astro';
+import donnees from '../../data/clubs.json';
+import Icone from '../../components/Icone.astro';
+
+export function getStaticPaths() {
+  return donnees.clubs.map((club) => ({
+    params: { slug: club.slug },
+    props: { club },
+  }));
+}
+
+const { club } = Astro.props;
+const salles = club.salles || [];
+const horaires = club.horaires || [];
+const liens = club.liens || {};
+const contact = club.contact || {};
+const couleurs = club.couleurs || { primaire: '#0f3460', accent: '#d4af37' };
+
+function eclaircir(hex, f) {
+  const n = hex.replace('#', '');
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(n.slice(i, i + 2), 16));
+  const m = (v) => Math.round(v + (255 - v) * f).toString(16).padStart(2, '0');
+  return '#' + m(r) + m(g) + m(b);
+}
+function assombrir(hex, f) {
+  const n = hex.replace('#', '');
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(n.slice(i, i + 2), 16));
+  const m = (v) => Math.round(v * (1 - f)).toString(16).padStart(2, '0');
+  return '#' + m(r) + m(g) + m(b);
+}
+
+// Les couleurs de club viennent des données : rien ne garantit qu'elles
+// soient lisibles sur le bandeau. On éclaircit l'accent par paliers jusqu'à
+// atteindre le rapport de contraste minimal, plutôt que d'espérer.
+function luminance(hex) {
+  const n = hex.replace('#', '');
+  return [0, 2, 4]
+    .map((i) => parseInt(n.slice(i, i + 2), 16) / 255)
+    .map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)))
+    .reduce((s, v, i) => s + [0.2126, 0.7152, 0.0722][i] * v, 0);
+}
+function contraste(a, b) {
+  const [x, y] = [luminance(a), luminance(b)].sort((m, n) => n - m);
+  return (x + 0.05) / (y + 0.05);
+}
+function rendreLisible(couleur, fond, cible = 4.5) {
+  let c = couleur;
+  for (let i = 0; i < 20 && contraste(c, fond) < cible; i++) c = eclaircir(c, 0.12);
+  // Quelques teintes ne peuvent pas atteindre la cible sans devenir blanches :
+  // on bascule alors franchement sur le blanc plutôt que sur un gris sale.
+  return contraste(c, fond) >= cible ? c : '#ffffff';
+}
+/** Assombrit une couleur jusqu'à ce qu'elle puisse porter du texte blanc. */
+function porterDuBlanc(couleur, cible = 4.5) {
+  let c = couleur;
+  for (let i = 0; i < 20 && contraste('#ffffff', c) < cible; i++) c = assombrir(c, 0.08);
+  return c;
+}
+
+// Certaines couleurs de club sont trop claires pour porter du texte blanc
+// (bleu vif, bleu canard) : on assombrit la base du bandeau juste ce qu'il
+// faut, en conservant la teinte. Le dégradé est ensuite construit autour.
+const base = porterDuBlanc(couleurs.primaire);
+const stopClair = porterDuBlanc(eclaircir(base, 0.12));
+const stopSombre = assombrir(base, 0.35);
+
+// Le texte se déplace sur tout le dégradé selon la largeur de l'écran : la
+// référence de calibrage est le stop réellement le plus clair. Quand la
+// couleur du club est déjà claire, `stopClair` ressort plus sombre que
+// `base` après correction : on ne peut donc pas le supposer.
+const fondReference = [stopSombre, base, stopClair].reduce((a, b) =>
+  luminance(b) > luminance(a) ? b : a
+);
+
+const styleClub = [
+  '--club-primaire:' + base,
+  '--club-primaire-clair:' + stopClair,
+  '--club-primaire-sombre:' + stopSombre,
+  '--club-accent:' + couleurs.accent,
+  // Variante garantie lisible sur le bandeau (texte)
+  '--club-accent-texte:' + rendreLisible(couleurs.accent, fondReference, 4.5),
+  // Variante garantie visible pour les traits et bordures (seuil 3:1)
+  '--club-accent-trait:' + rendreLisible(couleurs.accent, fondReference, 3),
+  '--club-halo:' + couleurs.accent + '40',
+  '--club-logo-fond:' + (club.logoFond || '#ffffff'),
+].join(';');
+
+const lienMaps = (salle) =>
+  'https://www.google.com/maps/search/?api=1&query=' +
+  encodeURIComponent([salle.nom, salle.adresse].filter(Boolean).join(", "));
+
+const aDesLiens = liens.site || liens.facebook || liens.instagram || liens.youtube;
+const titre = club.nom + (club.ville ? ' – Savate à ' + club.ville : '') + ' | CDSBF77';
+const description =
+  'Savate boxe française à ' + (club.ville || 'Seine-et-Marne') +
+  ' avec ' + club.nom + ' : disciplines, horaires et contact.';
+---
+<Base title={titre} description={description}>
+  <div class="club-scope" style={styleClub}>
+
+    <!-- ================= BANDEAU ================= -->
+    <section class="bandeau bandeau--club">
+      <svg class="trajectoire" viewBox="0 0 1200 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path class="trace-club trace-anime" d="M-50 380 C 260 380, 380 110, 700 110 S 1150 300, 1300 220" />
+        <circle class="impact-club" cx="700" cy="110" r="4" />
+      </svg>
+
+      <div class="enveloppe bandeau-grille">
+        <div class="bandeau-texte">
+          <p class="surtitre">{club.ville || 'Seine-et-Marne'}</p>
+          <h1>{club.nom}</h1>
+
+          <div class="etiquettes">
+            {(club.disciplines || []).map((d) => <span class="etiquette">{d}</span>)}
+            {(club.publics || []).includes('enfants') && <span class="etiquette">Ouvert aux enfants</span>}
+            {(club.publics || []).includes('handicaps') && <span class="etiquette etiquette--accent">Accueil handicap</span>}
+            {(club.labels || []).map((l) => <span class="etiquette etiquette--accent">Label {l}</span>)}
+          </div>
+
+
+          {aDesLiens && (
+            <div class="bandeau-liens">
+              {liens.site && <a href={liens.site} rel="noopener" aria-label={'Site de ' + club.nom}><Icone nom="site" /></a>}
+              {liens.facebook && <a href={liens.facebook} rel="noopener" aria-label={'Facebook de ' + club.nom}><Icone nom="facebook" /></a>}
+              {liens.instagram && <a href={liens.instagram} rel="noopener" aria-label={'Instagram de ' + club.nom}><Icone nom="instagram" /></a>}
+              {liens.youtube && <a href={liens.youtube} rel="noopener" aria-label={'YouTube de ' + club.nom}><Icone nom="youtube" /></a>}
+            </div>
+          )}
+        </div>
+
+        {club.logo && (
+          <div class="bandeau-logo">
+            <img src={club.logo} alt={'Logo ' + club.nom} width="180" height="180" loading="eager" decoding="async" />
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- ================= MÉDIAS ================= -->
+    {((club.videos || []).length > 0 || (club.photos || []).length > 0) && (
+      <section class="section section--craie">
+        <div class="enveloppe">
+          {(club.videos || []).length > 0 && (
+            <div class={club.videos.length > 1 ? 'videos-grille' : ''}>
+              {club.videos.map((v) => (
+                <div class="video-embed">
+                  <iframe src={v.url} allow="autoplay; fullscreen; picture-in-picture" allowfullscreen
+                          title={v.titre || 'Vidéo du club ' + club.nom} loading="lazy"></iframe>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {(club.photos || []).length > 0 && (
+            <div class="club-galerie" style={(club.videos || []).length > 0 ? 'margin-top:1.5rem' : undefined}>
+              {club.photos.map((p) => (
+                <figure class="club-photo">
+                  <img src={p.src} alt={p.alt || "Le club " + club.nom + " à l'entraînement"} loading="lazy" decoding="async" />
+                  {p.legende && <figcaption>{p.legende}</figcaption>}
+                </figure>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    )}
+
+    <!-- ================= INFORMATIONS ================= -->
+    <section class="section">
+      <div class="enveloppe">
+        <div class="grille-filet">
+          <div class="panneau">
+            <h2><span class="panneau-icone"><Icone nom="lieu" taille="1.2rem" /></span>Salle</h2>
+            {salles.length > 0 ? (
+              salles.map((salle) => (
+                <p>
+                  <strong>{salle.nom}</strong><br />{salle.adresse}<br />
+                  <a href={lienMaps(salle)} rel="noopener"><Icone nom="carte" /> Itinéraire</a>
+                  {(salle.disciplines || []).length > 0 && (
+                    <><br /><span class="menu">{salle.disciplines.join(' · ')}</span></>
+                  )}
+                </p>
+              ))
+            ) : (
+              <p>Lieu d'entraînement en cours de mise à jour.</p>
+            )}
+          </div>
+
+          <div class="panneau">
+            <h2><span class="panneau-icone"><Icone nom="personne" taille="1.2rem" /></span>Contact</h2>
+            {contact.correspondant && <p><strong>{contact.correspondant}</strong></p>}
+            {contact.telephone && <p><a href={'tel:' + contact.telephone.replace(/\s/g, '')}><Icone nom="telephone" /> {contact.telephone}</a></p>}
+            {contact.telephone2 && <p><a href={'tel:' + contact.telephone2.replace(/\s/g, '')}><Icone nom="telephone" /> {contact.telephone2}</a></p>}
+            {contact.email && <p><a href={'mailto:' + contact.email}><Icone nom="courriel" /> {contact.email}</a></p>}
+            {club.adresseSiege && <p class="menu"><Icone nom="boite" /> Courrier : {club.adresseSiege}</p>}
+            {!contact.correspondant && !contact.telephone && !contact.email && <p>Coordonnées en cours de mise à jour.</p>}
+          </div>
+
+          <div class="panneau">
+            <h2><span class="panneau-icone"><Icone nom="lien" taille="1.2rem" /></span>Liens</h2>
+            {liens.site && <p><a href={liens.site} rel="noopener"><Icone nom="site" /> Site du club</a></p>}
+            {liens.facebook && <p><a href={liens.facebook} rel="noopener"><Icone nom="facebook" /> Facebook</a></p>}
+            {liens.instagram && <p><a href={liens.instagram} rel="noopener"><Icone nom="instagram" /> Instagram</a></p>}
+            {liens.youtube && <p><a href={liens.youtube} rel="noopener"><Icone nom="youtube" /> YouTube</a></p>}
+            {liens.ffsavate && <p><a href={liens.ffsavate} rel="noopener"><Icone nom="lien-externe" /> Fiche fédérale</a></p>}
+            {!aDesLiens && !liens.ffsavate && <p>Aucun lien renseigné pour ce club.</p>}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HORAIRES ================= -->
+    <section class="section section--craie">
+      <div class="enveloppe">
+        <p class="surtitre">Créneaux</p>
+        <h2 class="titre-section">Horaires</h2>
+
+        {horaires.length > 0 ? (
+          <table class="horaires">
+            <thead>
+              <tr><th>Public</th><th>Jour</th><th>Créneau</th><th>Pratique</th></tr>
+            </thead>
+            <tbody>
+              {horaires.map((h) => (
+                <tr>
+                  <td data-label="Public">{h.public}</td>
+                  <td data-label="Jour">{h.jour}</td>
+                  <td data-label="Créneau">{h.creneau}</td>
+                  <td data-label="Pratique">{h.type || '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>Horaires en cours de mise à jour : contactez le club pour la grille de la saison.</p>
+        )}
+
+        {club.noteHoraires && <p class="note">{club.noteHoraires}</p>}
+        {club.aCompleter && (
+          <p class="note">
+            Cette fiche est en cours de complétion par le comité.
+            Une information à corriger ? <a href="/contact">Écrivez-nous</a>.
+          </p>
+        )}
+
+        <p class="retour">
+          <a class="bouton bouton--marine" href="/clubs"><Icone nom="fleche-gauche" taille="1rem" /> Tous les clubs</a>
+        </p>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  /* ---------- Bandeau aux couleurs du club ---------- */
+  .bandeau--club {
+    background: linear-gradient(160deg,
+      var(--club-primaire-sombre) 0%,
+      var(--club-primaire) 50%,
+      var(--club-primaire-clair) 100%);
+  }
+  .bandeau-grille {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: center;
+  }
+  .bandeau :global(.surtitre) { color: var(--club-accent-texte); }
+  .bandeau-texte h1 { margin-bottom: 1.2rem; }
+
+  .trajectoire :global(.trace-club) {
+    fill: none;
+    stroke: var(--club-accent-trait);
+    stroke-width: 1.5;
+    opacity: 0.55;
+  }
+  .trajectoire :global(.impact-club) { fill: var(--club-accent-trait); }
+
+  .etiquettes { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .etiquette {
+    font-size: var(--txt-xs);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--blanc);
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    padding: 0.3rem 0.85rem;
+    border-radius: 2px;
+  }
+  .etiquette--accent {
+    border-color: var(--club-accent-trait);
+    background: rgba(0, 0, 0, 0.22);
+    font-weight: 600;
+  }
+
+  .bandeau-liens { display: flex; gap: 0.5rem; margin-top: 1.4rem; }
+  .bandeau-liens a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 2px;
+    color: var(--blanc);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: background 0.25s ease, transform 0.25s var(--sortie);
+  }
+  .bandeau-liens a:hover {
+    background: var(--club-accent);
+    border-color: var(--club-accent);
+    transform: translateY(-2px);
+  }
+
+  .bandeau-logo {
+    width: clamp(7rem, 16vw, 11rem);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    background: var(--club-logo-fond, #fff);
+    border-radius: 2px;
+    padding: 0.9rem;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.32);
+  }
+  .bandeau-logo img { width: 100%; height: 100%; object-fit: contain; }
+
+  /* ---------- Panneaux d'information ---------- */
+  .panneau {
+    background: var(--blanc);
+    padding: 2rem 1.8rem;
+    border-top: 3px solid var(--club-accent);
+  }
+  .panneau h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--police-titre);
+    font-size: var(--titre-sm);
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0 0 1rem;
+  }
+  .panneau-icone { color: var(--club-accent); display: flex; }
+  .panneau p { margin: 0 0 0.7rem; color: var(--gris-500); line-height: 1.6; }
+  .panneau p:last-child { margin-bottom: 0; }
+  .panneau strong { color: var(--encre); }
+  .panneau a {
+    color: var(--bleu-700);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .panneau a:hover { color: var(--or-texte); text-decoration: underline; }
+  .menu { font-size: var(--txt-sm); font-style: italic; }
+
+  /* ---------- Horaires ---------- */
+  .note {
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--blanc);
+    border-left: 3px solid var(--club-accent);
+    font-size: 0.92rem;
+    color: var(--gris-600);
+  }
+  .retour { margin-top: 2.2rem; }
+
+  @media (max-width: 720px) {
+    .bandeau-grille { grid-template-columns: 1fr; }
+    .bandeau-logo { order: -1; width: 6.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bandeau-liens a { transition: none; }
+  }
+</style>

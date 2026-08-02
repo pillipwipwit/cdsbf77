@@ -1,0 +1,311 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+import donnees from '../data/clubs.json';
+import formation from '../data/formation.json';
+import savateAdaptee from '../data/savate-adaptee.json';
+
+const nbClubs = donnees.clubs.length;
+const nbLecons = formation.lecons.length + savateAdaptee.lecons.length;
+
+// La progression technique fédérale : le système d'accent du site.
+// Les phrases-profils viennent du module 1.3c de l'espace formation.
+const gants = [
+  { nom: 'Bleu', variable: '--gant-bleu', profil: 'Je touche' },
+  { nom: 'Vert', variable: '--gant-vert', profil: 'Je ne suis pas touché, et je touche' },
+  { nom: 'Rouge', variable: '--gant-rouge', profil: 'Décalage, débordement' },
+  { nom: 'Blanc', variable: '--gant-blanc', profil: 'Contres et contre-attaques' },
+  { nom: 'Jaune', variable: '--gant-jaune', profil: 'Feinter, perturber' },
+  { nom: 'Argent', variable: '--gant-argent', profil: 'Expertise technique' },
+];
+
+const disciplines = [
+  { icone: 'boxe', nom: 'Savate boxe française', teinte: 'var(--gant-bleu)',
+    texte: "Pieds chaussés, poings gantés. L'assaut où seule la touche compte, le combat pour les confirmés." },
+  { icone: 'canne', nom: 'Canne de combat', teinte: 'var(--gant-vert)',
+    texte: "L'escrime française à la canne de châtaignier : vitesse, précision, élégance." },
+  { icone: 'forme', nom: 'Savate forme', teinte: 'var(--gant-jaune)',
+    texte: 'Les enchaînements pieds-poings en séance de fitness, en musique, sans opposition.' },
+  { icone: 'defense', nom: 'Savate défense', teinte: 'var(--gant-rouge)',
+    texte: 'Évaluer, se dégager, riposter. Des repères, de la lucidité, de la confiance.' },
+];
+
+const activites = [
+  { icone: 'formation', nom: 'Se former', lien: '/formations', teinte: 'var(--gant-bleu)',
+    texte: `Moniteur fédéral, officiels, savate adaptée. ${nbLecons} leçons en ligne, en accès libre, chacune close par un quiz.` },
+  { icone: 'competition', nom: 'Compétitions', lien: '/competitions', teinte: 'var(--gant-rouge)',
+    texte: 'Championnats et challenges départementaux, du jeune tireur au tireur confirmé.' },
+  { icone: 'developpement', nom: 'Développement', lien: '/developpement', teinte: 'var(--gant-vert)',
+    texte: 'Aller-vers, sport-santé, milieu scolaire, insertion : la savate hors les murs.' },
+];
+
+// Logos des partenaires, tous hébergés dans le site.
+// `fondSombre` sert aux logos dessinés en blanc, invisibles sur fond clair.
+const partenaires = [
+  { nom: 'Ligue Île-de-France de Savate', court: 'Ligue Île-de-France', logo: '/logos/partenaires/ligue-idf.png' },
+  { nom: 'Fédération Française de Savate', court: 'FF Savate', logo: '/logos/partenaires/ff-savate.png' },
+  { nom: 'Département de Seine-et-Marne', court: 'Département 77', logo: '/logos/partenaires/departement-77.png', fondSombre: true },
+  { nom: 'Agence Nationale du Sport', court: 'Agence Nationale du Sport', logo: '/logos/partenaires/agence-nationale-du-sport.png' },
+  { nom: 'SDJES 77', court: 'SDJES 77', logo: '/logos/partenaires/sdjes-77.png' },
+  { nom: 'DRAJES et FDVA', court: 'DRAJES · FDVA', logo: '/logos/partenaires/drajes-fdva.png' },
+];
+---
+<Base>
+  <!-- ================= HÉROS ================= -->
+  <section class="heros">
+    <svg class="trajectoire" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 560 C 250 560, 380 120, 700 120 S 1150 420, 1300 300" />
+      <path class="trace-pale trace-anime" d="M-50 620 C 300 620, 420 200, 760 200 S 1180 480, 1300 360" />
+      <circle class="impact" cx="700" cy="120" r="4" />
+    </svg>
+
+    <div class="heros-grille">
+      <div class="heros-texte">
+        <p class="surtitre">Comité de Seine-et-Marne</p>
+        <h1>L'escrime<br /><em>des pieds</em><br />et des poings</h1>
+        <p class="accroche">
+          {nbClubs} clubs, quatre disciplines. Une progression qui se lit à la
+          couleur du gant, du premier assaut à la transmission.
+        </p>
+        <div class="heros-actions">
+          <a class="bouton bouton--plein" href="/clubs">Trouver mon club</a>
+          <a class="bouton bouton--ligne" href="/disciplines">Voir les disciplines</a>
+        </div>
+      </div>
+
+      <!-- La vidéo est au format portrait : assumée en panneau vertical -->
+      <div class="heros-media">
+        <div class="cadre-video">
+          <iframe
+            src="https://player.vimeo.com/video/1072779716?h=fe9825216e&background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
+            allow="autoplay; fullscreen; picture-in-picture"
+            title="La savate en Seine-et-Marne" loading="lazy"></iframe>
+        </div>
+        <p class="legende">Tourné dans les clubs du département</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= L'ÉCHELLE DES GANTS ================= -->
+  <section class="section section--sombre" id="progression">
+    <div class="enveloppe">
+      <p class="surtitre">La progression fédérale</p>
+      <h2 class="titre-section">Six gants, six façons de tirer</h2>
+      <p class="intro">
+        En savate, le niveau se lit à la couleur du gant. Chaque grade tient en
+        une phrase : ce qu'on sait faire, pas ce qu'on a gagné.
+      </p>
+
+      <ol class="echelle">
+        {gants.map((g) => (
+          <li class="gant" style={`--gant: var(${g.variable})`}>
+            <span class="gant-pastille"></span>
+            <span class="gant-nom">{g.nom}</span>
+            <span class="gant-profil">« {g.profil} »</span>
+          </li>
+        ))}
+      </ol>
+
+      <p class="echelle-pied">
+        Avant le gant bleu, les plus jeunes passent les grades Kangourou.
+        Après le jaune viennent les Gants d'Argent Technique.
+        <a href="/formations/monitorat">Comprendre la progression</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= DISCIPLINES ================= -->
+  <section class="section" id="disciplines">
+    <div class="enveloppe">
+      <p class="surtitre">Disciplines</p>
+      <h2 class="titre-section">Quatre façons de pratiquer</h2>
+      <p class="intro">
+        La savate boxe française est le cœur de la pratique. Autour d'elle, trois
+        disciplines associées permettent à chacun de trouver sa forme.
+      </p>
+    </div>
+    <div class="enveloppe">
+      <div class="grille-filet">
+        {disciplines.map((d) => (
+          <a class="carte" href="/disciplines" style={`--teinte: ${d.teinte}`}>
+            <span class="carte-icone"><Icone nom={d.icone} taille="1.6rem" /></span>
+            <h3>{d.nom}</h3>
+            <p>{d.texte}</p>
+            <span class="carte-fleche"><Icone nom="fleche-droite" taille="1.1rem" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CHIFFRES ================= -->
+  <section class="section section--craie">
+    <div class="enveloppe">
+      <div class="chiffres">
+        <div class="chiffre"><strong>{nbClubs}</strong><span>clubs affiliés</span></div>
+        <div class="chiffre"><strong>4</strong><span>disciplines</span></div>
+        <div class="chiffre"><strong>{nbLecons}</strong><span>leçons en ligne</span></div>
+        <div class="chiffre"><strong>6</strong><span>gants à gravir</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ACTIVITÉS ================= -->
+  <section class="section">
+    <div class="enveloppe">
+      <p class="surtitre">Le rôle du comité</p>
+      <h2 class="titre-section">Former, organiser, aller vers</h2>
+    </div>
+    <div class="enveloppe">
+      <div class="grille-filet">
+        {activites.map((a) => (
+          <a class="carte" href={a.lien} style={`--teinte: ${a.teinte}`}>
+            <span class="carte-icone"><Icone nom={a.icone} taille="1.6rem" /></span>
+            <h3>{a.nom}</h3>
+            <p>{a.texte}</p>
+            <span class="carte-fleche"><Icone nom="fleche-droite" taille="1.1rem" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PARTENAIRES ================= -->
+  <section class="section section--craie">
+    <div class="enveloppe">
+      <p class="surtitre">Ils soutiennent la savate en Seine-et-Marne</p>
+      <div class="partenaires">
+        {partenaires.map((p) => (
+          <div class:list={['partenaire', { 'partenaire--sombre': p.fondSombre }]}>
+            <img src={p.logo} alt={p.nom} loading="lazy" decoding="async"
+                 onerror="this.hidden=true;this.nextElementSibling.hidden=false;" />
+            <span class="partenaire-nom" hidden>{p.court}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- Héros ---------- */
+  .heros {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(160deg, #0b2748 0%, var(--bleu-900) 45%, #123f74 100%);
+    padding: clamp(7rem, 14vw, 10rem) 0 clamp(4rem, 8vw, 6rem);
+  }
+  .heros-grille {
+    position: relative;
+    z-index: 1;
+    max-width: var(--large);
+    margin: 0 auto;
+    padding: 0 clamp(1.2rem, 5vw, 3rem);
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    align-items: center;
+  }
+  .heros :global(.surtitre) { color: var(--or-400); }
+  .heros h1 {
+    font-family: var(--police-titre);
+    font-size: var(--titre-xl);
+    line-height: 0.92;
+    letter-spacing: 0.01em;
+    color: var(--blanc);
+    margin: 0 0 1.4rem;
+  }
+  .heros h1 em { font-style: normal; color: var(--or-400); }
+  .accroche {
+    color: #c3cedb;
+    font-size: var(--txt-md);
+    line-height: 1.65;
+    max-width: 42ch;
+    margin: 0 0 2rem;
+  }
+  .heros-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+
+  .heros-media { display: flex; flex-direction: column; gap: 0.7rem; }
+  .cadre-video {
+    position: relative;
+    aspect-ratio: 9 / 14;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+  }
+  /* Le lecteur Vimeo ajoute des bandes noires pour préserver le format :
+     on agrandit légèrement l'iframe pour que l'image couvre le cadre. */
+  .cadre-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    transform: scale(1.18);
+    transform-origin: center;
+  }
+  .legende {
+    margin: 0;
+    font-size: var(--txt-xs);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9aa8ba;
+  }
+
+  /* ---------- Pied de l'échelle ---------- */
+  .echelle-pied {
+    margin: 1.8rem 0 0;
+    font-size: 0.9rem;
+    color: #a8b6c8;
+    max-width: 62ch;
+  }
+  .echelle-pied a { color: var(--or-400); }
+
+  /* ---------- Partenaires ---------- */
+  .partenaires {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1px;
+    background: var(--gris-200);
+    border: 1px solid var(--gris-200);
+  }
+  .partenaire {
+    display: grid;
+    place-items: center;
+    background: var(--blanc);
+    padding: 1.6rem 1.2rem;
+    min-height: 7.5rem;
+  }
+  .partenaire--sombre { background: var(--bleu-900); }
+  .partenaire img {
+    max-width: 100%;
+    max-height: 3.6rem;
+    width: auto;
+    height: auto;
+    filter: grayscale(1);
+    opacity: 0.72;
+    transition: filter 0.35s ease, opacity 0.35s ease;
+  }
+  .partenaire:hover img { filter: none; opacity: 1; }
+  .partenaire--sombre img { filter: none; opacity: 0.9; }
+  .partenaire-nom {
+    font-family: var(--police-titre);
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+    color: var(--bleu-900);
+    text-align: center;
+  }
+  .partenaire--sombre .partenaire-nom { color: var(--blanc); }
+
+  @media (max-width: 860px) {
+    .heros-grille { grid-template-columns: 1fr; }
+    .heros-media { max-width: 20rem; }
+  }
+  @media (hover: none), (pointer: coarse) {
+    .partenaire img { filter: none; opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .partenaire img { transition: none; }
+  }
+</style>

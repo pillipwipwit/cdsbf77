@@ -1,0 +1,112 @@
+{
+  "commentaire": [
+    "Bassins géographiques servant de pages d'atterrissage aux campagnes publicitaires.",
+    "Chaque secteur génère /clubs/autour-de-<slug>, dont le titre reprend le nom du",
+    "bassin : l'annonce qui dit « Meaux » doit arriver sur une page qui dit « Meaux ».",
+    "Découpage à ajuster selon les zones de ciblage réellement achetées.",
+    "Les clubs sont désignés par leur slug dans clubs.json.",
+    "« misEnAvant » : clubs affichés en premier et en grand format dans le bassin."
+  ],
+  "secteurs": [
+    {
+      "slug": "meaux",
+      "nom": "Meaux",
+      "titre": "Meaux et le nord Seine-et-Marne",
+      "accroche": "Six clubs entre Meaux, la Goële et la vallée de la Marne.",
+      "clubs": [
+        "meaux",
+        "st-soupplets",
+        "moussy",
+        "la-ferte-sous-jouarre",
+        "villevaude",
+        "savate-pour-tous"
+      ],
+      "misEnAvant": [
+        "meaux"
+      ]
+    },
+    {
+      "slug": "marne-la-vallee",
+      "nom": "Marne-la-Vallée",
+      "titre": "Marne-la-Vallée et Val d'Europe",
+      "accroche": "De Torcy à Serris, neuf clubs sur l'axe de la Marne.",
+      "clubs": [
+        "collegien",
+        "dampmart",
+        "serris",
+        "aestbf",
+        "champs",
+        "lagny",
+        "victory-academy",
+        "coupvray",
+        "crecy"
+      ],
+      "misEnAvant": [
+        "collegien",
+        "dampmart",
+        "serris"
+      ]
+    },
+    {
+      "slug": "coulommiers",
+      "nom": "Coulommiers",
+      "titre": "Coulommiers et la Brie",
+      "accroche": "Cinq clubs dans la Brie, de Coulommiers à Fontenay-Trésigny.",
+      "clubs": [
+        "rebais",
+        "presles-en-brie",
+        "fontenay-tresigny",
+        "coulommiers",
+        "neufmoutiers"
+      ],
+      "misEnAvant": [
+        "rebais",
+        "presles-en-brie",
+        "fontenay-tresigny"
+      ]
+    },
+    {
+      "slug": "ozoir",
+      "nom": "Ozoir-la-Ferrière",
+      "titre": "Ozoir, Pontault et Roissy-en-Brie",
+      "accroche": "Quatre clubs aux portes de l'est parisien.",
+      "clubs": [
+        "roissy",
+        "ozoir",
+        "pontault-combault",
+        "courtry"
+      ],
+      "misEnAvant": [
+        "roissy"
+      ]
+    },
+    {
+      "slug": "melun",
+      "nom": "Melun",
+      "titre": "Melun et le Sénart",
+      "accroche": "Quatre clubs autour de Melun et de la vallée de l'Yerres.",
+      "clubs": [
+        "usm",
+        "evry-gregy",
+        "cris-ladies-boxing",
+        "grandpuits"
+      ],
+      "misEnAvant": []
+    },
+    {
+      "slug": "fontainebleau",
+      "nom": "Fontainebleau",
+      "titre": "Fontainebleau et le sud du département",
+      "accroche": "Quatre clubs entre Avon, Montereau et la Bassée.",
+      "clubs": [
+        "avon",
+        "vulaines-sur-seine",
+        "montereau",
+        "gouaix"
+      ],
+      "misEnAvant": [
+        "avon"
+      ]
+    }
+  ]
+}

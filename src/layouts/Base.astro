@@ -1,0 +1,196 @@
+---
+import '../styles/polices.css';
+import '../styles/comite.css';
+import '../styles/composants.css';
+import { ClientRouter } from 'astro:transitions';
+import Icone from '../components/Icone.astro';
+
+const {
+  title = 'CDSBF77 – Savate boxe française en Seine-et-Marne',
+  description = 'Le Comité Départemental de Savate Boxe Française de Seine-et-Marne : annuaire des clubs, disciplines, compétitions et formations.',
+  image = '/og-cdsbf77.png',
+} = Astro.props;
+
+const urlImage = new URL(image, Astro.site);
+
+const nav = [
+  { href: '/', label: 'Accueil' },
+  { href: '/clubs', label: 'Clubs' },
+  { href: '/disciplines', label: 'Disciplines' },
+  { href: '/competitions', label: 'Compétitions' },
+  { href: '/formations', label: 'Formations' },
+  { href: '/developpement', label: 'Développement' },
+  { href: '/actualites', label: 'Actualités' },
+  { href: '/contact', label: 'Contact' },
+];
+const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0f3460" />
+    <meta property="og:site_name" content="CDSBF77" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:image" content={urlImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Comité Départemental de Savate Boxe Française de Seine-et-Marne" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={urlImage} />
+    <noscript><style>.card { opacity: 1 !important; transform: none !important; }
+      .anim-cascade > * { opacity: 1 !important; transform: none !important; }</style></noscript>
+    <ClientRouter />
+  </head>
+  <body>
+    <nav class="navigation" id="navigation" aria-label="Navigation principale">
+      <div class="nav-container">
+        {nav.map((item) => (
+          <a
+            href={item.href}
+            class="nav-link"
+            aria-current={chemin === item.href || (item.href !== '/' && chemin.startsWith(item.href + '/')) ? 'page' : undefined}
+          ><span>{item.label}</span></a>
+        ))}
+      </div>
+    </nav>
+
+    <slot />
+
+    <footer id="contact">
+      <div class="footer-content">
+        <img src="/logos/cdsbf77.png" alt="Logo CDSBF77" class="footer-logo" width="100" height="100" loading="lazy" decoding="async" />
+        <div class="social-links">
+          <a href="https://www.facebook.com/profile.php?id=100088440284322" class="social-link" aria-label="Facebook" rel="noopener">
+            <Icone nom="facebook" taille="1.2rem" />
+          </a>
+          <a href="https://www.instagram.com/comite_77_savate_bf/" class="social-link" aria-label="Instagram" rel="noopener">
+            <Icone nom="instagram" taille="1.2rem" />
+          </a>
+          <a href="mailto:cdsbf77@gmail.com" class="social-link" aria-label="Courriel">
+            <Icone nom="courriel" taille="1.2rem" />
+          </a>
+        </div>
+        <p>© 2026 - Comité Départemental de Savate Boxe Française de Seine-et-Marne</p>
+        <p>
+          <a href="mailto:cdsbf77@gmail.com" style="color: var(--gold); text-decoration: none;">cdsbf77@gmail.com</a>
+          &nbsp;·&nbsp;
+          <a href="/liens" style="color: var(--gold); text-decoration: none;">Liens utiles</a>
+          &nbsp;·&nbsp;
+          <a href="/comite" style="color: var(--gold); text-decoration: none;">Le comité</a>
+          &nbsp;·&nbsp;
+          <a href="/mentions-legales" style="color: var(--gold); text-decoration: none;">Mentions légales</a>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      const sobre = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const tactile = () => window.matchMedia('(hover: none), (pointer: coarse)').matches;
+
+      // Barre de navigation : posée une seule fois, l'élément est requestionné à chaque appel
+      window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navigation');
+        if (nav) nav.classList.toggle('scrolled', window.pageYOffset > 100);
+      }, { passive: true });
+
+      // Les trajectoires se dessinent à l'arrivée dans le champ.
+      // Elles remplacent les particules flottantes : le mouvement dit
+      // quelque chose de la savate au lieu d'être un décor générique.
+      function trajectoires() {
+        const svgs = document.querySelectorAll('.trajectoire');
+        if (!svgs.length) return;
+        if (sobre()) { svgs.forEach((s) => s.classList.add('vue')); return; }
+
+        const obs = new IntersectionObserver((entrees) => {
+          entrees.forEach((e) => {
+            if (!e.isIntersecting) return;
+            e.target.querySelectorAll('.trace-anime').forEach((p) => {
+              // La longueur exacte du tracé permet de le dérouler proprement
+              p.style.setProperty('--longueur', String(Math.ceil(p.getTotalLength())));
+            });
+            e.target.classList.add('vue');
+            obs.unobserve(e.target);
+          });
+        }, { threshold: 0.15 });
+        svgs.forEach((s) => obs.observe(s));
+      }
+
+      function apparitions() {
+        // Cartes pleine largeur
+        const obsCartes = new IntersectionObserver((entrees) => {
+          entrees.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); obsCartes.unobserve(e.target); } });
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+        document.querySelectorAll('.card').forEach((c) => obsCartes.observe(c));
+
+        // Grilles : apparition en cascade, un enfant après l'autre
+        const grilles = document.querySelectorAll('.features-grid, .info-grid, .clubs-grid, .club-galerie');
+        const obsGrilles = new IntersectionObserver((entrees) => {
+          entrees.forEach((e) => {
+            if (!e.isIntersecting) return;
+            Array.from(e.target.children).forEach((enfant) => enfant.classList.add('revele'));
+            obsGrilles.unobserve(e.target);
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+        grilles.forEach((g) => {
+          g.classList.add('anim-cascade');
+          Array.from(g.children).forEach((enfant, i) => enfant.style.setProperty('--i', String(i)));
+          obsGrilles.observe(g);
+        });
+      }
+
+      function logoClub() {
+        if (sobre() || tactile()) return;
+        const bandeau = document.querySelector('.club-scope .page-hero');
+        const bloc = document.querySelector('.club-logo-bloc');
+        if (!bandeau || !bloc) return;
+        let trame = null;
+        bandeau.addEventListener('pointermove', (ev) => {
+          if (trame) return;
+          trame = requestAnimationFrame(() => {
+            trame = null;
+            const r = bandeau.getBoundingClientRect();
+            const x = (ev.clientX - r.left) / r.width - 0.5;
+            const y = (ev.clientY - r.top) / r.height - 0.5;
+            bloc.style.transform =
+              'perspective(900px) rotateX(' + (-y * 12).toFixed(2) + 'deg) rotateY(' + (x * 12).toFixed(2) + 'deg)';
+          });
+        });
+        bandeau.addEventListener('pointerleave', () => {
+          if (trame) { cancelAnimationFrame(trame); trame = null; }
+          bloc.style.transition = 'transform 0.6s cubic-bezier(0.22, 1.4, 0.36, 1)';
+          bloc.style.transform = '';
+          setTimeout(() => { bloc.style.transition = ''; }, 650);
+        });
+      }
+
+      function annee() {
+        const a = new Date().getFullYear();
+        document.querySelectorAll('footer p').forEach((p) => {
+          if (p.textContent.includes('©')) p.textContent = p.textContent.replace('2026', String(a));
+        });
+      }
+
+      function initialiser() {
+        trajectoires();
+        apparitions();
+        logoClub();
+        annee();
+      }
+
+      // Se déclenche au premier chargement comme après chaque transition de page
+      document.addEventListener('astro:page-load', initialiser);
+    </script>
+  </body>
+</html>

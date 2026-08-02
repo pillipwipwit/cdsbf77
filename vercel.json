@@ -1,0 +1,236 @@
+{
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/savate-adaptee",
+      "destination": "/developpement",
+      "permanent": true
+    },
+    {
+      "source": "/para-savate",
+      "destination": "/developpement",
+      "permanent": false
+    },
+    {
+      "source": "/blank-2",
+      "destination": "/disciplines",
+      "permanent": true
+    },
+    {
+      "source": "/blank-3",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/blank-4",
+      "destination": "/disciplines",
+      "permanent": true
+    },
+    {
+      "source": "/blank-5",
+      "destination": "/disciplines",
+      "permanent": true
+    },
+    {
+      "source": "/blank-6",
+      "destination": "/disciplines",
+      "permanent": true
+    },
+    {
+      "source": "/blank-7",
+      "destination": "/disciplines",
+      "permanent": true
+    },
+    {
+      "source": "/blog",
+      "destination": "/actualites",
+      "permanent": true
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/actualites",
+      "permanent": true
+    },
+    {
+      "source": "/products",
+      "destination": "/actualites",
+      "permanent": true
+    },
+    {
+      "source": "/avon",
+      "destination": "/clubs/avon",
+      "permanent": true
+    },
+    {
+      "source": "/coulommiers",
+      "destination": "/clubs/coulommiers",
+      "permanent": true
+    },
+    {
+      "source": "/sves",
+      "destination": "/clubs/serris",
+      "permanent": true
+    },
+    {
+      "source": "/lagny",
+      "destination": "/clubs/lagny",
+      "permanent": true
+    },
+    {
+      "source": "/meaux",
+      "destination": "/clubs/meaux",
+      "permanent": true
+    },
+    {
+      "source": "/dampmart",
+      "destination": "/clubs/dampmart",
+      "permanent": true
+    },
+    {
+      "source": "/rebais",
+      "destination": "/clubs/rebais",
+      "permanent": true
+    },
+    {
+      "source": "/roissy",
+      "destination": "/clubs/roissy",
+      "permanent": true
+    },
+    {
+      "source": "/st-soupplets",
+      "destination": "/clubs/st-soupplets",
+      "permanent": true
+    },
+    {
+      "source": "/crecy",
+      "destination": "/clubs/crecy",
+      "permanent": true
+    },
+    {
+      "source": "/champs",
+      "destination": "/clubs/champs",
+      "permanent": true
+    },
+    {
+      "source": "/fontenay",
+      "destination": "/clubs/fontenay-tresigny",
+      "permanent": true
+    },
+    {
+      "source": "/collegien",
+      "destination": "/clubs/collegien",
+      "permanent": true
+    },
+    {
+      "source": "/grandpuits",
+      "destination": "/clubs/grandpuits",
+      "permanent": true
+    },
+    {
+      "source": "/gouaix",
+      "destination": "/clubs/gouaix",
+      "permanent": true
+    },
+    {
+      "source": "/apollo",
+      "destination": "/clubs/victory-academy",
+      "permanent": true
+    },
+    {
+      "source": "/clubs/ama-academy",
+      "destination": "/clubs/victory-academy",
+      "permanent": true
+    },
+    {
+      "source": "/victory",
+      "destination": "/clubs/victory-academy",
+      "permanent": true
+    },
+    {
+      "source": "/st-fargeau",
+      "destination": "/clubs/cris-ladies-boxing",
+      "permanent": true
+    },
+    {
+      "source": "/moussy",
+      "destination": "/clubs/moussy",
+      "permanent": true
+    },
+    {
+      "source": "/coupvray",
+      "destination": "/clubs/coupvray",
+      "permanent": true
+    },
+    {
+      "source": "/ccsv",
+      "destination": "/clubs/vulaines-sur-seine",
+      "permanent": true
+    },
+    {
+      "source": "/ozoir",
+      "destination": "/clubs/ozoir",
+      "permanent": true
+    },
+    {
+      "source": "/torcy",
+      "destination": "/clubs/aestbf",
+      "permanent": true
+    },
+    {
+      "source": "/melun",
+      "destination": "/clubs/usm",
+      "permanent": true
+    },
+    {
+      "source": "/courtry",
+      "destination": "/clubs/courtry",
+      "permanent": true
+    },
+
+    {
+      "source": "/formations/candidats/fondements-de-la-pedagogie-inclusive",
+      "destination": "/formations/savate-adaptee/fondements-de-la-pedagogie-inclusive",
+      "permanent": true
+    },
+    {
+      "source": "/formations/candidats/principes-de-la-pratique-partagee",
+      "destination": "/formations/savate-adaptee/principes-de-la-pratique-partagee",
+      "permanent": true
+    },
+    {
+      "source": "/formations/candidats/manipulation-des-contraintes",
+      "destination": "/formations/savate-adaptee/manipulation-des-contraintes",
+      "permanent": true
+    },
+    {
+      "source": "/formations/candidats/communication-et-valorisation-en-savate-adaptee",
+      "destination": "/formations/savate-adaptee/communication-et-valorisation-en-savate-adaptee",
+      "permanent": true
+    },
+    {
+      "source": "/formations/candidats/gestion-des-comportements-defis-en-savate-adaptee",
+      "destination": "/formations/savate-adaptee/gestion-des-comportements-defis-en-savate-adaptee",
+      "permanent": true
+    },
+    {
+      "source": "/formations/candidats/module-1-3b-construction-de-seances",
+      "destination": "/formations/savate-adaptee/module-1-3b-construction-de-seances",
+      "permanent": true
+    },
+    {
+      "source": "/formations/candidats/module-1-3c-progression-technique-et-grades",
+      "destination": "/formations/savate-adaptee/module-1-3c-progression-technique-et-grades",
+      "permanent": true
+    },
+    {
+      "source": "/formations/candidats/:path*",
+      "destination": "/formations",
+      "permanent": true
+    },
+    {
+      "source": "/formations/filiere-federale",
+      "destination": "/formations",
+      "permanent": true
+    }
+  ]
+}

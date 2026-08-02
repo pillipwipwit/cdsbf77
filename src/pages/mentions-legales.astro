@@ -1,0 +1,71 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Mentions légales – CDSBF77" description="Mentions légales du site du CDSBF77.">
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+    <h1>Mentions légales</h1>
+      </section>
+  <section class="section">
+    <div class="enveloppe">
+      <section class="bloc">
+          <p><strong>Éditeur :</strong> Comité Départemental de Savate Boxe Française de Seine-et-Marne (association loi 1901), 24 avenue Franklin Roosevelt, 77100 Meaux. Directeur de la publication : Cédric Senez, président.</p>
+          <p><strong>Hébergement :</strong> Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis.</p>
+          <p><strong>Données personnelles :</strong> ce site ne dépose aucun cookie de suivi et ne collecte aucune donnée personnelle. Les coordonnées des clubs sont publiées avec l'accord de leurs correspondants ; pour toute rectification, <a href="/contact">contactez le comité</a>.</p>
+              </section>
+      </section>
+</Base>
+
+<style>
+  .bloc {
+    margin-top: clamp(2.2rem, 5vw, 3.5rem);
+    padding-top: clamp(1.8rem, 4vw, 2.6rem);
+    border-top: 1px solid var(--gris-200);
+  }
+  .bloc:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+  .bloc p, .section > .enveloppe > p {
+    max-width: var(--mesure);
+    line-height: 1.75;
+    color: var(--gris-500);
+  }
+  .bloc a, .section a { color: var(--bleu-700); font-weight: 600; }
+
+  .panneau {
+    background: var(--blanc);
+    padding: 1.7rem 1.6rem;
+    border-top: 3px solid var(--or-400);
+  }
+  .panneau h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--police-titre);
+    font-size: var(--titre-sm);
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0 0 0.7rem;
+  }
+  .panneau h3 :global(.icone) { color: var(--or-texte); }
+  .panneau p { margin: 0 0 0.5rem; font-size: 0.93rem; line-height: 1.65; color: var(--gris-500); }
+  .panneau p:last-child { margin-bottom: 0; }
+
+  .video-embed {
+    position: relative;
+    padding-top: 56.25%;
+    overflow: hidden;
+    border: 1px solid var(--gris-200);
+    margin-top: 1.5rem;
+  }
+  .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .videos-grille {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    margin-top: 1.5rem;
+  }
+  .videos-grille .video-embed { margin-top: 0; }
+</style>

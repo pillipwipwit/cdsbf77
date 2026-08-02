@@ -1,0 +1,113 @@
+---
+// Icônes SVG inlinées au build, en remplacement de Font Awesome chargé en CDN.
+//
+// Deux sources, toutes deux libres et sans obligation d'attribution :
+//   - Lucide (licence ISC) pour les pictogrammes, tracés au trait
+//   - Simple Icons (CC0) pour les logos de réseaux sociaux, en aplat
+//
+// Ajouter une icône : compléter CATALOGUE avec un nom de fichier existant
+// dans node_modules/lucide-static/icons/ ou node_modules/simple-icons/icons/.
+import { readFileSync } from 'node:fs';
+
+export interface Props {
+  nom: string;
+  taille?: number | string;
+  classe?: string;
+  /** Texte alternatif. Sans lui, l'icône est décorative et masquée aux lecteurs d'écran. */
+  titre?: string;
+}
+
+const CATALOGUE: Record<string, { source: 'lucide' | 'marque'; fichier: string }> = {
+  // Disciplines
+  'boxe':            { source: 'lucide', fichier: 'hand-fist' },
+  'canne':           { source: 'lucide', fichier: 'swords' },
+  'forme':           { source: 'lucide', fichier: 'heart-pulse' },
+  'defense':         { source: 'lucide', fichier: 'shield' },
+  // Activités
+  'formation':       { source: 'lucide', fichier: 'graduation-cap' },
+  'competition':     { source: 'lucide', fichier: 'trophy' },
+  'developpement':   { source: 'lucide', fichier: 'sprout' },
+  'accessibilite':   { source: 'lucide', fichier: 'accessibility' },
+  'physique':        { source: 'lucide', fichier: 'dumbbell' },
+  'officiel':        { source: 'lucide', fichier: 'flag' },
+  // Développement de la pratique
+  'aller-vers':      { source: 'lucide', fichier: 'users' },
+  'sante':           { source: 'lucide', fichier: 'heart' },
+  'ecole':           { source: 'lucide', fichier: 'school' },
+  'insertion':       { source: 'lucide', fichier: 'briefcase' },
+  'entraide':        { source: 'lucide', fichier: 'handshake' },
+  // Contact et repères
+  'courriel':        { source: 'lucide', fichier: 'mail' },
+  'lieu':            { source: 'lucide', fichier: 'map-pin' },
+  'carte':           { source: 'lucide', fichier: 'map' },
+  'personne':        { source: 'lucide', fichier: 'user' },
+  'telephone':       { source: 'lucide', fichier: 'phone' },
+  'site':            { source: 'lucide', fichier: 'globe' },
+  'lien':            { source: 'lucide', fichier: 'link' },
+  'lien-externe':    { source: 'lucide', fichier: 'external-link' },
+  'institution':     { source: 'lucide', fichier: 'landmark' },
+  'boite':           { source: 'lucide', fichier: 'inbox' },
+  'partage':         { source: 'lucide', fichier: 'share-2' },
+  'fleche-droite':   { source: 'lucide', fichier: 'arrow-right' },
+  'fleche-gauche':   { source: 'lucide', fichier: 'arrow-left' },
+  'calendrier':      { source: 'lucide', fichier: 'calendar' },
+  'recherche':       { source: 'lucide', fichier: 'search' },
+  'video':           { source: 'lucide', fichier: 'video' },
+  'lecture':         { source: 'lucide', fichier: 'play-circle' },
+  'etiquette':       { source: 'lucide', fichier: 'tag' },
+  // Réseaux sociaux
+  'facebook':        { source: 'marque', fichier: 'facebook' },
+  'instagram':       { source: 'marque', fichier: 'instagram' },
+  'youtube':         { source: 'marque', fichier: 'youtube' },
+};
+
+const { nom, taille = '1em', classe = '', titre } = Astro.props;
+
+const entree = CATALOGUE[nom];
+if (!entree) {
+  throw new Error(
+    `Icone : « ${nom} » est inconnue. Noms disponibles : ${Object.keys(CATALOGUE).join(', ')}`
+  );
+}
+
+const chemin =
+  entree.source === 'lucide'
+    ? `node_modules/lucide-static/icons/${entree.fichier}.svg`
+    : `node_modules/simple-icons/icons/${entree.fichier}.svg`;
+
+const brut = readFileSync(chemin, 'utf8');
+// On ne garde que le contenu du <svg>, les attributs sont reposés ici
+const interieur = brut
+  .replace(/^[\s\S]*?<svg[^>]*>/, '')
+  .replace(/<\/svg>[\s\S]*$/, '')
+  .replace(/<title>[\s\S]*?<\/title>/, '')
+  .trim();
+
+const marque = entree.source === 'marque';
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width={taille}
+  height={taille}
+  class={`icone ${classe}`.trim()}
+  fill={marque ? 'currentColor' : 'none'}
+  stroke={marque ? undefined : 'currentColor'}
+  stroke-width={marque ? undefined : 2}
+  stroke-linecap={marque ? undefined : 'round'}
+  stroke-linejoin={marque ? undefined : 'round'}
+  role={titre ? 'img' : undefined}
+  aria-label={titre}
+  aria-hidden={titre ? undefined : 'true'}
+  focusable="false"
+  set:html={interieur}
+/>
+
+<style>
+  .icone {
+    display: inline-block;
+    vertical-align: -0.125em;
+    flex: none;
+  }
+</style>

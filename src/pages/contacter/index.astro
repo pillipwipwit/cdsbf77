@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import TrouverClub from '../../components/TrouverClub.astro';
+import donnees from '../../data/clubs.json';
+
+const nbClubs = donnees.clubs.length;
+---
+<Base
+  title="Contacter un club de savate en Seine-et-Marne – CDSBF77"
+  description="Trouvez le club de savate boxe française le plus proche en Seine-et-Marne et posez votre question : horaires, tarifs, inscription."
+>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+      <p class="surtitre">Contact</p>
+      <h1>Contacter un club</h1>
+      <p class="accroche">
+        Horaires, tarifs, inscription : trouvez le club le plus proche et
+        écrivez-lui directement. Le premier cours se fait sans engagement.
+      </p>
+    </div>
+  </section>
+
+  <TrouverClub />
+</Base>

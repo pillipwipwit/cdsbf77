@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+import formation from '../data/formation.json';
+import savateAdaptee from '../data/savate-adaptee.json';
+
+const nbMonitorat = formation.lecons.length;
+const nbAdaptee = savateAdaptee.lecons.length;
+
+const parcours = [
+  {
+    icone: 'formation',
+    teinte: 'var(--gant-bleu)',
+    nom: 'Préparation au monitorat',
+    texte: `${nbMonitorat} leçons en ligne d'environ 20 minutes, en 9 modules suivant le programme de l'unité capitalisable, chacune close par un quiz autocorrigé.`,
+    lien: '/formations/monitorat',
+    libelle: 'Commencer la formation',
+  },
+  {
+    icone: 'accessibilite',
+    teinte: 'var(--gant-vert)',
+    nom: 'Savate adaptée',
+    texte: `${nbAdaptee} modules sur la pédagogie inclusive, l'adaptation des situations et la gestion des comportements-défis. En accès libre, avec quiz.`,
+    lien: '/formations/savate-adaptee',
+    libelle: 'Suivre les modules',
+  },
+  {
+    icone: 'physique',
+    teinte: 'var(--gant-jaune)',
+    nom: 'Qualités physiques',
+    texte: "Systèmes énergétiques, planification de l'entraînement : un outil interactif ouvert à tous les sportifs.",
+    lien: '/formations/qualites-physiques',
+    libelle: "Explorer l'outil",
+  },
+  {
+    icone: 'officiel',
+    teinte: 'var(--gant-rouge)',
+    nom: "Formation d'officiels",
+    texte: 'Juges et arbitres : le comité assure la formation et le recyclage des officiels qui font vivre les compétitions départementales.',
+    lien: '/contact',
+    libelle: 'Se renseigner sur la prochaine session',
+  },
+];
+---
+<Base
+  title="Formations – CDSBF77"
+  description="Formations d'encadrants et d'officiels de savate en Seine-et-Marne : moniteur de savate, savate adaptée, juges et arbitres."
+>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+      <p class="surtitre">Formations</p>
+      <h1>Encadrer,<br />juger, arbitrer</h1>
+      <p class="accroche">
+        Le comité forme les moniteurs et les officiels de demain, en savate
+        comme en savate adaptée. {nbMonitorat + nbAdaptee} leçons sont en accès
+        libre en ligne, sans inscription.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="enveloppe">
+      <p class="surtitre">Se former dans le 77</p>
+      <h2 class="titre-section">La filière du comité</h2>
+      <p class="intro">
+        Le comité organise chaque saison la formation de <strong>moniteur de
+        savate boxe française</strong>, structurée en trois unités capitalisables
+        et sanctionnée par l'examen régional. Il forme également les
+        <strong>officiels</strong> dont les compétitions départementales ont
+        besoin, et propose une formation à la <strong>savate adaptée</strong>
+        pour l'accueil des publics en situation de handicap.
+      </p>
+    </div>
+
+    <div class="enveloppe">
+      <div class="grille-filet">
+        {parcours.map((p) => (
+          <a class="carte" href={p.lien} style={`--teinte: ${p.teinte}`}>
+            <span class="carte-icone"><Icone nom={p.icone} taille="1.6rem" /></span>
+            <h3>{p.nom}</h3>
+            <p>{p.texte}</p>
+            <span class="carte-fleche"><Icone nom="fleche-droite" taille="1.1rem" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--craie">
+    <div class="enveloppe">
+      <div class="avis">
+        <h2>Saison 2026-2027</h2>
+        <p>
+          Le planning des unités capitalisables, les tarifs et les modalités
+          d'inscription seront publiés ici prochainement.
+        </p>
+        <p>
+          Une question sur un cursus ? <a href="/contact">Contactez le comité</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro strong { color: var(--bleu-900); font-weight: 600; }
+
+  .avis {
+    background: var(--blanc);
+    border-left: 4px solid var(--or-400);
+    padding: 1.6rem 1.8rem;
+    max-width: var(--mesure);
+  }
+  .avis h2 {
+    font-family: var(--police-titre);
+    font-size: var(--titre-sm);
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0 0 0.7rem;
+  }
+  .avis p { margin: 0 0 0.6rem; color: var(--gris-500); line-height: 1.65; }
+  .avis p:last-child { margin-bottom: 0; }
+  .avis a { color: var(--bleu-700); font-weight: 600; }
+</style>

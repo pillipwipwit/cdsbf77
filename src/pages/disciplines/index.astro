@@ -1,0 +1,143 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icone from '../../components/Icone.astro';
+
+// Chaque discipline porte une couleur de l'échelle des gants : le système
+// d'accent du site, repris de la progression technique fédérale.
+const disciplines = [
+  {
+    icone: 'boxe',
+    teinte: 'var(--gant-bleu)',
+    nom: 'Savate boxe française',
+    chapo: 'Le cœur de la pratique',
+    texte:
+      "Sport de combat né en France au XIXe siècle : on touche avec les pieds chaussés et les poings gantés. Deux formes de pratique : l'assaut, où seule la touche compte, et le combat, réservé aux tireurs confirmés.",
+    videos: [],
+  },
+  {
+    icone: 'defense',
+    teinte: 'var(--gant-rouge)',
+    nom: 'Savate défense',
+    chapo: 'Des repères, de la lucidité',
+    texte:
+      "La savate défense est la déclinaison self-défense de la savate. On y apprend à évaluer une situation, à se dégager, à riposter avec des techniques simples et éprouvées, dans un cadre réglementé et progressif. La pédagogie part de mises en situation concrètes, puis construit des réponses proportionnées. L'objectif n'est pas de fabriquer des combattants mais de donner à chacun des repères, de la lucidité et de la confiance.",
+    videos: [
+      { url: 'https://player.vimeo.com/video/1212576947?h=5fbc3ce719', titre: 'Savate défense en Seine-et-Marne' },
+      { url: 'https://player.vimeo.com/video/1212576894?h=ebb38e4898', titre: 'Savate défense : mises en situation' },
+    ],
+  },
+  {
+    icone: 'forme',
+    teinte: 'var(--gant-jaune)',
+    nom: 'Savate forme',
+    chapo: 'Sans opposition ni contact',
+    texte:
+      "La savate forme reprend les enchaînements pieds-poings de la boxe française et les transforme en séance de fitness en musique, sans opposition ni contact. Cardio, renforcement musculaire, coordination et mémoire des enchaînements : la séance sollicite le corps entier tout en restant accessible à tous les niveaux. C'est souvent la première porte d'entrée vers la savate pour un public qui ne se destinait pas aux sports de combat.",
+    videos: [
+      { url: 'https://player.vimeo.com/video/1212576912?h=2f0e7497ab', titre: 'Savate forme en club' },
+    ],
+  },
+  {
+    icone: 'canne',
+    teinte: 'var(--gant-vert)',
+    nom: 'Canne de combat',
+    chapo: "L'escrime française à la canne",
+    texte:
+      "L'escrime française à la canne de châtaignier : vitesse, précision et élégance. Discipline patrimoniale et spectaculaire, la canne se pratique dès le plus jeune âge. Les touches sont portées avec une arme légère et les assauts se jouent autant sur le déplacement et l'esquive que sur la frappe, ce qui en fait une école remarquable de motricité et de tactique.",
+    videos: [
+      { url: 'https://player.vimeo.com/video/1212576892?h=c83fe8e458', titre: 'Canne de combat en Seine-et-Marne' },
+    ],
+  },
+];
+---
+<Base
+  title="Les disciplines – CDSBF77"
+  description="Savate boxe française, canne de combat, savate forme et savate défense : quatre disciplines enseignées dans les clubs de Seine-et-Marne, en images."
+>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+      <p class="surtitre">Disciplines</p>
+      <h1>Quatre façons<br />de pratiquer</h1>
+      <p class="accroche">
+        La savate boxe française est le cœur de la pratique. Autour d'elle, trois
+        disciplines associées permettent à chacun de trouver la forme qui lui
+        convient. Les images ci-dessous sont tournées dans les clubs du département.
+      </p>
+    </div>
+  </section>
+
+  {disciplines.map((d, i) => (
+    <section class:list={['section', { 'section--craie': i % 2 === 1 }]} style={`--teinte: ${d.teinte}`}>
+      <div class="enveloppe discipline">
+        <div class="discipline-texte">
+          <span class="discipline-icone"><Icone nom={d.icone} taille="2rem" /></span>
+          <p class="surtitre">{d.chapo}</p>
+          <h2 class="titre-section">{d.nom}</h2>
+          <p class="corps">{d.texte}</p>
+        </div>
+
+        {d.videos.length > 0 && (
+          <div class={d.videos.length > 1 ? 'videos-grille' : ''}>
+            {d.videos.map((v) => (
+              <div class="video-embed">
+                <iframe src={v.url} allow="autoplay; fullscreen; picture-in-picture"
+                        allowfullscreen title={v.titre} loading="lazy"></iframe>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  ))}
+
+  <section class="section section--sombre">
+    <div class="enveloppe fin">
+      <h2 class="titre-section">Laquelle est faite pour vous ?</h2>
+      <p class="intro">
+        La plupart des clubs enseignent plusieurs disciplines. Le mieux reste
+        d'aller voir : le premier cours se fait sans engagement.
+      </p>
+      <a class="bouton bouton--plein" href="/contacter">Trouver un club près de chez moi</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .discipline { display: grid; gap: clamp(1.5rem, 4vw, 3rem); }
+  .discipline-icone { color: var(--teinte); display: block; margin-bottom: 0.8rem; }
+  .discipline .corps {
+    max-width: var(--mesure);
+    line-height: 1.75;
+    color: var(--gris-500);
+    margin: 0;
+  }
+  .section--sombre .corps { color: #b9c4d2; }
+
+  /* Un filet à la couleur de la discipline sépare les sections */
+  .section { border-top: 3px solid var(--teinte); }
+
+  .video-embed {
+    position: relative;
+    padding-top: 56.25%;
+    overflow: hidden;
+    border: 1px solid var(--gris-200);
+  }
+  .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .videos-grille {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  }
+
+  .fin { text-align: center; }
+  .fin .intro { margin-left: auto; margin-right: auto; }
+
+  @media (min-width: 900px) {
+    .discipline { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: center; }
+    .discipline:has(.videos-grille) { grid-template-columns: 1fr; }
+  }
+</style>

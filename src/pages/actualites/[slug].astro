@@ -1,0 +1,209 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icone from '../../components/Icone.astro';
+import articles from '../../data/actualites.json';
+
+export function getStaticPaths() {
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+
+const formate = (iso) =>
+  new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const paragraphes = (article.contenu || '')
+  .split('\n')
+  .map((p) => p.trim())
+  .filter(Boolean);
+
+const images = article.images || [];
+const videoThumbs = article.videoThumbs || [];
+const tags = article.tags || [];
+
+const INSTAGRAM_URL = 'https://www.instagram.com/comite_77_savate_bf/';
+---
+<Base
+  title={article.titre + ' – Actualités CDSBF77'}
+  description={article.extrait}
+  image={images[0] || videoThumbs[0] || '/og-cdsbf77.png'}
+>
+  <section class="bandeau bandeau--article">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+      <a class="retour" href="/actualites"><Icone nom="fleche-gauche" taille="0.95rem" /> Toutes les actualités</a>
+      <p class="surtitre">
+        <Icone nom="calendrier" taille="0.85rem" /> {formate(article.date)}
+        {article.source === 'instagram' && (
+          <>· <Icone nom="instagram" taille="0.85rem" /> depuis Instagram</>
+        )}
+      </p>
+      <h1>{article.titre}</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="enveloppe enveloppe--article">
+      {images.length > 0 && (
+        <div class={'galerie' + (images.length === 1 ? ' galerie--une' : '')}>
+          {images.map((src) => (
+            <img src={src} alt="" loading="lazy" decoding="async" />
+          ))}
+        </div>
+      )}
+
+      <div class="corps">
+        {paragraphes.map((p) => <p>{p}</p>)}
+      </div>
+
+      {videoThumbs.length > 0 && (
+        <div class="panneau panneau--video">
+          <h3><Icone nom="video" taille="1.1rem" /> {videoThumbs.length > 1 ? 'Vidéos de la publication' : 'Vidéo de la publication'}</h3>
+          <p>
+            Cette publication contient {videoThumbs.length > 1 ? 'des vidéos' : 'une vidéo'}. Retrouvez-la en entier
+            sur notre compte Instagram.
+          </p>
+          <div class="video-grille">
+            {videoThumbs.map((thumb) => (
+              <a class="video-vignette" href={INSTAGRAM_URL} target="_blank" rel="noopener">
+                <img src={thumb} alt="" loading="lazy" decoding="async" />
+                <span class="video-vignette-icone"><Icone nom="lecture" taille="2rem" /></span>
+              </a>
+            ))}
+          </div>
+          <a class="bouton bouton--plein" href={INSTAGRAM_URL} target="_blank" rel="noopener">
+            <Icone nom="instagram" taille="1rem" /> Voir sur Instagram
+          </a>
+        </div>
+      )}
+
+      {tags.length > 0 && (
+        <div class="etiquettes">
+          {tags.map((t) => (
+            <span class="etiquette"><Icone nom="etiquette" taille="0.8rem" /> {t}</span>
+          ))}
+        </div>
+      )}
+
+      <p class="pied-nav">
+        <a href="/actualites"><Icone nom="fleche-gauche" taille="0.9rem" /> Retour à toutes les actualités</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .bandeau--article { padding-bottom: clamp(2.5rem, 5vw, 3.5rem); }
+  .retour {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--txt-sm);
+    font-weight: 600;
+    color: #c3cedb;
+    margin-bottom: 1.4rem;
+  }
+  .retour:hover { color: var(--blanc); }
+  .bandeau--article .surtitre {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  .enveloppe--article { max-width: 44rem; }
+
+  /* ---------- Galerie ---------- */
+  .galerie {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+    margin: 0 0 2rem;
+  }
+  .galerie--une { grid-template-columns: 1fr; }
+  .galerie img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    background: var(--craie);
+  }
+  .galerie--une img { aspect-ratio: 4 / 3; }
+
+  /* ---------- Corps de texte ---------- */
+  .corps { max-width: var(--mesure); }
+  .corps p {
+    line-height: 1.8;
+    color: var(--encre);
+    margin: 0 0 1.2rem;
+  }
+  .corps p:last-child { margin-bottom: 0; }
+
+  /* ---------- Panneau vidéo ---------- */
+  .panneau--video { margin: 2.2rem 0; max-width: var(--mesure); }
+  .video-grille {
+    display: grid;
+    gap: 0.6rem;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    margin: 1rem 0 1.3rem;
+  }
+  .video-vignette {
+    position: relative;
+    display: block;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background: var(--bleu-900);
+  }
+  .video-vignette img { width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.85; transition: opacity 0.3s ease; }
+  .video-vignette:hover img { opacity: 1; }
+  .video-vignette-icone {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blanc);
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+  }
+
+  /* ---------- Étiquettes ---------- */
+  .etiquettes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 2rem 0 0;
+    max-width: var(--mesure);
+  }
+  .etiquette {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: var(--txt-xs);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--gris-500);
+    background: var(--craie);
+    border: 1px solid var(--gris-200);
+    padding: 0.35rem 0.7rem;
+    border-radius: var(--rayon-pilule);
+  }
+
+  .pied-nav {
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gris-200);
+  }
+  .pied-nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--bleu-700);
+    font-weight: 600;
+  }
+</style>

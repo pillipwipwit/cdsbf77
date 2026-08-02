@@ -1,0 +1,147 @@
+---
+import Formation from "../../../layouts/Formation.astro";
+import Quiz from "../../../components/Quiz.astro";
+import donnees from "../../../data/savate-adaptee.json";
+
+const FAMILLES = {
+  "savate-adaptee": { titre: "Savate adaptée", ancre: "savate-adaptee" },
+  complement: { titre: "Compléments moniteur fédéral", ancre: "complement" },
+};
+
+export function getStaticPaths() {
+  return donnees.lecons.map((lecon) => {
+    const memeFamille = donnees.lecons
+      .filter((l) => l.famille === lecon.famille)
+      .sort((a, b) => a.ordre - b.ordre);
+    const i = memeFamille.findIndex((l) => l.id === lecon.id);
+    return {
+      params: { lecon: lecon.id },
+      props: {
+        lecon,
+        precedent: memeFamille[i - 1] ?? null,
+        suivant: memeFamille[i + 1] ?? null,
+      },
+    };
+  });
+}
+
+const { lecon, precedent, suivant } = Astro.props;
+const famille = FAMILLES[lecon.famille];
+---
+
+<Formation title={lecon.titre} description={lecon.chapo}>
+  <article>
+    <header class="tete">
+      <div class="fmt-wrap">
+        <p class="fil">
+          <a href="/formations">Formations</a>
+          <span aria-hidden="true">›</span>
+          <a href={`/formations/savate-adaptee#${famille.ancre}`}>{famille.titre}</a>
+        </p>
+        <h1>{lecon.titre}</h1>
+        <p class="chapo">{lecon.chapo}</p>
+        <p class="duree">≈ {lecon.duree} min de lecture · {lecon.quiz.length} questions</p>
+      </div>
+    </header>
+
+    <div class="fmt-wrap corps">
+      <div class="texte" set:html={lecon.contenu} />
+
+      <Quiz leconId={lecon.id} questions={lecon.quiz} />
+
+      <nav class="nav">
+        {precedent ? (
+          <a class="nav-lien prec" href={`/formations/savate-adaptee/${precedent.id}`}>
+            <span>Leçon précédente</span>
+            <strong>{precedent.titre}</strong>
+          </a>
+        ) : (
+          <span />
+        )}
+        {suivant ? (
+          <a class="nav-lien suiv" href={`/formations/savate-adaptee/${suivant.id}`}>
+            <span>Leçon suivante</span>
+            <strong>{suivant.titre}</strong>
+          </a>
+        ) : (
+          <a class="nav-lien suiv" href="/formations/savate-adaptee">
+            <span>Fin du parcours</span>
+            <strong>Revenir au sommaire</strong>
+          </a>
+        )}
+      </nav>
+    </div>
+  </article>
+</Formation>
+
+<style>
+  .tete {
+    background: var(--marine);
+    color: var(--blanc);
+    padding: clamp(2.2rem, 6vw, 4rem) 0 clamp(1.8rem, 5vw, 3rem);
+  }
+  .fil {
+    margin: 0 0 1.4rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9aa8ba;
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .fil a { color: var(--or-clair); text-decoration: none; }
+  .fil a:hover { text-decoration: underline; }
+  .tete h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); max-width: 22ch; }
+  .tete .chapo {
+    margin: 1rem 0 0;
+    font-size: 1.05rem;
+    color: #c3cedb;
+    max-width: 58ch;
+    font-style: italic;
+  }
+  .tete .duree {
+    margin: 1.4rem 0 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #9aa8ba;
+  }
+
+  .corps { padding-top: 3rem; }
+  .texte { max-width: var(--mesure); }
+
+  .nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 4rem;
+  }
+  .nav-lien {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1.1rem 1.3rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-clair);
+    border-radius: var(--rayon);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease;
+  }
+  .nav-lien:hover { border-color: var(--marine); }
+  .nav-lien span {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--or-texte);
+    font-weight: 600;
+  }
+  .nav-lien strong { font-weight: 500; font-size: 0.95rem; line-height: 1.4; }
+  .nav-lien.suiv { text-align: right; align-items: flex-end; }
+
+  @media (max-width: 620px) {
+    .nav { grid-template-columns: 1fr; }
+    .nav-lien.suiv { text-align: left; align-items: flex-start; }
+  }
+</style>

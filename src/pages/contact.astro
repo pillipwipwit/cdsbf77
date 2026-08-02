@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+---
+<Base
+  title="Contact – CDSBF77"
+  description="Contacter le Comité Départemental de Savate Boxe Française de Seine-et-Marne."
+>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+    <p class="surtitre">Contact</p>
+    <h1>Écrire au comité</h1>
+      </section>
+  <section class="section">
+    <div class="enveloppe">
+      <section class="bloc">
+          <div class="grille-filet">
+            <div class="panneau">
+              <h3><Icone nom="lieu" />Adresse</h3>
+              <p>Comité Départemental de Savate Boxe Française de Seine-et-Marne<br />
+              24 avenue Franklin Roosevelt<br />77100 Meaux</p>
+            </div>
+            <div class="panneau">
+              <h3><Icone nom="courriel" />Email &amp; téléphone</h3>
+              <p><a href="mailto:cdsbf77@gmail.com">cdsbf77@gmail.com</a></p>
+              <p><a href="tel:0626498259">06 26 49 82 59</a></p>
+            </div>
+            <div class="panneau">
+              <h3><Icone nom="partage" />Réseaux</h3>
+              <p><a href="https://www.instagram.com/comite_77_savate_bf/" rel="noopener"><Icone nom="instagram" /> Instagram</a></p>
+              <p><a href="https://www.facebook.com/profile.php?id=100088440284322" rel="noopener"><Icone nom="facebook" /> Facebook</a></p>
+            </div>
+          </div>
+          <p style="margin-top:1.5rem;">Pour rejoindre un club, consultez directement <a href="/clubs">l'annuaire</a> : chaque fiche indique le contact du club.</p>
+              </section>
+      </section>
+</Base>
+
+<style>
+  .bloc {
+    margin-top: clamp(2.2rem, 5vw, 3.5rem);
+    padding-top: clamp(1.8rem, 4vw, 2.6rem);
+    border-top: 1px solid var(--gris-200);
+  }
+  .bloc:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+  .bloc p, .section > .enveloppe > p {
+    max-width: var(--mesure);
+    line-height: 1.75;
+    color: var(--gris-500);
+  }
+  .bloc a, .section a { color: var(--bleu-700); font-weight: 600; }
+
+  .panneau {
+    background: var(--blanc);
+    padding: 1.7rem 1.6rem;
+    border-top: 3px solid var(--or-400);
+  }
+  .panneau h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--police-titre);
+    font-size: var(--titre-sm);
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0 0 0.7rem;
+  }
+  .panneau h3 :global(.icone) { color: var(--or-texte); }
+  .panneau p { margin: 0 0 0.5rem; font-size: 0.93rem; line-height: 1.65; color: var(--gris-500); }
+  .panneau p:last-child { margin-bottom: 0; }
+
+  .video-embed {
+    position: relative;
+    padding-top: 56.25%;
+    overflow: hidden;
+    border: 1px solid var(--gris-200);
+    margin-top: 1.5rem;
+  }
+  .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .videos-grille {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    margin-top: 1.5rem;
+  }
+  .videos-grille .video-embed { margin-top: 0; }
+</style>

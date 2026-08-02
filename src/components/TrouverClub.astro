@@ -1,0 +1,224 @@
+---
+// Sélecteur « Trouve ton club » : saisie d'un code postal ou d'une commune,
+// résultats filtrés en direct depuis clubs.json.
+import donnees from '../data/clubs.json';
+import Icone from './Icone.astro';
+
+const clubs = [...donnees.clubs]
+  .sort((a, b) => (a.ville || 'zzz').localeCompare(b.ville || 'zzz', 'fr'))
+  .map((c) => ({
+    slug: c.slug,
+    nom: c.nom,
+    ville: c.ville || '',
+    cp: c.codePostal || '',
+    disciplines: c.disciplines || [],
+    // Un club sans courriel ne peut pas recevoir la demande directement
+    contactable: Boolean(c.contact?.email),
+    accent: c.couleurs?.accent || '#d4af37',
+  }));
+
+const codesPostaux = [...new Set(clubs.map((c) => c.cp).filter(Boolean))].sort();
+---
+
+<section class="trouver" id="trouver-club">
+  <div class="enveloppe">
+    <p class="surtitre">Trouver un club</p>
+    <h2 class="titre-section">Trouver son club</h2>
+    <p class="intro">
+      Entrez votre code postal ou le nom de votre commune pour trouver le
+      club le plus proche et le contacter.
+    </p>
+
+    <div class="recherche">
+      <span class="recherche-icone"><Icone nom="lieu" taille="1.15rem" /></span>
+      <input
+        id="cp"
+        type="text"
+        inputmode="text"
+        autocomplete="postal-code"
+        placeholder="Code postal ou commune…"
+        aria-label="Code postal ou commune"
+        aria-describedby="aide-cp"
+      />
+      <button type="button" id="effacer" class="effacer" hidden aria-label="Effacer la recherche">×</button>
+    </div>
+    <p id="aide-cp" class="aide">
+      {codesPostaux.length} codes postaux couverts en Seine-et-Marne.
+    </p>
+
+    <div id="resultats" class="resultats" role="region" aria-live="polite" aria-label="Clubs trouvés"></div>
+  </div>
+</section>
+
+<script define:vars={{ clubs }}>
+  const champ = document.getElementById('cp');
+  const zone = document.getElementById('resultats');
+  const effacer = document.getElementById('effacer');
+
+  // Comparaison insensible aux accents, à la casse et aux traits d'union
+  const normaliser = (s) =>
+    (s || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]/g, '');
+
+  function chercher(saisie) {
+    const q = normaliser(saisie);
+    if (!q) return { clubs: [], exact: true };
+    const chiffres = /^\d+$/.test(saisie.trim());
+
+    if (chiffres) {
+      const cp = saisie.trim();
+      const exact = clubs.filter((c) => c.cp === cp);
+      if (exact.length) return { clubs: exact, exact: true, hors: false };
+      // Faute de coordonnées GPS dans les données, on ne sait pas calculer
+      // le club le plus proche : on est franc et on montre tout le département.
+      if (cp.startsWith('77')) return { clubs, exact: false, hors: false };
+      return { clubs: [], exact: false, hors: cp.length >= 2 };
+    }
+
+    const trouves = clubs.filter(
+      (c) => normaliser(c.ville).includes(q) || normaliser(c.nom).includes(q)
+    );
+    return { clubs: trouves, exact: trouves.length > 0 };
+  }
+
+  function afficher() {
+    const saisie = champ.value.trim();
+    effacer.hidden = saisie === '';
+
+    if (!saisie) { zone.innerHTML = ''; return; }
+
+    const { clubs: trouves, exact, hors } = chercher(saisie);
+
+    if (!trouves.length) {
+      zone.innerHTML = hors
+        ? '<p class="vide">Le comité couvre la Seine-et-Marne (codes postaux en 77). ' +
+          'Pour pratiquer ailleurs, la <a href="https://www.ffsavate.com" rel="noopener">Fédération Française de Savate</a> ' +
+          'recense les clubs de toute la France.</p>'
+        : '<p class="vide">Aucun club à cette adresse. ' +
+          '<a href="/clubs">Parcourir les ' + clubs.length + ' clubs du département</a> ' +
+          'ou <a href="/contact">demander conseil au comité</a>.</p>';
+      return;
+    }
+
+    const entete = exact
+      ? trouves.length + (trouves.length > 1 ? ' clubs correspondent' : ' club correspond')
+      : "Aucun club à ce code postal précis. Voici les " + trouves.length +
+        ' clubs du département — le comité peut vous orienter vers le plus proche.';
+
+    zone.innerHTML =
+      '<p class="compte">' + entete + '</p>' +
+      '<ul class="liste-resultats">' +
+      trouves
+        .map(
+          (c) =>
+            '<li class="resultat" style="--teinte:' + c.accent + '">' +
+            '<div class="resultat-txt">' +
+            '<p class="resultat-lieu">' + (c.cp ? c.cp + ' · ' : '') + c.ville + '</p>' +
+            '<h3>' + c.nom + '</h3>' +
+            '<p class="resultat-disc">' + c.disciplines.join(' · ') + '</p>' +
+            '</div>' +
+            '<div class="resultat-actions">' +
+            '<a class="bouton bouton--plein" href="/contacter/' + c.slug + '">Contacter le club</a>' +
+            '<a class="lien-fiche" href="/clubs/' + c.slug + '">Voir la fiche</a>' +
+            '</div>' +
+            '</li>'
+        )
+        .join('') +
+      '</ul>';
+  }
+
+  champ.addEventListener('input', afficher);
+  effacer.addEventListener('click', () => { champ.value = ''; afficher(); champ.focus(); });
+</script>
+
+<style>
+  .trouver { padding: var(--pas-section) 0; background: var(--craie); }
+
+  .recherche {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-200);
+    border-radius: 2px;
+    padding: 0 1.1rem;
+    max-width: 32rem;
+    transition: border-color 0.2s ease;
+  }
+  .recherche:focus-within { border-color: var(--bleu-700); }
+  .recherche-icone { color: var(--gris-500); display: flex; }
+  .recherche input {
+    flex: 1;
+    font-family: var(--police-texte);
+    font-size: 1.05rem;
+    padding: 1rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--encre);
+  }
+  .recherche input:focus { outline: none; }
+  .effacer {
+    border: 0;
+    background: transparent;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--gris-500);
+    cursor: pointer;
+    padding: 0 0.2rem;
+  }
+  .effacer:hover { color: var(--encre); }
+
+  .aide {
+    margin: 0.7rem 0 0;
+    font-size: var(--txt-sm);
+    color: var(--gris-500);
+  }
+
+  .resultats { margin-top: 2rem; }
+  .compte {
+    font-size: var(--txt-sm);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--or-texte);
+    margin: 0 0 1rem;
+  }
+  .liste-resultats { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--gris-200); border: 1px solid var(--gris-200); }
+  .resultat {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--blanc);
+    padding: 1.4rem 1.6rem;
+    border-left: 4px solid var(--teinte);
+  }
+  .resultat-lieu {
+    margin: 0;
+    font-size: var(--txt-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gris-500);
+  }
+  .resultat h3 {
+    font-family: var(--police-titre);
+    font-size: 1.45rem;
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0.15rem 0 0.25rem;
+  }
+  .resultat-disc { margin: 0; font-size: var(--txt-sm); color: var(--gris-500); }
+  .resultat-actions { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+  .lien-fiche { font-size: var(--txt-sm); font-weight: 600; color: var(--bleu-700); }
+
+  .vide { color: var(--gris-500); line-height: 1.6; }
+
+  @media (max-width: 600px) {
+    .resultat { flex-direction: column; align-items: stretch; }
+    .resultat-actions { justify-content: space-between; }
+  }
+</style>

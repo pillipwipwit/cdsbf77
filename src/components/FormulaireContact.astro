@@ -1,0 +1,177 @@
+---
+// Formulaire de contact d'un club, avec motif au choix.
+// Court volontairement : chaque champ ajouté coûte des demandes.
+//
+// L'envoi passe par un lien `mailto:` construit dans le navigateur : rien
+// n'est transmis au site ni à un tiers, rien n'est stocké.
+import Icone from './Icone.astro';
+
+export interface Props {
+  club: any;
+  titre?: string;
+  id?: string;
+}
+
+const { club, titre = 'Écrire au club', id = 'contact' } = Astro.props;
+
+const contact = club.contact || {};
+const COMITE = 'cdsbf77@gmail.com';
+const destinataire = contact.email || COMITE;
+const relaisParLeComite = !contact.email;
+
+const MOTIFS = [
+  'Horaires des cours',
+  'Tarifs et inscription',
+  'Venir essayer un cours',
+  'Accueil des enfants',
+  'Autre question',
+];
+---
+
+<section class="form" id={id}>
+  <div class="form-tete">
+    <h2>{titre}</h2>
+    <p>Une question sur les horaires, les tarifs ou l’inscription ? Le club vous répond.</p>
+  </div>
+
+  <form class="form-corps" data-form novalidate>
+    {relaisParLeComite && (
+      <p class="form-avis">
+        Sans courriel connu pour ce club, le message passe par le comité.
+        {contact.telephone && <> Vous pouvez aussi appeler le <a href={'tel:' + contact.telephone.replace(/\s/g, '')}>{contact.telephone}</a>.</>}
+      </p>
+    )}
+
+    <p class="form-champ">
+      <label for={`${id}-motif`}>Votre demande</label>
+      <select id={`${id}-motif`} data-champ="motif">
+        {MOTIFS.map((m) => <option value={m}>{m}</option>)}
+      </select>
+    </p>
+
+    <p class="form-champ">
+      <label for={`${id}-prenom`}>Prénom</label>
+      <input id={`${id}-prenom`} data-champ="prenom" type="text" autocomplete="given-name" required />
+    </p>
+
+    <p class="form-champ">
+      <label for={`${id}-rappel`}>Téléphone ou courriel</label>
+      <input id={`${id}-rappel`} data-champ="rappel" type="text" autocomplete="tel"
+             placeholder="06 12 34 56 78 ou vous@exemple.fr" required />
+    </p>
+
+    <p class="form-champ">
+      <label for={`${id}-message`}>Message <span class="option">(facultatif)</span></label>
+      <textarea id={`${id}-message`} data-champ="message" rows="3"
+                placeholder="Précisez si besoin : âge, niveau, disponibilités…"></textarea>
+    </p>
+
+    <button type="submit" class="bouton bouton--plein form-envoi">
+      <Icone nom="courriel" taille="1.05rem" /> Envoyer
+    </button>
+
+    <p class="form-erreur" data-erreur role="alert" hidden></p>
+
+    <p class="form-note">
+      Vos informations ne sont ni stockées ni transmises au site : le bouton
+      prépare un message dans votre messagerie, que vous envoyez vous-même.
+    </p>
+  </form>
+</section>
+
+<script define:vars={{ destinataire, nomClub: club.nom, ville: club.ville || '', relaisParLeComite, ancre: id }}>
+  const form = document.querySelector(`#${ancre} [data-form]`);
+  if (form) {
+    const erreur = form.querySelector('[data-erreur]');
+    const val = (n) => (form.querySelector(`[data-champ="${n}"]`)?.value || '').trim();
+
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const prenom = val('prenom');
+      const rappel = val('rappel');
+
+      if (!prenom || !rappel) {
+        erreur.hidden = false;
+        erreur.textContent = 'Merci d’indiquer votre prénom et un moyen de vous joindre.';
+        form.querySelector(`[data-champ="${prenom ? 'rappel' : 'prenom'}"]`).focus();
+        return;
+      }
+      erreur.hidden = true;
+
+      const motif = val('motif');
+      const lignes = ['Bonjour,', '', 'Objet : ' + motif + '.', '',
+        'Prénom : ' + prenom, 'Pour me joindre : ' + rappel];
+      const msg = val('message');
+      if (msg) lignes.push('', msg);
+      lignes.push('', 'Envoyé depuis cdsbf77.org');
+
+      const objet = (relaisParLeComite ? nomClub + (ville ? ' (' + ville + ')' : '') + ' — ' : '') + motif;
+
+      window.location.href =
+        'mailto:' + destinataire +
+        '?subject=' + encodeURIComponent(objet) +
+        '&body=' + encodeURIComponent(lignes.join('\n'));
+    });
+  }
+</script>
+
+<style>
+  .form {
+    background: var(--blanc);
+    border-top: 3px solid var(--club-accent, var(--or-400));
+    padding: clamp(1.4rem, 4vw, 2.2rem);
+    scroll-margin-top: 5rem;
+  }
+  .form-tete h2 {
+    font-family: var(--police-titre);
+    font-size: var(--titre-sm);
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0 0 0.4rem;
+  }
+  .form-tete p { margin: 0 0 1rem; font-size: 0.94rem; color: var(--gris-500); line-height: 1.55; }
+
+  .form-corps { display: flex; flex-direction: column; gap: 0.75rem; }
+  .form-champ { display: flex; flex-direction: column; gap: 0.3rem; margin: 0; }
+  .form-champ label { font-size: var(--txt-sm); font-weight: 600; color: var(--bleu-900); }
+  .option { font-weight: 400; color: var(--gris-500); }
+  .form-champ input,
+  .form-champ select,
+  .form-champ textarea {
+    font-family: var(--police-texte);
+    font-size: 1rem; /* évite le zoom automatique d'iOS à la saisie */
+    padding: 0.8rem 0.9rem;
+    border: 1px solid var(--gris-200);
+    border-radius: 2px;
+    background: var(--blanc);
+    color: var(--encre);
+  }
+  .form-champ textarea { resize: vertical; }
+  .form-champ input:focus,
+  .form-champ select:focus,
+  .form-champ textarea:focus {
+    outline: none;
+    border-color: var(--bleu-700);
+    box-shadow: 0 0 0 3px rgba(26, 78, 140, 0.14);
+  }
+  .form-envoi { justify-content: center; margin-top: 0.2rem; }
+
+  .form-erreur {
+    margin: 0;
+    padding: 0.7rem 0.9rem;
+    background: #fdf5f3;
+    border-left: 3px solid var(--rouge);
+    color: #8d2c1f;
+    font-size: 0.9rem;
+  }
+  .form-avis {
+    margin: 0;
+    padding: 0.6rem 0.8rem;
+    background: #fdf9f0;
+    border-left: 3px solid var(--or-400);
+    font-size: 0.86rem;
+    color: var(--gris-600);
+    line-height: 1.55;
+  }
+  .form-note { margin: 0; font-size: var(--txt-xs); color: var(--gris-500); line-height: 1.5; }
+</style>

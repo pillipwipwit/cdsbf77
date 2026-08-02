@@ -1,0 +1,297 @@
+/* ============================================================
+   CDSBF77 — composants de la direction artistique
+   « L'escrime des pieds et des poings »
+
+   Trois partis pris :
+   - l'échelle des gants sert de système d'accent (voir tokens.css) ;
+   - le mouvement est dessiné en trajectoires, pas en dégradés ;
+   - les formes sont franches : angles vifs, filets d'un pixel.
+
+   Chargé après comite.css, dont il remplace progressivement les
+   composants. Les anciennes classes restent le temps de la bascule.
+   ============================================================ */
+
+/* ---------- Enveloppes et rythme ---------- */
+.enveloppe {
+  max-width: var(--large);
+  margin: 0 auto;
+  padding: 0 clamp(1.2rem, 5vw, 3rem);
+}
+
+.section {
+  padding: var(--pas-section) 0;
+  background: var(--blanc);
+}
+.section--sombre { background: var(--bleu-900); color: #dbe3ec; }
+.section--craie { background: var(--craie); }
+
+.surtitre {
+  font-size: var(--txt-xs);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--or-texte);
+  margin: 0 0 1rem;
+}
+/* Sur fond sombre, l'or vif reprend la main : --or-texte est calculé pour
+   les fonds clairs et devient illisible ici (2,2:1). */
+.section--sombre .surtitre,
+.bandeau .surtitre { color: var(--or-400); }
+
+.titre-section {
+  font-family: var(--police-titre);
+  font-size: var(--titre-lg);
+  line-height: 1;
+  color: var(--bleu-900);
+  margin: 0 0 1rem;
+}
+.section--sombre .titre-section { color: var(--blanc); }
+
+.intro {
+  max-width: 58ch;
+  line-height: 1.7;
+  margin: 0 0 var(--pas-bloc);
+  color: var(--gris-500);
+}
+.section--sombre .intro { color: #b9c4d2; }
+
+/* ---------- Boutons ---------- */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--police-texte);
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  padding: 0.95rem 1.9rem;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.25s var(--sortie), background 0.25s ease,
+              color 0.25s ease, border-color 0.25s ease;
+}
+.bouton--plein { background: var(--or-400); color: var(--bleu-900); }
+.bouton--plein:hover { background: #e4c458; transform: translateY(-2px); }
+.bouton--ligne { color: var(--blanc); border-color: rgba(255, 255, 255, 0.45); }
+.bouton--ligne:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-2px); }
+.bouton--marine { background: var(--bleu-900); color: var(--blanc); }
+.bouton--marine:hover { background: var(--bleu-700); transform: translateY(-2px); }
+
+/* ---------- Trajectoire : le motif de mouvement ----------
+   Un arc tracé au trait, avec le point d'impact marqué. Reprend le
+   vocabulaire des coups de savate, nommés par leur tracé. */
+.trajectoire {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.trajectoire path { fill: none; }
+.trajectoire .trace-or { stroke: var(--or-400); stroke-width: 1.5; opacity: 0.5; }
+.trajectoire .trace-pale { stroke: #ffffff; stroke-width: 1; opacity: 0.18; }
+.trajectoire .impact { fill: var(--or-400); }
+
+/* Tracé qui se dessine à l'arrivée dans le champ */
+.trajectoire .trace-anime {
+  stroke-dasharray: var(--longueur, 2000);
+  stroke-dashoffset: var(--longueur, 2000);
+}
+.trajectoire.vue .trace-anime {
+  animation: tracer 1.8s var(--sortie) forwards;
+}
+@keyframes tracer { to { stroke-dashoffset: 0; } }
+
+/* ---------- L'échelle des gants ---------- */
+.echelle { list-style: none; margin: 0; padding: 0; }
+.echelle .gant {
+  display: grid;
+  grid-template-columns: 2.4rem 7rem 1fr;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.15rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  transition: padding-left 0.35s var(--sortie);
+}
+.echelle .gant:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+.echelle .gant:hover { padding-left: 0.8rem; }
+.gant-pastille {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--gant);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  transition: box-shadow 0.4s ease, transform 0.4s var(--ressort);
+}
+.echelle .gant:hover .gant-pastille {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 8px color-mix(in srgb, var(--gant) 28%, transparent);
+}
+.gant-nom {
+  font-family: var(--police-titre);
+  font-size: 1.6rem;
+  letter-spacing: 0.06em;
+  color: var(--blanc);
+}
+.gant-profil { color: #a8b6c8; font-style: italic; font-size: 0.98rem; }
+
+/* ---------- Cartes en grille au filet ---------- */
+.grille-filet {
+  display: grid;
+  gap: 1px;
+  background: var(--gris-200);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+.carte {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  background: var(--blanc);
+  padding: 2.2rem 1.8rem 3.2rem;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+.carte::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: var(--teinte, var(--or-400));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--sortie);
+}
+.carte:hover::before,
+.carte:focus-visible::before { transform: scaleX(1); }
+.carte:hover { background: #fbfcfd; }
+.carte-icone { color: var(--teinte, var(--bleu-700)); display: block; }
+.carte h3 {
+  font-family: var(--police-titre);
+  font-size: var(--titre-sm);
+  letter-spacing: 0.03em;
+  color: var(--bleu-900);
+  margin: 0;
+}
+.carte p { margin: 0; font-size: 0.93rem; line-height: 1.6; color: var(--gris-500); }
+.carte-fleche {
+  position: absolute;
+  bottom: 1.6rem;
+  left: 1.8rem;
+  color: var(--teinte, var(--or-texte));
+  transform: translateX(-6px);
+  opacity: 0;
+  transition: transform 0.4s var(--sortie), opacity 0.3s ease;
+}
+.carte:hover .carte-fleche,
+.carte:focus-visible .carte-fleche { transform: translateX(0); opacity: 1; }
+
+/* ---------- Chiffres ---------- */
+.chiffres {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+.chiffre strong {
+  display: block;
+  font-family: var(--police-titre);
+  font-size: clamp(2.8rem, 6vw, 4.2rem);
+  line-height: 1;
+  color: var(--bleu-700);
+}
+.chiffre span {
+  font-size: var(--txt-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gris-500);
+}
+
+/* ---------- Bandeau de page (sous-pages) ---------- */
+.bandeau {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(160deg, #0b2748 0%, var(--bleu-900) 45%, #123f74 100%);
+  padding: clamp(7rem, 12vw, 9rem) 0 clamp(3rem, 6vw, 4.5rem);
+  color: var(--blanc);
+}
+.bandeau .enveloppe { position: relative; z-index: 1; }
+.bandeau h1 {
+  font-family: var(--police-titre);
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 0.95;
+  margin: 0 0 1rem;
+  color: var(--blanc);
+}
+.bandeau .accroche {
+  color: #c3cedb;
+  font-size: var(--txt-md);
+  line-height: 1.65;
+  max-width: 54ch;
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .echelle .gant { grid-template-columns: 2rem 1fr; row-gap: 0.2rem; }
+  .echelle .gant-profil { grid-column: 2; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bouton, .carte, .carte::before, .carte-fleche,
+  .echelle .gant, .gant-pastille { transition: none; }
+  .trajectoire .trace-anime { stroke-dashoffset: 0; animation: none; }
+}
+
+/* ---------- Bloc de contenu rédactionnel ----------
+   Remplace l'ancien couple .card / .card-content : fond blanc, angles vifs,
+   filet d'accent en tête plutôt qu'ombre portée. */
+.bloc {
+  background: var(--blanc);
+  border: 1px solid var(--gris-200);
+  border-top: 3px solid var(--or-400);
+  padding: clamp(1.5rem, 4vw, 2.6rem);
+  margin-bottom: 1.5rem;
+}
+.bloc > *:last-child { margin-bottom: 0; }
+.bloc p { color: var(--gris-500); line-height: 1.75; margin: 0 0 1.1rem; }
+.bloc strong { color: var(--encre); }
+.bloc .titre-section { font-size: var(--titre-md); margin-bottom: 1.2rem; }
+
+/* ---------- Panneau d'information ----------
+   Cellule de la grille au filet, avec titre à icône. */
+.panneau {
+  background: var(--blanc);
+  padding: 1.8rem 1.6rem;
+  border-top: 3px solid var(--teinte, var(--or-400));
+}
+.panneau h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--police-titre);
+  font-size: var(--titre-sm);
+  letter-spacing: 0.03em;
+  color: var(--bleu-900);
+  margin: 0 0 0.8rem;
+}
+.panneau h3 .icone { color: var(--or-texte); flex: none; }
+.panneau p { margin: 0 0 0.7rem; color: var(--gris-500); line-height: 1.65; font-size: 0.95rem; }
+.panneau p:last-child { margin-bottom: 0; }
+.panneau a { color: var(--bleu-700); font-weight: 600; }
+
+/* Encadré d'information secondaire */
+.encadre {
+  background: #fdf9f0;
+  border-left: 3px solid var(--or-400);
+  padding: 0.9rem 1.2rem;
+  font-size: 0.93rem;
+  color: var(--gris-600);
+  line-height: 1.6;
+  margin: 1.5rem 0 0;
+}

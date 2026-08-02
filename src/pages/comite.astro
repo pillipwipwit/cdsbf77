@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+---
+<Base
+  title="Le comité – CDSBF77"
+  description="Le Comité Départemental de Savate Boxe Française de Seine-et-Marne : missions, bureau et documents officiels."
+>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+    <p class="surtitre">Le comité</p>
+    <h1>Qui sommes-nous ?</h1>
+      </section>
+  <section class="section">
+    <div class="enveloppe">
+      <section class="bloc">
+          <h2 class="titre-section">Nos missions</h2>
+          <p>
+            Organe déconcentré de la Fédération Française de Savate, le CDSBF77 anime,
+            coordonne et développe la pratique de la savate boxe française et de ses
+            disciplines associées en Seine-et-Marne : compétitions départementales,
+            formations, développement des clubs et pratique adaptée.
+          </p>
+          <div class="grille-filet" style="margin-top:1.5rem;">
+            <div class="panneau">
+              <h3><Icone nom="personne" />Président</h3>
+              <p>Cédric Senez</p>
+            </div>
+            <div class="panneau">
+              <h3><Icone nom="lieu" />Siège</h3>
+              <p>24 avenue Franklin Roosevelt<br />77100 Meaux</p>
+            </div>
+            <div class="panneau">
+              <h3><Icone nom="courriel" />Contact</h3>
+              <p><a href="mailto:cdsbf77@gmail.com">cdsbf77@gmail.com</a></p>
+              <p><a href="tel:0626498259">06 26 49 82 59</a></p>
+            </div>
+          </div>
+          <p class="panneau" style="margin-top:1.5rem;">Composition du bureau et documents officiels (statuts, PV d'AG) à publier.</p>
+              </section>
+      </section>
+</Base>
+
+<style>
+  .bloc {
+    margin-top: clamp(2.2rem, 5vw, 3.5rem);
+    padding-top: clamp(1.8rem, 4vw, 2.6rem);
+    border-top: 1px solid var(--gris-200);
+  }
+  .bloc:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+  .bloc p, .section > .enveloppe > p {
+    max-width: var(--mesure);
+    line-height: 1.75;
+    color: var(--gris-500);
+  }
+  .bloc a, .section a { color: var(--bleu-700); font-weight: 600; }
+
+  .panneau {
+    background: var(--blanc);
+    padding: 1.7rem 1.6rem;
+    border-top: 3px solid var(--or-400);
+  }
+  .panneau h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--police-titre);
+    font-size: var(--titre-sm);
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0 0 0.7rem;
+  }
+  .panneau h3 :global(.icone) { color: var(--or-texte); }
+  .panneau p { margin: 0 0 0.5rem; font-size: 0.93rem; line-height: 1.65; color: var(--gris-500); }
+  .panneau p:last-child { margin-bottom: 0; }
+
+  .video-embed {
+    position: relative;
+    padding-top: 56.25%;
+    overflow: hidden;
+    border: 1px solid var(--gris-200);
+    margin-top: 1.5rem;
+  }
+  .video-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .videos-grille {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    margin-top: 1.5rem;
+  }
+  .videos-grille .video-embed { margin-top: 0; }
+</style>

@@ -1,0 +1,121 @@
+/* ============================================================
+   CDSBF77 — jetons de conception
+   Source unique de la palette, de la typographie et des ombres.
+   Importé par comite.css (site principal) et Formation.astro
+   (espace formation), qui utilisaient jusqu'ici deux vocabulaires
+   distincts (--gold/--blue d'un côté, --or/--marine de l'autre).
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* ---- Bleu : couleur d'identité ---- */
+  --bleu-950: #08192e; /* fonds les plus sombres */
+  --bleu-900: #0f3460; /* marine, bandeaux et pieds de page */
+  --bleu-700: #1a4e8c; /* bleu principal, liens */
+  --bleu-500: #3a6eb8; /* bleu clair, dégradés */
+
+  /* ---- Or : couleur d'accent ----
+     Les valeurs claires sont réservées au décor et aux fonds sombres :
+     sur blanc, elles n'atteignent pas le contraste minimal (2,1:1 pour
+     --or-400). Pour du texte sur fond clair, utiliser --or-texte. */
+  --or-400: #d4af37; /* accent sur fond sombre, filets, pastilles */
+  --or-500: #b8941f; /* survols sur fond clair */
+  --or-200: #f5e7b9; /* aplats très clairs */
+  --or-texte: #806418; /* 5,6:1 sur blanc et 5,1:1 sur crème — le seul or utilisable en texte */
+
+  /* ---- Neutres ---- */
+  --blanc: #ffffff;
+  --craie: #f8f9fa; /* fond de page clair */
+  --creme: #f7f4ee; /* fond de l'espace formation */
+  --gris-200: #dfe4ea; /* filets et bordures — jamais en texte */
+  --gris-400: #8792a0; /* gros chiffres et repères, 3,2:1 sur blanc */
+  --gris-500: #697079; /* texte secondaire, 5,0:1 sur blanc et 4,8:1 sur craie */
+  --gris-600: #5d6b7a; /* texte secondaire soutenu, 5,5:1 */
+  --encre: #1c2530; /* texte courant */
+
+  /* ---- Couleurs de sens ---- */
+  --vert: #2e7d5b;
+  --rouge: #b4402f;
+
+  /* ---- L'échelle des gants ----
+     La progression technique fédérale, du premier assaut à la transmission.
+     C'est le système d'accent propre au site : le bleu et le jaune sont déjà
+     les couleurs du comité, les autres prolongent la même famille.
+     Ordre : bleu, vert, rouge, blanc, jaune, argent. */
+  --gant-bleu: #1a4e8c;
+  --gant-vert: #2e7d5b;
+  --gant-rouge: #b4402f;
+  --gant-blanc: #f2f0ea;
+  --gant-jaune: #d4af37;
+  --gant-argent: #9aa5b3;
+
+  /* ---- Échelle typographique ----
+     Rapport 1.25, bornée en clamp pour tenir du mobile au grand écran. */
+  --txt-xs: 0.74rem;
+  --txt-sm: 0.86rem;
+  --txt-base: 1rem;
+  --txt-md: clamp(1.05rem, 1.6vw, 1.15rem);
+  --titre-sm: clamp(1.4rem, 2.4vw, 1.7rem);
+  --titre-md: clamp(1.9rem, 3.4vw, 2.4rem);
+  --titre-lg: clamp(2.2rem, 4.6vw, 3.4rem);
+  --titre-xl: clamp(3rem, 7.5vw, 5.6rem);
+
+  /* ---- Rythme vertical ---- */
+  --pas-section: clamp(4rem, 9vw, 7rem);
+  --pas-bloc: clamp(2rem, 5vw, 3.5rem);
+
+  /* ---- Largeurs ---- */
+  --large: 1180px;
+
+  /* ---- Courbes ---- */
+  --sortie: cubic-bezier(0.22, 1, 0.36, 1);
+  --ressort: cubic-bezier(0.22, 1.4, 0.36, 1);
+
+  /* ---- Typographie ---- */
+  --police-titre: "Bebas Neue", "Archivo", system-ui, sans-serif;
+  --police-texte: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* ---- Formes ---- */
+  --rayon: 4px; /* espace formation, anguleux */
+  --rayon-md: 16px;
+  --rayon-lg: 20px;
+  --rayon-pilule: 40px;
+  --mesure: 68ch; /* largeur de lecture confortable */
+
+  /* ---- Ombres ---- */
+  --ombre-basse: 0 5px 15px rgba(8, 25, 46, 0.08);
+  --ombre-moyenne: 0 10px 30px rgba(8, 25, 46, 0.15);
+  --ombre-haute: 0 20px 60px rgba(8, 25, 46, 0.3);
+
+  /* ---- Mouvement ---- */
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ============================================================
+     Alias de compatibilité
+     Les deux anciens vocabulaires pointent désormais sur les mêmes
+     valeurs. À résorber au fur et à mesure ; ne rien ajouter ici.
+     ============================================================ */
+
+  /* comite.css */
+  --gold: var(--or-400);
+  --gold-light: var(--or-200);
+  --gold-dark: var(--or-500);
+  --blue: var(--bleu-700);
+  --blue-light: var(--bleu-500);
+  --blue-dark: var(--bleu-900);
+  --white: var(--blanc);
+  --gray-light: var(--craie);
+  --gray-medium: var(--gris-500);
+  --shadow-light: var(--ombre-basse);
+  --shadow-medium: var(--ombre-moyenne);
+  --shadow-heavy: var(--ombre-haute);
+
+  /* Formation.astro */
+  --marine: var(--bleu-900);
+  --marine-clair: var(--bleu-700);
+  --or: var(--or-400);
+  --or-clair: var(--or-200);
+  --gris: var(--gris-600);
+  --gris-clair: var(--gris-200);
+}

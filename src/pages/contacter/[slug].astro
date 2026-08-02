@@ -1,0 +1,169 @@
+---
+// Page de conversion : une par club, visée par les boutons des pages de
+// bassin et par les annonces pointant sur un club unique.
+//
+// Le formulaire est le premier élément après le bandeau, et le bandeau est
+// resserré pour qu'il reste visible sans faire défiler sur mobile.
+import Base from '../../layouts/Base.astro';
+import Icone from '../../components/Icone.astro';
+import FormulaireContact from '../../components/FormulaireContact.astro';
+import donnees from '../../data/clubs.json';
+
+export function getStaticPaths() {
+  return donnees.clubs.map((club) => ({
+    params: { slug: club.slug },
+    props: { club },
+  }));
+}
+
+const { club } = Astro.props;
+const contact = club.contact || {};
+const couleurs = club.couleurs || { primaire: '#0f3460', accent: '#d4af37' };
+const salles = club.salles || [];
+const horaires = club.horaires || [];
+
+const lienMaps = (salle) =>
+  'https://www.google.com/maps/search/?api=1&query=' +
+  encodeURIComponent([salle.nom, salle.adresse].filter(Boolean).join(', '));
+
+const titre = "Contacter " + club.nom + (club.ville ? ' à ' + club.ville : '') + ' | CDSBF77';
+const description =
+  'Horaires, tarifs et inscription à la savate boxe française chez ' + club.nom +
+  (club.ville ? ' à ' + club.ville : '') + '. Écrivez directement au club.';
+---
+<Base title={titre} description={description}>
+  <div style={`--club-accent:${couleurs.accent}`}>
+
+    <section class="bandeau">
+      <div class="enveloppe">
+        <p class="surtitre">{club.ville || 'Seine-et-Marne'}</p>
+        <h1>{club.nom}</h1>
+        <p class="accroche">Horaires, tarifs, inscription : posez votre question au club.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="enveloppe grille">
+        <FormulaireContact club={club} id="contact" />
+
+        <aside class="cote">
+          <h2>Bon à savoir</h2>
+          <ul class="coches">
+            <li>Le premier cours se fait sans inscription préalable</li>
+            <li>Aucun matériel nécessaire : venez en tenue de sport</li>
+            <li>Des chaussures propres, réservées à la salle</li>
+            <li>Arrivez 10 minutes en avance pour vous présenter</li>
+          </ul>
+
+          {salles.length > 0 && (
+            <>
+              <h2>Où</h2>
+              {salles.map((s) => (
+                <p>
+                  <strong>{s.nom}</strong><br />{s.adresse}<br />
+                  <a href={lienMaps(s)} rel="noopener"><Icone nom="carte" /> Itinéraire</a>
+                </p>
+              ))}
+            </>
+          )}
+
+          {(contact.correspondant || contact.telephone) && (
+            <>
+              <h2>Votre contact</h2>
+              {contact.correspondant && <p><strong>{contact.correspondant}</strong></p>}
+              {contact.telephone && (
+                <p><a href={'tel:' + contact.telephone.replace(/\s/g, '')}><Icone nom="telephone" /> {contact.telephone}</a></p>
+              )}
+            </>
+          )}
+
+          {horaires.length > 0 && (
+            <>
+              <h2>Créneaux</h2>
+              <table class="horaires-court">
+                <tbody>
+                  {horaires.slice(0, 5).map((h) => (
+                    <tr><td>{h.public}</td><td>{h.jour}</td><td class="fin">{h.creneau}</td></tr>
+                  ))}
+                </tbody>
+              </table>
+              {horaires.length > 5 && (
+                <p><a href={'/clubs/' + club.slug}>Voir les {horaires.length} créneaux</a></p>
+              )}
+            </>
+          )}
+
+          <p class="fiche"><a href={'/clubs/' + club.slug}>Fiche complète du club <Icone nom="fleche-droite" taille="0.9rem" /></a></p>
+        </aside>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  /* Bandeau court : le formulaire doit rester haut dans la page. */
+  .bandeau {
+    padding-top: clamp(5.2rem, 9vw, 7rem);
+    padding-bottom: clamp(1.4rem, 3vw, 2rem);
+  }
+  .bandeau h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+  .bandeau :global(.surtitre) { color: var(--or-400); }
+  .bandeau .accroche { font-size: 0.98rem; margin: 0.6rem 0 0; }
+
+  .section { padding-top: clamp(1.6rem, 4vw, 2.5rem); }
+  .grille {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    align-items: start;
+  }
+
+  .cote {
+    background: var(--craie);
+    border-top: 3px solid var(--club-accent, var(--or-400));
+    padding: 1.6rem;
+  }
+  .cote h2 {
+    font-family: var(--police-titre);
+    font-size: 1.3rem;
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0 0 0.7rem;
+  }
+  .cote p + h2, .cote ul + h2, .cote table + h2 { margin-top: 1.6rem; }
+  .cote p { margin: 0 0 0.6rem; color: var(--gris-500); line-height: 1.6; font-size: 0.93rem; }
+  .cote strong { color: var(--encre); }
+  .cote a { color: var(--bleu-700); display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; }
+
+  .coches { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  .coches li {
+    position: relative;
+    padding-left: 1.4rem;
+    font-size: 0.93rem;
+    color: var(--gris-500);
+    line-height: 1.5;
+  }
+  .coches li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5em;
+    width: 0.45rem;
+    height: 0.45rem;
+    background: var(--club-accent, var(--or-400));
+  }
+
+  .horaires-court { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .horaires-court td { padding: 0.4rem 0.2rem; border-bottom: 1px solid var(--gris-200); color: var(--gris-500); }
+  .horaires-court tr:last-child td { border-bottom: 0; }
+  .horaires-court td:first-child { font-weight: 600; color: var(--encre); }
+  .fin { text-align: right; white-space: nowrap; }
+
+  .fiche { margin-top: 1.4rem; }
+
+  @media (max-width: 860px) {
+    /* Sur mobile le formulaire passe avant le contexte : c'est lui qui
+       convertit, le reste rassure une fois la demande envisagée. */
+    .grille { grid-template-columns: 1fr; }
+  }
+</style>

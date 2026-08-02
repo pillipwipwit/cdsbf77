@@ -1,0 +1,234 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+import articles from '../data/actualites.json';
+
+const tries = [...articles].sort((a, b) => b.date.localeCompare(a.date));
+const annees = [...new Set(tries.map((a) => a.date.slice(0, 4)))].sort((a, b) => b.localeCompare(a));
+
+const formate = (iso) =>
+  new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const vignette = (article) => article.images?.[0] || article.videoThumbs?.[0] || null;
+---
+<Base
+  title="Actualités – CDSBF77"
+  description="Les actualités de la savate en Seine-et-Marne : résultats, stages, vie des clubs et du comité."
+>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+      <p class="surtitre">Actualités</p>
+      <h1>La vie du comité</h1>
+      <p class="accroche">
+        {tries.length} publications : résultats, stages, vie des clubs et portraits de celles et ceux qui
+        font vivre la savate en Seine-et-Marne.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="enveloppe">
+      <div class="filtres">
+        <label class="champ">
+          <span class="champ-icone"><Icone nom="recherche" taille="1.05rem" /></span>
+          <input id="recherche" type="search" placeholder="Rechercher un article…" aria-label="Rechercher un article" />
+        </label>
+        <label class="champ champ--select">
+          <select id="annee" aria-label="Filtrer par année">
+            <option value="">Toutes les années</option>
+            {annees.map((a) => <option value={a}>{a}</option>)}
+          </select>
+        </label>
+      </div>
+
+      <p id="compteur" class="compteur" aria-live="polite" hidden></p>
+
+      <div class="grille-articles" id="liste-articles">
+        {tries.map((article) => (
+          <article
+            class="carte"
+            data-texte={(article.titre + ' ' + article.extrait).toLowerCase()}
+            data-annee={article.date.slice(0, 4)}
+          >
+            <a class="carte-lien" href={'/actualites/' + article.slug}>
+              <span class="sr-only">Lire : {article.titre}</span>
+            </a>
+
+            <div class="carte-media">
+              {vignette(article) ? (
+                <img src={vignette(article)} alt="" loading="lazy" decoding="async" width="480" height="480" />
+              ) : (
+                <div class="carte-media carte-media--vide" aria-hidden="true"></div>
+              )}
+              {article.videoThumbs?.length > 0 && (
+                <span class="pastille-video" aria-hidden="true"><Icone nom="lecture" taille="1.6rem" /></span>
+              )}
+            </div>
+
+            <div class="carte-corps">
+              <p class="carte-date">
+                <Icone nom="calendrier" taille="0.85rem" /> {formate(article.date)}
+              </p>
+              <h2 class="carte-titre">{article.titre}</h2>
+              <p class="carte-extrait">{article.extrait}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p id="aucun" hidden class="vide">
+        Aucun article ne correspond. Essayez un autre mot-clé, ou remettez l'année sur « Toutes ».
+      </p>
+    </div>
+  </section>
+
+  <script>
+    const recherche = document.getElementById('recherche') as HTMLInputElement;
+    const annee = document.getElementById('annee') as HTMLSelectElement;
+    const cartes = Array.from(document.querySelectorAll<HTMLElement>('#liste-articles .carte'));
+    const aucun = document.getElementById('aucun')!;
+    const compteur = document.getElementById('compteur')!;
+
+    function filtrer() {
+      const q = recherche.value.trim().toLowerCase();
+      const a = annee.value;
+      let visibles = 0;
+      for (const carte of cartes) {
+        const okTexte = !q || carte.dataset.texte!.includes(q);
+        const okAnnee = !a || carte.dataset.annee === a;
+        const ok = okTexte && okAnnee;
+        carte.hidden = !ok;
+        if (ok) visibles++;
+      }
+      aucun.hidden = visibles > 0;
+      const filtreActif = q !== '' || a !== '';
+      compteur.hidden = !filtreActif || visibles === 0;
+      compteur.textContent = visibles > 1 ? visibles + ' articles affichés' : visibles + ' article affiché';
+    }
+    recherche.addEventListener('input', filtrer);
+    annee.addEventListener('change', filtrer);
+  </script>
+</Base>
+
+<style>
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  /* ---------- Filtres ---------- */
+  .filtres { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0 0 2rem; }
+  .champ {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex: 1 1 18rem;
+    background: var(--blanc);
+    border: 1px solid var(--gris-200);
+    border-radius: 2px;
+    padding: 0 1rem;
+    transition: border-color 0.2s ease;
+  }
+  .champ:focus-within { border-color: var(--bleu-700); }
+  .champ-icone { color: var(--gris-500); display: flex; }
+  .champ input,
+  .champ select {
+    flex: 1;
+    font-family: var(--police-texte);
+    font-size: 1rem;
+    padding: 0.85rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--encre);
+  }
+  .champ input:focus, .champ select:focus { outline: none; }
+  .champ--select { flex: 0 1 12rem; }
+
+  .compteur {
+    margin: -1rem 0 1.4rem;
+    font-size: var(--txt-sm);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--or-texte);
+  }
+
+  .vide { color: var(--gris-500); padding: 2rem 0; }
+
+  /* ---------- Grille des articles ---------- */
+  .grille-articles {
+    display: grid;
+    gap: 1px;
+    background: var(--gris-200);
+    border: 1px solid var(--gris-200);
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  }
+  .carte {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background: var(--blanc);
+    transition: background 0.25s ease;
+  }
+  .carte:hover, .carte:focus-within { background: #fbfcfd; }
+  .carte-lien { position: absolute; inset: 0; z-index: 1; }
+  .carte-lien:focus-visible { outline: 3px solid var(--or-400); outline-offset: -3px; }
+
+  .carte-media {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--craie);
+    overflow: hidden;
+  }
+  .carte-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s var(--sortie); }
+  .carte:hover .carte-media img { transform: scale(1.04); }
+  .carte-media--vide { background: linear-gradient(135deg, var(--bleu-900), var(--bleu-700)); }
+  .pastille-video {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background: rgba(8, 25, 46, 0.55);
+    color: var(--blanc);
+    backdrop-filter: blur(2px);
+  }
+
+  .carte-corps { padding: 1.3rem 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+  .carte-date {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--txt-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--or-texte);
+    margin: 0;
+  }
+  .carte-titre {
+    font-family: var(--police-titre);
+    font-size: 1.3rem;
+    letter-spacing: 0.02em;
+    line-height: 1.15;
+    color: var(--bleu-900);
+    margin: 0;
+  }
+  .carte-extrait {
+    font-size: var(--txt-sm);
+    line-height: 1.6;
+    color: var(--gris-500);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

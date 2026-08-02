@@ -1,0 +1,277 @@
+---
+// Layout autonome de l'espace formation.
+//
+// POUR L'INTÉGRER À TON LAYOUT EXISTANT (Base.astro) :
+//   1. importe Base : import Base from './Base.astro';
+//   2. remplace <html>…</html> par <Base title={title} description={description}> … </Base>
+//   3. conserve le bloc <style is:global> ci-dessous.
+import '../styles/polices.css';
+import '../styles/tokens.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = "Espace formation du Comité départemental de savate boxe française de Seine-et-Marne." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — CDSBF 77</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0f3460" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header class="fmt-top">
+      <a class="fmt-back" href="/formations">← Formations CDSBF 77</a>
+      <a class="fmt-brand" href="/formations/monitorat">Espace formation</a>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="fmt-foot">
+      <p>Comité départemental de savate boxe française de Seine-et-Marne</p>
+      <p class="fmt-foot-note">
+        Supports pédagogiques internes. Sources : documents de formation de Florian Pourhadi (2022),
+        National Strength &amp; Conditioning Association (2016), code du sport, loi du 1<sup>er</sup> juillet 1901.
+      </p>
+    </footer>
+
+    <style is:global>
+      /* La palette vient de src/styles/tokens.css, importé plus haut :
+         l'espace formation et le site principal partagent désormais
+         les mêmes valeurs. */
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      }
+
+      body {
+        margin: 0;
+        background: var(--creme);
+        color: var(--encre);
+        font-family: var(--police-texte);
+        font-size: 1rem;
+        line-height: 1.7;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1, h2, h3, .fmt-display {
+        font-family: var(--police-titre);
+        font-weight: 400;
+        letter-spacing: 0.02em;
+        line-height: 1.05;
+        margin: 0;
+      }
+
+      a { color: var(--marine); }
+
+      :focus-visible {
+        outline: 3px solid var(--or);
+        outline-offset: 2px;
+      }
+
+      /* ---- Chrome ---- */
+      .fmt-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem clamp(1rem, 4vw, 3rem);
+        background: var(--marine);
+        color: var(--blanc);
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+      .fmt-back,
+      .fmt-brand {
+        color: var(--blanc);
+        text-decoration: none;
+        font-size: 0.8rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-weight: 500;
+      }
+      .fmt-brand { color: var(--or-clair); }
+      .fmt-back:hover, .fmt-brand:hover { text-decoration: underline; }
+
+      .fmt-foot {
+        margin-top: 5rem;
+        padding: 2.5rem clamp(1rem, 4vw, 3rem);
+        background: var(--marine);
+        color: #b9c4d2;
+        font-size: 0.85rem;
+      }
+      .fmt-foot p { margin: 0 0 0.4rem; }
+      .fmt-foot-note { color: #9aa8ba; font-size: 0.78rem; max-width: 70ch; }
+
+      /* ---- Conteneur ---- */
+      .fmt-wrap {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 0 clamp(1rem, 4vw, 3rem);
+      }
+
+      /* ============================================================
+         Contenu de leçon injecté (set:html)
+         Vocabulaire commun issu de la migration des anciennes pages.
+         ============================================================ */
+      .texte h2 {
+        font-size: 1.9rem;
+        color: var(--marine);
+        margin: 0 0 0.9rem;
+      }
+      .texte h3 {
+        font-family: var(--police-texte);
+        font-size: 1.02rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 1.4;
+        color: var(--marine);
+        margin: 0 0 0.6rem;
+      }
+      .texte p { margin: 0 0 1.1rem; }
+      .texte ul, .texte ol { margin: 0 0 1.3rem; padding-left: 1.3rem; }
+      .texte li { margin-bottom: 0.45rem; }
+      .texte strong { color: var(--marine); font-weight: 600; }
+      .texte > *:last-child, .texte .fmt-bloc > *:last-child { margin-bottom: 0; }
+
+      .texte table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        font-size: 0.88rem;
+        background: var(--blanc);
+      }
+      .texte th, .texte td {
+        border: 1px solid var(--gris-clair);
+        padding: 0.6rem 0.8rem;
+        text-align: left;
+      }
+      .texte th { background: var(--marine); color: var(--blanc); font-weight: 600; }
+
+      /* Section de leçon */
+      .fmt-bloc {
+        margin: 0 0 3.2rem;
+        padding-bottom: 0.4rem;
+        border-top: 1px solid var(--gris-clair);
+        padding-top: 2.2rem;
+      }
+      .fmt-bloc:first-child { border-top: 0; padding-top: 0; }
+      .fmt-chapo-section {
+        margin: -0.5rem 0 1.3rem;
+        color: var(--gris);
+        font-style: italic;
+        font-size: 0.95rem;
+      }
+
+      /* Point clé */
+      .fmt-cle {
+        background: var(--marine);
+        color: #dbe3ec;
+        border-radius: var(--rayon);
+        padding: 1.3rem 1.5rem;
+        margin: 1.6rem 0;
+      }
+      .fmt-cle h3 { color: var(--or); font-size: 1.05rem; }
+      .fmt-cle strong { color: var(--blanc); }
+      .fmt-cle em { color: var(--or-clair); font-style: normal; }
+      .fmt-cle p:last-child { margin-bottom: 0; }
+
+      /* Encarts */
+      .fmt-encart {
+        background: var(--blanc);
+        border: 1px solid var(--gris-clair);
+        border-left: 4px solid var(--marine-clair);
+        border-radius: var(--rayon);
+        padding: 1.2rem 1.4rem;
+        margin: 1.6rem 0;
+      }
+      .fmt-encart p:last-child { margin-bottom: 0; }
+      .fmt-encart--attention { border-left-color: var(--rouge); background: #fdf5f3; }
+      .fmt-encart--succes    { border-left-color: var(--vert);  background: #f1f8f4; }
+      .fmt-encart--astuce    { border-left-color: var(--or);    background: #fdf9f0; }
+      .fmt-encart--definition{ border-left-color: var(--marine); background: #f3f6fa; }
+      .fmt-encart--reflexion { border-left-color: var(--or);    background: var(--creme); }
+      .fmt-encart--exemple   { border-left-color: var(--gris);  background: #f6f7f9; }
+
+      /* Grilles de cartes */
+      .fmt-grille {
+        display: grid;
+        gap: 0.9rem;
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+        margin: 1.4rem 0;
+      }
+      .fmt-carte {
+        background: var(--blanc);
+        border: 1px solid var(--gris-clair);
+        border-top: 3px solid var(--or);
+        border-radius: var(--rayon);
+        padding: 1rem 1.15rem;
+      }
+      .fmt-carte h3 { font-size: 0.95rem; }
+      .fmt-carte p { font-size: 0.9rem; margin-bottom: 0.5rem; }
+      .fmt-carte p:last-child, .fmt-carte ul:last-child { margin-bottom: 0; }
+      .fmt-encart .fmt-grille { margin-bottom: 0; }
+
+      /* Dépliants (anciens accordéons, sans JavaScript) */
+      .fmt-depliant {
+        border: 1px solid var(--gris-clair);
+        border-radius: var(--rayon);
+        background: var(--blanc);
+        margin: 0.7rem 0;
+      }
+      .fmt-depliant > summary {
+        cursor: pointer;
+        padding: 0.9rem 1.2rem;
+        font-weight: 600;
+        color: var(--marine);
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+      }
+      .fmt-depliant > summary::-webkit-details-marker { display: none; }
+      .fmt-depliant > summary::after {
+        content: "+";
+        font-size: 1.3rem;
+        color: var(--or-texte);
+        flex: none;
+        line-height: 1;
+      }
+      .fmt-depliant[open] > summary::after { content: "–"; }
+      .fmt-depliant[open] > summary { border-bottom: 1px solid var(--gris-clair); }
+      .fmt-depliant > *:not(summary) { padding: 0 1.2rem; }
+      .fmt-depliant > summary + * { padding-top: 1rem; }
+      .fmt-depliant > *:last-child:not(summary) { padding-bottom: 1rem; }
+
+      /* Médias */
+      .fmt-media { margin: 1.6rem 0; }
+      .fmt-media img { max-width: 100%; height: auto; display: block; border-radius: var(--rayon); }
+      .fmt-media iframe {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        height: auto;
+        border: 0;
+        border-radius: var(--rayon);
+      }
+      .fmt-media figcaption {
+        margin-top: 0.6rem;
+        font-size: 0.82rem;
+        color: var(--gris);
+      }
+    </style>
+  </body>
+</html>

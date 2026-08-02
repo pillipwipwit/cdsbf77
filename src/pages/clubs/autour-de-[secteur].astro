@@ -1,0 +1,223 @@
+---
+// Pages d'atterrissage par bassin géographique, destinées aux campagnes.
+//
+// Principe : l'annonce connaît déjà la zone ciblée, on ne redemande donc pas
+// au visiteur où il habite. La page affiche d'emblée les clubs du secteur,
+// et son titre reprend le nom du bassin — la correspondance entre le message
+// de l'annonce et la destination est le premier facteur de conversion.
+import Base from '../../layouts/Base.astro';
+import Icone from '../../components/Icone.astro';
+import donnees from '../../data/clubs.json';
+import secteurs from '../../data/secteurs.json';
+
+export function getStaticPaths() {
+  return secteurs.secteurs.map((s) => ({
+    params: { secteur: s.slug },
+    props: { secteur: s },
+  }));
+}
+
+const { secteur } = Astro.props;
+const clubs = secteur.clubs
+  .map((slug) => donnees.clubs.find((c) => c.slug === slug))
+  .filter(Boolean);
+
+// Clubs mis en avant par le comité : en tête et en grand format. Pas de
+// mention « recommandé » — cela dévaloriserait les autres clubs du bassin,
+// qui accueillent tout aussi bien.
+const misEnAvant = secteur.misEnAvant || [];
+const enAvant = clubs.filter((c) => misEnAvant.includes(c.slug));
+const autres = clubs.filter((c) => !misEnAvant.includes(c.slug));
+
+const lienMaps = (salle) =>
+  'https://www.google.com/maps/search/?api=1&query=' +
+  encodeURIComponent([salle.nom, salle.adresse].filter(Boolean).join(', '));
+
+const titre = 'Savate boxe française à ' + secteur.nom + ' – clubs, horaires et tarifs | CDSBF77';
+const description =
+  'Essayez la savate boxe française autour de ' + secteur.nom + ' : ' +
+  clubs.length + ' clubs, leurs horaires et leur contact. Premier cours sans engagement.';
+---
+<Base title={titre} description={description}>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+      <p class="surtitre">{secteur.titre}</p>
+      <h1>Boxe française<br />à {secteur.nom}</h1>
+      <p class="accroche">{secteur.accroche} Horaires, tarifs et contact de chaque club.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="enveloppe">
+      <ol class="clubs">
+        {[...enAvant, ...autres].map((club, i) => {
+          const horaires = club.horaires || [];
+          const salle = (club.salles || [])[0];
+          const accent = club.couleurs?.accent || '#d4af37';
+          const avant = misEnAvant.includes(club.slug);
+          return (
+            <>
+            {i === enAvant.length && enAvant.length > 0 && (
+              <li class="separateur"><h2>Également dans le secteur</h2></li>
+            )}
+            <li class:list={['club', { 'club--avant': avant }]} style={`--teinte:${accent}`}>
+              <div class="club-tete">
+                <div>
+                  <p class="club-ville">{club.ville}{club.codePostal ? ' · ' + club.codePostal : ''}</p>
+                  <h2>{club.nom}</h2>
+                  <p class="club-disc">{(club.disciplines || []).join(' · ')}</p>
+                </div>
+                {club.logo && <img class="club-logo" src={club.logo} alt="" width="64" height="64" loading="lazy" decoding="async" />}
+              </div>
+
+              <a class="bouton bouton--plein club-cta" href={'/contacter/' + club.slug}>
+                Horaires, tarifs, contact
+              </a>
+
+              <div class="club-infos">
+                {salle && (
+                  <p class="club-lieu">
+                    <Icone nom="lieu" taille="1rem" />
+                    <span>
+                      <strong>{salle.nom}</strong><br />{salle.adresse}<br />
+                      <a href={lienMaps(salle)} rel="noopener">Itinéraire</a>
+                    </span>
+                  </p>
+                )}
+
+                {horaires.length > 0 ? (
+                  <table class="club-horaires">
+                    <tbody>
+                      {horaires.slice(0, 6).map((h) => (
+                        <tr>
+                          <td class="h-public">{h.public}</td>
+                          <td class="h-jour">{h.jour}</td>
+                          <td class="h-creneau">{h.creneau}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <p class="club-sans-horaire">
+                    Créneaux à confirmer auprès du club, joignable ci-dessus.
+                  </p>
+                )}
+
+                {horaires.length > 6 && (
+                  <p class="club-plus"><a href={'/clubs/' + club.slug}>Voir les {horaires.length} créneaux</a></p>
+                )}
+              </div>
+
+              <p class="club-fiche"><a href={'/clubs/' + club.slug}>Fiche complète du club <Icone nom="fleche-droite" taille="0.9rem" /></a></p>
+            </li>
+            </>
+          );
+        })}
+      </ol>
+
+      <p class="ailleurs">
+        Vous n'habitez pas ce secteur ?
+        <a href="/clubs">Voir les {donnees.clubs.length} clubs de Seine-et-Marne</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Bandeau resserré : sur un mobile de 812 px, le bouton du premier club
+     doit rester visible sans faire défiler. */
+  .bandeau {
+    padding-top: clamp(5.2rem, 9vw, 7rem);
+    padding-bottom: clamp(1.6rem, 3.5vw, 2.5rem);
+  }
+  .bandeau h1 { font-size: clamp(2rem, 5.5vw, 3.4rem); }
+  .bandeau .accroche { font-size: 0.98rem; }
+
+  .clubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+  .club {
+    background: var(--blanc);
+    border: 1px solid var(--gris-200);
+    border-top: 3px solid var(--teinte);
+    padding: 1.6rem;
+  }
+  .club-tete { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; }
+  .club-ville {
+    margin: 0;
+    font-size: var(--txt-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gris-500);
+  }
+  .club h2 {
+    font-family: var(--police-titre);
+    font-size: 1.7rem;
+    letter-spacing: 0.03em;
+    color: var(--bleu-900);
+    margin: 0.2rem 0 0.3rem;
+    line-height: 1.05;
+  }
+  .club-disc { margin: 0; font-size: var(--txt-sm); color: var(--gris-500); }
+  .club-logo { object-fit: contain; flex: none; }
+
+  /* L'appel à l'action passe avant les informations : sur mobile il doit
+     rester visible sans faire défiler. */
+  .club-cta { justify-content: center; width: 100%; margin: 1.2rem 0 1.4rem; }
+
+  .club-infos { display: grid; gap: 1rem; }
+  .club-lieu {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--gris-500);
+    line-height: 1.55;
+  }
+  .club-lieu strong { color: var(--encre); }
+  .club-lieu a { color: var(--bleu-700); font-weight: 600; }
+
+  .club-horaires { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  .club-horaires td { padding: 0.45rem 0.2rem; border-bottom: 1px solid var(--gris-200); color: var(--gris-500); }
+  .club-horaires tr:last-child td { border-bottom: 0; }
+  .h-public { font-weight: 600; color: var(--encre); white-space: nowrap; }
+  .h-creneau { text-align: right; white-space: nowrap; }
+
+  .club-sans-horaire { margin: 0; font-size: 0.9rem; color: var(--gris-500); font-style: italic; }
+  .club-plus, .club-fiche { margin: 0.9rem 0 0; font-size: var(--txt-sm); }
+  .club-fiche a { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; color: var(--bleu-700); }
+
+  /* Mise en avant : pleine largeur, filet plus marqué, titre plus grand.
+     Aucune mention de valeur : seule la place dans la page hiérarchise. */
+  .club--avant { border-top-width: 5px; padding: 1.9rem; }
+  .club--avant h2 { font-size: 2rem; }
+  .club--avant .club-logo { width: 80px; height: 80px; }
+
+  .separateur { list-style: none; margin: 1.2rem 0 0; }
+  .separateur h2 {
+    font-family: var(--police-titre);
+    font-size: 1.25rem;
+    letter-spacing: 0.06em;
+    color: var(--gris-500);
+    margin: 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gris-200);
+  }
+
+  .ailleurs { margin-top: 2.5rem; color: var(--gris-500); }
+
+  @media (max-width: 480px) {
+    .club { padding: 1.2rem; }
+    .club-cta { margin: 1rem 0 1.2rem; }
+    .club h2 { font-size: 1.5rem; }
+  }
+
+  @media (min-width: 720px) {
+    .clubs { grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr)); }
+    .club--avant, .separateur { grid-column: 1 / -1; }
+    .club-cta { width: auto; }
+  }
+</style>
