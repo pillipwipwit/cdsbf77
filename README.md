@@ -163,7 +163,7 @@ peut ne rien ouvrir.
 
 **Destinataires** : 24 clubs sur 32 reçoivent la demande directement
 (`contact.email` dans `clubs.json`). Les 8 autres n'ont pas d'adresse
-renseignée — leur demande part à `contact@cdsbf77.org` avec le nom du club en
+renseignée — leur demande part à `cdsbf77@gmail.com` avec le nom du club en
 objet, et la page le dit au visiteur. Renseigner ces adresses dans
 `clubs.json` suffit à basculer automatiquement :
 Villevaudé, Pontault-Combault, Neufmoutiers-en-Brie, Rebais, Saint-Soupplets,
@@ -180,7 +180,7 @@ conservation, mise à jour des mentions légales) :
    créer, un sous-traitant à mentionner.
 2. **Fonction serverless Vercel + fournisseur d'e-mail** (Resend, Brevo…) :
    demande l'adaptateur `@astrojs/vercel`, une clé d'API et
-   l'authentification du domaine `cdsbf77.org` (SPF/DKIM). Meilleure
+   l'authentification du domaine `cdsbf77.fr` (SPF/DKIM). Meilleure
    délivrabilité, le comité peut se mettre en copie.
 
 Dans les deux cas, prévoir un piège à robots (champ caché) et le traitement
@@ -250,9 +250,10 @@ rédigée. Les titres d'encarts gardent les émojis des pages d'origine (💡, �
 1. Pousser ce dossier sur un dépôt GitHub.
 2. Sur vercel.com : « Add New Project » → importer le dépôt (framework détecté : Astro).
 3. Valider la preview sur `*.vercel.app`.
-4. Domaine `cdsbf77.org` dans Settings → Domains.
+4. Domaine `cdsbf77.fr` dans Settings → Domains (domaine canonique ;
+   `cdsbf77.org` reste enregistré mais pointe encore chez Wix — voir plus bas).
 5. Redirections 301 depuis les anciennes URLs Wix : `vercel.json`.
-6. Search Console : soumettre `https://www.cdsbf77.org/sitemap-index.xml`.
+6. Search Console : soumettre `https://www.cdsbf77.fr/sitemap-index.xml`.
 
 ## À faire ensuite
 
