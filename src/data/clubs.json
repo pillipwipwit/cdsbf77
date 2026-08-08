@@ -1304,44 +1304,44 @@
       "labels": [],
       "salles": [
         {
-          "nom": "Gymnase",
+          "nom": "Gymnase de Collégien",
           "adresse": "Allée du Parc, 77090 Collégien"
         }
       ],
       "horaires": [
         {
-          "public": "Adultes",
+          "public": "Tous niveaux",
           "jour": "Lundi",
           "creneau": "20:00 - 21:30",
-          "type": "Boxe française · Loisir"
+          "type": "Boxe française"
         },
         {
-          "public": "Adultes",
+          "public": "Compétiteurs",
           "jour": "Mardi",
           "creneau": "18:00 - 19:00",
-          "type": "Boxe française · Compétition"
+          "type": "Boxe française"
         },
         {
-          "public": "Adultes",
+          "public": "Confirmés",
           "jour": "Mercredi",
           "creneau": "20:00 - 21:30",
-          "type": "Boxe française · Compétition"
+          "type": "Boxe française"
         },
         {
-          "public": "Adultes",
+          "public": "Compétiteurs",
           "jour": "Jeudi",
           "creneau": "18:00 - 19:00",
-          "type": "Boxe française · Compétition"
+          "type": "Boxe française"
         },
         {
-          "public": "Adultes",
+          "public": "Tous niveaux",
           "jour": "Vendredi",
           "creneau": "20:00 - 21:30",
-          "type": "Boxe française · Loisir"
+          "type": "Boxe française"
         }
       ],
       "contact": {
-        "correspondant": "Arnaud Leroy",
+        "correspondant": "Arnaud Leroy et Hervé Sanchez",
         "telephone": "06 30 76 17 27",
         "telephone2": "06 44 10 85 44",
         "email": "bfscollegien@gmail.com"
@@ -1352,7 +1352,7 @@
         "facebook": "https://www.facebook.com/people/Bfs-Collegien/pfbid038CE1LDyoxmZFW7WVSu7Y29AMD8gn1m8iy3WmYzqZtYZqNdoBHxPPshZnww4HVtsHl/",
         "instagram": "https://www.instagram.com/bfscollegien/"
       },
-      "aCompleter": true,
+      "aCompleter": false,
       "couleurs": {
         "primaire": "#000000",
         "accent": "#C0C0C0"
@@ -1362,10 +1362,10 @@
           "url": "https://player.vimeo.com/video/1059305330?h=3b39ea4117"
         }
       ],
-      "commentaire": "Trois créneaux hebdomadaires (adultes et enfants), grille exacte à confirmer sur bfscollegien.fr. Coordonnées d'Arnaud Leroy transmises en juillet 2026. Le 06 44 10 85 44 remplace le 06 44 10 85 92 relevé auparavant, écart à vérifier",
+      "commentaire": "Créneaux et encadrement confirmés par la story Instagram du club (03/08/2026) : tous niveaux le lundi et le vendredi, confirmés le mercredi, compétiteurs le mardi et le jeudi. Le tarif annuel affiché sur la story est tronqué à l'image (« 220,… ») : à confirmer auprès du club avant publication.",
       "logo": "/logos/collegien.jpg",
       "logoFond": "#101010",
-      "sourceHoraires": "Fiche fédérale ffsavate.com, relevée le 29/07/2026"
+      "sourceHoraires": "Story Instagram @bfscollegien du 03/08/2026, recoupée avec la fiche fédérale"
     },
     {
       "slug": "dampmart",
@@ -1840,7 +1840,8 @@
       },
       "liens": {
         "ffsavate": "https://www.ffsavate.com/club-infos/coulommiers-sbf/",
-        "facebook": "https://www.facebook.com/CSBF77/"
+        "facebook": "https://www.facebook.com/CSBF77/",
+        "instagram": "https://www.instagram.com/sbf_coulommiers/"
       },
       "aCompleter": false,
       "couleurs": {
@@ -1867,19 +1868,24 @@
         "enfants"
       ],
       "labels": [],
-      "salles": [],
+      "salles": [
+        {
+          "nom": "Base de loisirs de Saint-Fargeau-Ponthierry",
+          "adresse": "77310 Saint-Fargeau-Ponthierry"
+        }
+      ],
       "horaires": [
         {
-          "public": "Féminines",
+          "public": "Féminines (15 ans et +)",
           "jour": "Lundi, mercredi et jeudi",
           "creneau": "18h30 - 20h00",
-          "type": null
+          "type": "Boxe française"
         },
         {
-          "public": "Bébés",
+          "public": "Baby-boxing (3-6 ans)",
           "jour": "Mercredi",
           "creneau": "17h00 - 18h00",
-          "type": null
+          "type": "Boxe française"
         }
       ],
       "contact": {
@@ -1889,11 +1895,75 @@
       },
       "liens": {},
       "aCompleter": true,
-      "commentaire": "Créneaux et coordonnées transmis par Mme Gaillard en juillet 2026. Restent à confirmer : la discipline exacte (le nom du club dit boxing, la fiche est renseignée en savate boxe française par défaut), la tranche d'âge du créneau bébés, l'adresse de la salle, le rôle respectif de Mme Gaillard et de Cristèle, et l'affiliation fédérale. Couleurs provisoires reprises de la charte du comité",
+      "commentaire": "Affiche officielle de la saison 2026-2027 : boxe française 100 % féminine à partir de 15 ans, et baby-boxing de 3 à 6 ans. Restent à confirmer : le rôle respectif de Mme Gaillard et de Cristèle, l'affiliation fédérale, l'adresse précise de la salle au sein de la base de loisirs, et une adresse de courriel publiable.",
       "couleurs": {
-        "primaire": "#0f3460",
-        "accent": "#d4af37"
-      }
+        "primaire": "#1a0b14",
+        "accent": "#ff2e8b"
+      },
+      "noteHoraires": "Nouveaux créneaux à partir de septembre 2026.",
+      "sourceHoraires": "Affiche officielle du club, relevée le 03/08/2026"
+    },
+    {
+      "slug": "ajak",
+      "nom": "AJAK Boxe Française",
+      "ville": "Saint-Fargeau-Ponthierry",
+      "codePostal": "77310",
+      "disciplines": [
+        "Savate boxe française"
+      ],
+      "publics": [
+        "enfants"
+      ],
+      "labels": [],
+      "salles": [
+        {
+          "nom": "École élémentaire des Grands Cèdres",
+          "adresse": "Rue Grande, 77310 Saint-Fargeau-Ponthierry"
+        }
+      ],
+      "horaires": [
+        {
+          "public": "Enfants 7-12 ans",
+          "jour": "Mercredi",
+          "creneau": "15h30 - 16h30",
+          "type": "Boxe française"
+        },
+        {
+          "public": "Ados 13-18 ans",
+          "jour": "Mercredi",
+          "creneau": "17h00 - 18h00",
+          "type": "Boxe française"
+        },
+        {
+          "public": "Enfants 7-12 ans",
+          "jour": "Vendredi",
+          "creneau": "18h30 - 19h30",
+          "type": "Boxe française"
+        },
+        {
+          "public": "Ados 13-18 ans",
+          "jour": "Vendredi",
+          "creneau": "19h45 - 20h45",
+          "type": "Boxe française"
+        }
+      ],
+      "tarif": "220 € l'année",
+      "contact": {
+        "correspondant": null,
+        "telephone": "07 60 04 59 12",
+        "telephone2": "06 67 57 76 83",
+        "email": "ajak.boxe@gmail.com"
+      },
+      "liens": {
+        "instagram": "https://www.instagram.com/ajakboxe/"
+      },
+      "aCompleter": true,
+      "couleurs": {
+        "primaire": "#1c1c1c",
+        "accent": "#f4c20d"
+      },
+      "commentaire": "Club créé pour la saison 2026-2027, accueillant enfants et adolescents. Informations issues de l'affiche officielle du club et du compte @ajakboxe. Restent à confirmer : le correspondant, l'affiliation fédérale, un éventuel créneau adultes et le logo au format fichier.",
+      "sourceHoraires": "Affiche officielle du club, relevée le 03/08/2026"
     }
   ]
 }

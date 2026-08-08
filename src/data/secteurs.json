@@ -84,12 +84,13 @@
       "slug": "melun",
       "nom": "Melun",
       "titre": "Melun et le Sénart",
-      "accroche": "Quatre clubs autour de Melun et de la vallée de l'Yerres.",
+      "accroche": "Cinq clubs autour de Melun et de la vallée de l'Yerres.",
       "clubs": [
         "usm",
         "evry-gregy",
         "cris-ladies-boxing",
-        "grandpuits"
+        "grandpuits",
+        "ajak"
       ],
       "misEnAvant": []
     },

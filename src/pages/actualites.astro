@@ -9,7 +9,11 @@ const annees = [...new Set(tries.map((a) => a.date.slice(0, 4)))].sort((a, b) =>
 const formate = (iso) =>
   new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
-const vignette = (article) => article.images?.[0] || article.videoThumbs?.[0] || null;
+// `vignette` est une version 400x400 générée pour la grille : les cartes
+// tiraient sinon des JPEG de 1400 px dans des cases de 256 px, soit 20 Mo
+// pour parcourir la liste. On retombe sur l'image d'origine si elle manque.
+const vignette = (article) =>
+  article.vignette || article.images?.[0] || article.videoThumbs?.[0] || null;
 ---
 <Base
   title="Actualités – CDSBF77"

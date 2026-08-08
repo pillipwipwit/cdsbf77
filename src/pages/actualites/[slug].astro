@@ -25,10 +25,25 @@ const videoThumbs = article.videoThumbs || [];
 const tags = article.tags || [];
 
 const INSTAGRAM_URL = 'https://www.instagram.com/comite_77_savate_bf/';
+
+// Une trentaine de publications importées n'avaient aucune légende : sans
+// repli, leur page sortait sans meta description. On décrit alors ce que la
+// page contient réellement, plutôt que de laisser le champ vide.
+function descriptionDeRepli() {
+  const quoi = [];
+  if (images.length) quoi.push(images.length > 1 ? images.length + ' photos' : 'une photo');
+  if (videoThumbs.length) quoi.push(videoThumbs.length > 1 ? 'des vidéos' : 'une vidéo');
+  const media = quoi.length ? quoi.join(' et ') : 'une publication';
+  return (
+    'Publication du ' + formate(article.date) + ' du Comité Départemental de Savate ' +
+    'Boxe Française de Seine-et-Marne : ' + media + '.'
+  );
+}
+const descriptionPage = (article.extrait || '').trim() || descriptionDeRepli();
 ---
 <Base
   title={article.titre + ' – Actualités CDSBF77'}
-  description={article.extrait}
+  description={descriptionPage}
   image={images[0] || videoThumbs[0] || '/og-cdsbf77.png'}
 >
   <section class="bandeau bandeau--article">

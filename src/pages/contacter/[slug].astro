@@ -93,6 +93,13 @@ const description =
             </>
           )}
 
+          {club.tarif && (
+            <>
+              <h2>Cotisation</h2>
+              <p><strong>{club.tarif}</strong></p>
+            </>
+          )}
+
           <p class="fiche"><a href={'/clubs/' + club.slug}>Fiche complète du club <Icone nom="fleche-droite" taille="0.9rem" /></a></p>
         </aside>
       </div>

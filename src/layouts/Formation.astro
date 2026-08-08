@@ -23,7 +23,22 @@ const { title, description = "Espace formation du Comité départemental de sava
     <title>{title} — CDSBF 77</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0f3460" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Ces pages sont servies par un layout autonome : les métadonnées de
+         partage de Base.astro ne s'y appliquent pas, on les repose ici. -->
+    <meta property="og:site_name" content="CDSBF77" />
+    <meta property="og:title" content={title + ' — CDSBF 77'} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:image" content={new URL('/og-cdsbf77.png', Astro.site)} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title + ' — CDSBF 77'} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL('/og-cdsbf77.png', Astro.site)} />
   </head>
   <body>
     <header class="fmt-top">

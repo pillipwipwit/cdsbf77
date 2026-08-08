@@ -78,8 +78,11 @@ const styleClub = [
   '--club-primaire-clair:' + stopClair,
   '--club-primaire-sombre:' + stopSombre,
   '--club-accent:' + couleurs.accent,
-  // Variante garantie lisible sur le bandeau (texte)
-  '--club-accent-texte:' + rendreLisible(couleurs.accent, fondReference, 4.5),
+  // Variante garantie lisible sur le bandeau (texte).
+  // Cible 5,0 et non 4,5 : le dégradé interpole entre les stops, et le texte
+  // ne tombe pas exactement sur celui qu'on calibre. Mesuré à l'écran, viser
+  // pile 4,5 laissait un club (Cris Ladies Boxing) redescendre à 4,38.
+  '--club-accent-texte:' + rendreLisible(couleurs.accent, fondReference, 5.0),
   // Variante garantie visible pour les traits et bordures (seuil 3:1)
   '--club-accent-trait:' + rendreLisible(couleurs.accent, fondReference, 3),
   '--club-halo:' + couleurs.accent + '40',
@@ -236,6 +239,13 @@ const description =
           <p>Horaires en cours de mise à jour : contactez le club pour la grille de la saison.</p>
         )}
 
+        {club.tarif && (
+          <p class="tarif">
+            <Icone nom="etiquette" taille="1rem" />
+            <span><strong>Cotisation :</strong> {club.tarif}</span>
+          </p>
+        )}
+
         {club.noteHoraires && <p class="note">{club.noteHoraires}</p>}
         {club.aCompleter && (
           <p class="note">
@@ -356,6 +366,20 @@ const description =
   .menu { font-size: var(--txt-sm); font-style: italic; }
 
   /* ---------- Horaires ---------- */
+  .tarif {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--blanc);
+    border-left: 3px solid var(--club-accent-trait);
+    font-size: 0.98rem;
+    color: var(--gris-600);
+  }
+  .tarif :global(.icone) { color: var(--club-accent-trait); flex: none; }
+  .tarif strong { color: var(--encre); }
+
   .note {
     margin-top: 1.5rem;
     padding: 0.9rem 1.2rem;
