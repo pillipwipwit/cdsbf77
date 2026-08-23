@@ -272,10 +272,16 @@ const disciplines = [...new Set(clubs.flatMap((c) => c.disciplines || []))];
   }
 
   @media (max-width: 600px) {
+    .filtres { display: grid; grid-template-columns: 1fr; gap: 0.7rem; }
+    .filtres .champ,
+    .filtres .champ--select {
+      width: 100%;
+      min-height: 3.45rem;
+      flex: none;
+    }
     .grille-clubs { grid-template-columns: 1fr; }
     .club { padding: 1.3rem 1.2rem 1rem; }
     .club-rs a { width: 2.75rem; height: 2.75rem; }
-    .champ--select { flex: 1 1 100%; }
   }
   @media (hover: none), (pointer: coarse) {
     .club-logo { filter: none; opacity: 1; }

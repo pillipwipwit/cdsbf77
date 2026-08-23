@@ -54,19 +54,36 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
     <ClientRouter />
   </head>
   <body>
+    <a class="aller-contenu" href="#contenu">Aller au contenu</a>
     <nav class="navigation" id="navigation" aria-label="Navigation principale">
       <div class="nav-container">
-        {nav.map((item) => (
-          <a
-            href={item.href}
-            class="nav-link"
-            aria-current={chemin === item.href || (item.href !== '/' && chemin.startsWith(item.href + '/')) ? 'page' : undefined}
-          ><span>{item.label}</span></a>
-        ))}
+        <a class="nav-marque" href="/" aria-label="CDSBF 77 — Accueil">
+          <span class="nav-monogramme">77</span>
+          <span class="nav-nom">CDSBF</span>
+        </a>
+
+        <button class="nav-bouton" type="button" aria-expanded="false" aria-controls="menu-principal">
+          <span>Menu</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+
+        <div class="nav-liens" id="menu-principal">
+          {nav.map((item) => (
+            <a
+              href={item.href}
+              class="nav-link"
+              aria-current={chemin === item.href || (item.href !== '/' && chemin.startsWith(item.href + '/')) ? 'page' : undefined}
+            ><span>{item.label}</span></a>
+          ))}
+        </div>
       </div>
     </nav>
 
-    <slot />
+    <main id="contenu">
+      <slot />
+    </main>
 
     <footer id="contact">
       <div class="footer-content">
@@ -182,11 +199,37 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
         });
       }
 
+      function menuPrincipal() {
+        const nav = document.getElementById('navigation');
+        const bouton = nav?.querySelector<HTMLButtonElement>('.nav-bouton');
+        const liens = nav?.querySelectorAll<HTMLAnchorElement>('.nav-link');
+        if (!nav || !bouton || bouton.dataset.pret === 'oui') return;
+        bouton.dataset.pret = 'oui';
+
+        const fermer = () => {
+          nav.classList.remove('ouverte');
+          bouton.setAttribute('aria-expanded', 'false');
+        };
+
+        bouton.addEventListener('click', () => {
+          const ouvert = nav.classList.toggle('ouverte');
+          bouton.setAttribute('aria-expanded', String(ouvert));
+        });
+        liens?.forEach((lien) => lien.addEventListener('click', fermer));
+        nav.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            fermer();
+            bouton.focus();
+          }
+        });
+      }
+
       function initialiser() {
         trajectoires();
         apparitions();
         logoClub();
         annee();
+        menuPrincipal();
       }
 
       // Se déclenche au premier chargement comme après chaque transition de page

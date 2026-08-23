@@ -4,9 +4,43 @@ import Icone from '../components/Icone.astro';
 import donnees from '../data/clubs.json';
 import formation from '../data/formation.json';
 import savateAdaptee from '../data/savate-adaptee.json';
+import articles from '../data/actualites.json';
+import donneesSecteurs from '../data/secteurs.json';
 
 const nbClubs = donnees.clubs.length;
 const nbLecons = formation.lecons.length + savateAdaptee.lecons.length;
+
+const actualitesRecentes = [...articles]
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .slice(0, 4);
+const vignetteActualite = (article) =>
+  article.vignette || article.images?.[0] || article.videoThumbs?.[0] || null;
+const dateActualite = (iso) =>
+  new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const positions: Record<string, { x: number; y: number }> = {
+  meaux: { x: 51, y: 13 },
+  'marne-la-vallee': { x: 23, y: 31 },
+  coulommiers: { x: 62, y: 35 },
+  ozoir: { x: 18, y: 51 },
+  melun: { x: 40, y: 68 },
+  fontainebleau: { x: 58, y: 84 },
+};
+const libellesClubs: Record<string, string> = {
+  meaux: 'CS Meaux',
+  collegien: 'Collégien',
+  dampmart: 'Dampmart',
+  serris: 'SVES',
+  rebais: 'Rebais',
+  'fontenay-tresigny': 'Fontenay-Trésigny',
+  roissy: 'Roissy',
+  avon: 'Avon',
+};
+const bassins = donneesSecteurs.secteurs.map((secteur) => ({
+  ...secteur,
+  ...positions[secteur.slug],
+  clubsEnVue: secteur.misEnAvant.map((slug) => libellesClubs[slug] || slug),
+}));
 
 // La progression technique fédérale : le système d'accent du site.
 // Les phrases-profils viennent du module 1.3c de l'espace formation.
@@ -76,10 +110,15 @@ const partenaires = [
       <!-- La vidéo est au format portrait : assumée en panneau vertical -->
       <div class="heros-media">
         <div class="cadre-video">
+          <div class="video-attente" aria-hidden="true">
+            <strong>CDSBF 77</strong>
+            <span>La savate en mouvement</span>
+          </div>
           <iframe
             src="https://player.vimeo.com/video/1072779716?h=fe9825216e&background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
             allow="autoplay; fullscreen; picture-in-picture"
-            title="La savate en Seine-et-Marne" loading="lazy"></iframe>
+            title="La savate en Seine-et-Marne" loading="eager"
+            onload="this.parentElement.classList.add('charge')"></iframe>
         </div>
         <p class="legende">Tourné dans les clubs du département</p>
       </div>
@@ -138,6 +177,54 @@ const partenaires = [
     </div>
   </section>
 
+  <!-- ================= TOUR DU 77 ================= -->
+  <section class="section territoire" id="tour-du-77">
+    <div class="enveloppe territoire-entete">
+      <div>
+        <p class="surtitre">La savate près de chez vous</p>
+        <h2 class="titre-section">Le Tour du 77</h2>
+      </div>
+      <p class="intro">
+        Six bassins, {nbClubs} clubs et autant de portes d'entrée. Choisissez
+        votre territoire pour retrouver directement les clubs les plus proches.
+      </p>
+    </div>
+
+    <div class="enveloppe">
+      <div class="territoire-plan">
+        <svg class="territoire-dessin" viewBox="0 0 700 720" aria-hidden="true">
+          <path class="territoire-contour" d="M290 34 L462 74 L531 155 L641 236 L590 347 L624 467 L520 548 L482 680 L327 646 L236 568 L112 518 L89 394 L144 293 L123 188 L214 129 Z" />
+          <path class="territoire-trace" d="M356 94 C258 145 174 208 173 350 S286 522 412 603" />
+          <path class="territoire-trace territoire-trace--bis" d="M175 350 C294 316 394 244 493 246 S572 332 529 423" />
+        </svg>
+
+        <ol class="bassins">
+          {bassins.map((bassin, index) => (
+            <li style={`--x:${bassin.x}%; --y:${bassin.y}%`}>
+              <a href={'/clubs/autour-de-' + bassin.slug}>
+                <span class="bassin-numero">0{index + 1}</span>
+                <span class="bassin-texte">
+                  <strong>{bassin.nom}</strong>
+                  <small>
+                    {bassin.clubsEnVue.length
+                      ? bassin.clubsEnVue.join(' · ')
+                      : bassin.clubs.length + ' clubs à découvrir'}
+                  </small>
+                </span>
+                <span class="bassin-fleche"><Icone nom="fleche-droite" taille="1rem" /></span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <p class="territoire-pied">
+        <span>Vous préférez parcourir tout l'annuaire ?</span>
+        <a href="/clubs">Voir les {nbClubs} clubs</a>
+      </p>
+    </div>
+  </section>
+
   <!-- ================= CHIFFRES ================= -->
   <section class="section section--craie">
     <div class="enveloppe">
@@ -164,6 +251,38 @@ const partenaires = [
             <h3>{a.nom}</h3>
             <p>{a.texte}</p>
             <span class="carte-fleche"><Icone nom="fleche-droite" taille="1.1rem" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ACTUALITÉS ================= -->
+  <section class="section actualites-accueil">
+    <div class="enveloppe actualites-entete">
+      <div>
+        <p class="surtitre">En ce moment</p>
+        <h2 class="titre-section">La vie du comité</h2>
+      </div>
+      <a class="lien-tout" href="/actualites">Toutes les actualités <Icone nom="fleche-droite" taille="1rem" /></a>
+    </div>
+
+    <div class="enveloppe">
+      <div class="actualites-grille">
+        {actualitesRecentes.map((article, index) => (
+          <a class:list={['actu-accueil', { 'actu-accueil--vedette': index === 0 }]} href={'/actualites/' + article.slug}>
+            <span class:list={['actu-visuel', { 'actu-visuel--vide': !vignetteActualite(article) }]}>
+              {vignetteActualite(article) ? (
+                <img src={vignetteActualite(article)} alt="" loading="lazy" decoding="async" width="640" height="640" />
+              ) : (
+                <span class="actu-marque" aria-hidden="true">CDSBF 77</span>
+              )}
+            </span>
+            <span class="actu-corps">
+              <span class="actu-date">{dateActualite(article.date)}</span>
+              <strong>{article.titre}</strong>
+              {index === 0 && <span class="actu-extrait">{article.extrait}</span>}
+            </span>
           </a>
         ))}
       </div>
@@ -233,6 +352,33 @@ const partenaires = [
     border-radius: 2px;
     border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(145deg, #081d36, var(--bleu-700));
+  }
+  .video-attente {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.15rem;
+    padding: 1.5rem;
+    background:
+      radial-gradient(circle at 78% 22%, var(--or-400) 0 5px, transparent 6px),
+      linear-gradient(145deg, transparent 0 47%, rgba(212, 175, 55, 0.38) 47.2% 47.65%, transparent 47.9%),
+      linear-gradient(160deg, #081d36, var(--bleu-700));
+    color: var(--blanc);
+  }
+  .video-attente strong {
+    font-family: var(--police-titre);
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    letter-spacing: 0.04em;
+    line-height: 0.95;
+  }
+  .video-attente span {
+    color: #c3cedb;
+    font-size: var(--txt-xs);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
   }
   /* Le lecteur Vimeo ajoute des bandes noires pour préserver le format :
      on agrandit légèrement l'iframe pour que l'image couvre le cadre. */
@@ -244,7 +390,10 @@ const partenaires = [
     border: 0;
     transform: scale(1.18);
     transform-origin: center;
+    opacity: 0;
+    transition: opacity 0.45s ease;
   }
+  .cadre-video.charge iframe { opacity: 1; }
   .legende {
     margin: 0;
     font-size: var(--txt-xs);
@@ -261,6 +410,194 @@ const partenaires = [
     max-width: 62ch;
   }
   .echelle-pied a { color: var(--or-400); }
+
+  /* ---------- Tour du 77 ---------- */
+  .territoire {
+    background: linear-gradient(155deg, #071a31, var(--bleu-900));
+    color: var(--blanc);
+    overflow: hidden;
+  }
+  .territoire-entete {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 1.2fr);
+    align-items: end;
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+  .territoire .titre-section { color: var(--blanc); }
+  .territoire .intro { margin: 0; color: #b8c6d7; }
+  .territoire-plan {
+    position: relative;
+    min-height: 43rem;
+    margin-top: 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.13);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+    background: radial-gradient(circle at 50% 48%, rgba(26, 78, 140, 0.34), transparent 55%);
+  }
+  .territoire-dessin {
+    position: absolute;
+    inset: 0;
+    width: min(100%, 44rem);
+    height: 100%;
+    margin: auto;
+  }
+  .territoire-contour {
+    fill: rgba(255, 255, 255, 0.025);
+    stroke: rgba(255, 255, 255, 0.22);
+    stroke-width: 1.5;
+  }
+  .territoire-trace {
+    fill: none;
+    stroke: var(--or-400);
+    stroke-width: 2;
+    stroke-dasharray: 7 11;
+    animation: territoire-defile 10s linear infinite;
+  }
+  .territoire-trace--bis { stroke: rgba(129, 170, 218, 0.7); animation-duration: 14s; }
+  @keyframes territoire-defile { to { stroke-dashoffset: -180; } }
+
+  .bassins { list-style: none; margin: 0; padding: 0; }
+  .bassins li {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+  .bassins a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: clamp(12rem, 20vw, 15.5rem);
+    padding: 0.8rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(8, 29, 54, 0.88);
+    color: var(--blanc);
+    text-decoration: none;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(12px);
+    transition: transform 0.25s var(--sortie), border-color 0.25s ease, background 0.25s ease;
+  }
+  .bassins a:hover,
+  .bassins a:focus-visible {
+    transform: translateY(-4px);
+    border-color: var(--or-400);
+    background: rgba(15, 52, 96, 0.98);
+  }
+  .bassins a:focus-visible { outline: 3px solid var(--or-400); outline-offset: 3px; }
+  .bassin-numero {
+    color: var(--or-400);
+    font-family: var(--police-titre);
+    font-size: 1.35rem;
+  }
+  .bassin-texte { display: flex; flex: 1; min-width: 0; flex-direction: column; }
+  .bassin-texte strong { font-family: var(--police-titre); font-size: 1.35rem; letter-spacing: 0.03em; line-height: 1; }
+  .bassin-texte small { margin-top: 0.25rem; color: #aebed1; font-size: 0.68rem; line-height: 1.35; }
+  .bassin-fleche { display: inline-flex; color: var(--or-400); }
+  .territoire-pied {
+    display: flex;
+    justify-content: center;
+    gap: 0.65rem;
+    margin: 1.5rem 0 0;
+    color: #9fb0c5;
+    font-size: var(--txt-sm);
+  }
+  .territoire-pied a { color: var(--or-400); font-weight: 700; }
+
+  /* ---------- Actualités sur l'accueil ---------- */
+  .actualites-entete {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  .lien-tout {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--bleu-700);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .lien-tout:hover { color: var(--or-texte); }
+  .lien-tout:focus-visible { outline: 3px solid var(--or-400); outline-offset: 4px; }
+  .actualites-grille {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    gap: 1px;
+    border: 1px solid var(--gris-200);
+    background: var(--gris-200);
+  }
+  .actu-accueil {
+    display: grid;
+    grid-template-columns: 8.5rem minmax(0, 1fr);
+    min-height: 9.5rem;
+    background: var(--blanc);
+    color: var(--encre);
+    text-decoration: none;
+    overflow: hidden;
+    transition: background 0.25s ease;
+  }
+  .actu-accueil--vedette {
+    grid-row: span 3;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(18rem, 1fr) auto;
+  }
+  .actu-visuel { display: block; min-width: 0; overflow: hidden; background: var(--craie); }
+  .actu-visuel img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.55s var(--sortie);
+  }
+  .actu-visuel--vide {
+    display: flex;
+    align-items: end;
+    padding: 1.4rem;
+    background:
+      radial-gradient(circle at 78% 22%, var(--or-400) 0 5px, transparent 6px),
+      linear-gradient(145deg, transparent 0 48%, rgba(212, 175, 55, 0.34) 48.2% 48.7%, transparent 49%),
+      linear-gradient(135deg, var(--bleu-900), var(--bleu-700));
+  }
+  .actu-marque {
+    color: var(--blanc);
+    font-family: var(--police-titre);
+    font-size: clamp(2.2rem, 6vw, 4.8rem);
+    letter-spacing: 0.04em;
+    line-height: 0.9;
+  }
+  .actu-corps { display: flex; flex-direction: column; justify-content: center; padding: 1.15rem 1.3rem; }
+  .actu-corps strong {
+    color: var(--bleu-900);
+    font-family: var(--police-titre);
+    font-size: 1.28rem;
+    letter-spacing: 0.02em;
+    line-height: 1.12;
+  }
+  .actu-accueil--vedette .actu-corps { padding: 1.6rem 1.75rem 1.8rem; }
+  .actu-accueil--vedette .actu-corps strong { font-size: clamp(1.8rem, 3vw, 2.7rem); }
+  .actu-date {
+    margin-bottom: 0.4rem;
+    color: var(--or-texte);
+    font-size: var(--txt-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .actu-extrait {
+    display: -webkit-box;
+    margin-top: 0.7rem;
+    color: var(--gris-500);
+    font-size: var(--txt-sm);
+    line-height: 1.55;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .actu-accueil:hover { background: #f7f9fb; }
+  .actu-accueil:hover img { transform: scale(1.045); }
+  .actu-accueil:focus-visible { outline: 3px solid var(--or-400); outline-offset: -3px; }
 
   /* ---------- Partenaires ---------- */
   .partenaires {
@@ -298,14 +635,41 @@ const partenaires = [
   }
   .partenaire--sombre .partenaire-nom { color: var(--blanc); }
 
+  @media (max-width: 900px) {
+    .territoire-entete { grid-template-columns: 1fr; align-items: start; gap: 1rem; }
+    .territoire-plan { min-height: auto; padding: 1.2rem; }
+    .territoire-dessin { opacity: 0.22; }
+    .bassins {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+      z-index: 2;
+    }
+    .bassins li { position: static; transform: none; }
+    .bassins a { width: 100%; height: 100%; }
+
+    .actualites-grille { grid-template-columns: 1fr; }
+    .actu-accueil--vedette { grid-row: auto; }
+  }
+
   @media (max-width: 860px) {
     .heros-grille { grid-template-columns: 1fr; }
     .heros-media { max-width: 20rem; }
+  }
+  @media (max-width: 600px) {
+    .bassins { grid-template-columns: 1fr; }
+    .territoire-plan { padding: 0.85rem; }
+    .territoire-pied { align-items: flex-start; flex-direction: column; }
+    .actualites-entete { align-items: flex-start; flex-direction: column; gap: 0.8rem; }
+    .actu-accueil { grid-template-columns: 7rem minmax(0, 1fr); min-height: 8rem; }
+    .actu-accueil--vedette { grid-template-columns: 1fr; grid-template-rows: 14rem auto; }
   }
   @media (hover: none), (pointer: coarse) {
     .partenaire img { filter: none; opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .partenaire img { transition: none; }
+    .partenaire img, .cadre-video iframe, .actu-visuel img, .bassins a { transition: none; }
+    .territoire-trace { animation: none; }
   }
 </style>

@@ -5,7 +5,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         html {
             scroll-behavior: smooth;
         }
@@ -173,81 +173,134 @@
             opacity: 0.9;
         }
         
-        /* Modern Navigation */
+        /* Navigation principale : compacte sur ordinateur, panneau explicite
+           sur mobile. Les anciennes pastilles forçaient le dernier lien sur
+           une seconde ligne et rendaient les rubriques de droite invisibles
+           sur les petits écrans. */
+        .aller-contenu {
+            position: fixed;
+            top: 0.6rem;
+            left: 0.75rem;
+            z-index: 1200;
+            padding: 0.7rem 1rem;
+            background: var(--or-400);
+            color: var(--bleu-900);
+            font-weight: 700;
+            text-decoration: none;
+            transform: translateY(-180%);
+            transition: transform 0.2s ease;
+        }
+
+        .aller-contenu:focus { transform: translateY(0); }
+
         .navigation {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 0.7rem 0;
             transition: var(--transition);
-            backdrop-filter: blur(10px);
             background: transparent;
         }
         
         .navigation.scrolled {
-            background: rgba(26, 78, 140, 0.95);
+            background: rgba(8, 29, 54, 0.96);
             backdrop-filter: blur(20px);
             box-shadow: var(--shadow-medium);
-            padding: 0.5rem 0;
+            padding: 0.42rem 0;
         }
         
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding: 0 1rem;
+            gap: 1.4rem;
+            padding: 0 1.5rem;
         }
-        
-        .nav-link {
-            color: white;
+
+        .nav-marque {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            flex: 0 0 auto;
+            color: var(--blanc);
             text-decoration: none;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 500;
+        }
+
+        .nav-monogramme {
+            display: grid;
+            place-items: center;
+            width: 2.45rem;
+            height: 2.45rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: var(--or-400);
+            color: var(--bleu-900);
+            font-family: var(--police-titre);
+            font-size: 1.35rem;
+            line-height: 1;
+        }
+
+        .nav-nom {
+            font-family: var(--police-titre);
+            font-size: 1.3rem;
+            letter-spacing: 0.08em;
+        }
+
+        .nav-liens {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: clamp(0.25rem, 0.7vw, 0.65rem);
+            min-width: 0;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.86);
+            text-decoration: none;
+            padding: 0.65rem clamp(0.42rem, 0.7vw, 0.72rem);
+            font-size: clamp(0.76rem, 0.9vw, 0.9rem);
+            font-weight: 600;
+            white-space: nowrap;
             position: relative;
-            overflow: hidden;
-            transition: var(--transition);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: color 0.2s ease;
         }
         
-        .nav-link::before {
+        .nav-link::after {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
+            left: 0.45rem;
+            right: 0.45rem;
+            bottom: 0.25rem;
+            height: 2px;
             background: var(--gold);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s ease, height 0.6s ease;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.25s var(--sortie);
         }
-        
-        .nav-link:hover::before {
-            width: 300%;
-            height: 300%;
+
+        .nav-link:hover,
+        .nav-link[aria-current='page'] { color: var(--blanc); }
+        .nav-link:hover::after,
+        .nav-link[aria-current='page']::after { transform: scaleX(1); }
+        .nav-link:focus-visible,
+        .nav-marque:focus-visible,
+        .nav-bouton:focus-visible { outline: 3px solid var(--or-400); outline-offset: 3px; }
+
+        .nav-bouton {
+            display: none;
+            align-items: center;
+            gap: 0.55rem;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--blanc);
+            padding: 0.58rem 0.75rem;
+            font: 600 0.9rem var(--police-texte);
+            cursor: pointer;
         }
-        
-        .nav-link:hover {
-            color: var(--blue);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-medium);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .nav-link span {
-            position: relative;
-            z-index: 2;
-        }
+        .nav-bouton svg { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-width: 1.8; }
         
         /* Scroll Indicator */
         .scroll-indicator {
@@ -997,24 +1050,53 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
    la recherche. */
 [hidden] { display: none !important; }
 
-/* Navigation : une rangée qui défile plutôt que trois rangées empilées.
-   Les huit pastilles occupaient sinon près d'un tiers de l'écran, en
-   position fixe, sur toute la hauteur du site. */
-@media (max-width: 860px) {
-    .navigation { padding: 0.55rem 0; }
-    .nav-container {
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        overflow-x: auto;
-        overscroll-behavior-x: contain;
-        scroll-snap-type: x proximity;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        gap: 0.45rem;
-        padding: 0 0.9rem;
+/* Navigation mobile : toutes les rubriques restent découvrables sans
+   défilement horizontal caché. */
+@media (max-width: 980px) {
+    .navigation {
+        padding: 0.5rem 0;
+        background: rgba(8, 29, 54, 0.96);
+        backdrop-filter: blur(18px);
     }
-    .nav-container::-webkit-scrollbar { display: none; }
-    .nav-link { flex: 0 0 auto; scroll-snap-align: start; white-space: nowrap; }
+    .nav-container {
+        position: relative;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+    .nav-monogramme { width: 2.3rem; height: 2.3rem; }
+    .nav-bouton { display: inline-flex; }
+    .nav-liens {
+        position: absolute;
+        top: calc(100% + 0.55rem);
+        left: 1rem;
+        right: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.35rem;
+        padding: 0.7rem;
+        background: rgba(8, 29, 54, 0.985);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.34);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-0.45rem);
+        transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    }
+    .navigation.ouverte .nav-liens {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+    .nav-link {
+        padding: 0.78rem 0.82rem;
+        font-size: 0.88rem;
+        background: rgba(255, 255, 255, 0.055);
+    }
+    .nav-link[aria-current='page'] { background: rgba(212, 175, 55, 0.16); }
+    .nav-link::after { left: 0.82rem; right: 0.82rem; }
 }
 
 @media (max-width: 700px) {

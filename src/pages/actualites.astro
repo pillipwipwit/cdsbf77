@@ -14,6 +14,18 @@ const formate = (iso) =>
 // pour parcourir la liste. On retombe sur l'image d'origine si elle manque.
 const vignette = (article) =>
   article.vignette || article.images?.[0] || article.videoThumbs?.[0] || null;
+
+const PAS = 18;
+const articlesInitiaux = tries.slice(0, PAS);
+const resumes = tries.map((article) => ({
+  slug: article.slug,
+  titre: article.titre,
+  date: article.date,
+  extrait: article.extrait,
+  vignette: vignette(article),
+  video: Boolean(article.videoThumbs?.length),
+}));
+const resumesJson = JSON.stringify(resumes).replace(/</g, '\\u003c');
 ---
 <Base
   title="Actualités – CDSBF77"
@@ -52,7 +64,7 @@ const vignette = (article) =>
       <p id="compteur" class="compteur" aria-live="polite" hidden></p>
 
       <div class="grille-articles" id="liste-articles">
-        {tries.map((article) => (
+        {articlesInitiaux.map((article) => (
           <article
             class="carte"
             data-texte={(article.titre + ' ' + article.extrait).toLowerCase()}
@@ -62,11 +74,11 @@ const vignette = (article) =>
               <span class="sr-only">Lire : {article.titre}</span>
             </a>
 
-            <div class="carte-media">
+            <div class:list={['carte-media', { 'carte-media--vide': !vignette(article) }]}>
               {vignette(article) ? (
                 <img src={vignette(article)} alt="" loading="lazy" decoding="async" width="480" height="480" />
               ) : (
-                <div class="carte-media carte-media--vide" aria-hidden="true"></div>
+                <span aria-hidden="true">CDSBF 77</span>
               )}
               {article.videoThumbs?.length > 0 && (
                 <span class="pastille-video" aria-hidden="true"><Icone nom="lecture" taille="1.6rem" /></span>
@@ -84,37 +96,148 @@ const vignette = (article) =>
         ))}
       </div>
 
+      <div class="suite-articles">
+        <button id="charger-suite" class="bouton bouton--ligne-sombre" type="button">
+          Afficher 18 articles de plus
+        </button>
+      </div>
+
       <p id="aucun" hidden class="vide">
         Aucun article ne correspond. Essayez un autre mot-clé, ou remettez l'année sur « Toutes ».
       </p>
     </div>
   </section>
 
-  <script>
-    const recherche = document.getElementById('recherche') as HTMLInputElement;
-    const annee = document.getElementById('annee') as HTMLSelectElement;
-    const cartes = Array.from(document.querySelectorAll<HTMLElement>('#liste-articles .carte'));
-    const aucun = document.getElementById('aucun')!;
-    const compteur = document.getElementById('compteur')!;
+  <script is:inline id="donnees-actualites" type="application/json" set:html={resumesJson}></script>
 
-    function filtrer() {
-      const q = recherche.value.trim().toLowerCase();
-      const a = annee.value;
-      let visibles = 0;
-      for (const carte of cartes) {
-        const okTexte = !q || carte.dataset.texte!.includes(q);
-        const okAnnee = !a || carte.dataset.annee === a;
-        const ok = okTexte && okAnnee;
-        carte.hidden = !ok;
-        if (ok) visibles++;
+  <script>
+    type ResumeActualite = {
+      slug: string;
+      titre: string;
+      date: string;
+      extrait: string;
+      vignette: string | null;
+      video: boolean;
+    };
+
+    const PAS = 18;
+
+    function initialiserActualites() {
+      const liste = document.getElementById('liste-articles');
+      const recherche = document.getElementById('recherche') as HTMLInputElement | null;
+      const annee = document.getElementById('annee') as HTMLSelectElement | null;
+      const aucun = document.getElementById('aucun');
+      const compteur = document.getElementById('compteur');
+      const chargeur = document.getElementById('charger-suite') as HTMLButtonElement | null;
+      const source = document.getElementById('donnees-actualites');
+      if (!liste || !recherche || !annee || !aucun || !compteur || !chargeur || !source || liste.dataset.pret === 'oui') return;
+
+      const articles = JSON.parse(source.textContent || '[]') as ResumeActualite[];
+      const carteInitiale = liste.querySelector('.carte');
+      const attributPortee = carteInitiale
+        ? Array.from(carteInitiale.attributes).find((attribut) => attribut.name.startsWith('data-astro-cid-'))?.name
+        : undefined;
+      let limite = PAS;
+
+      const formater = (iso: string) => new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', {
+        day: 'numeric', month: 'long', year: 'numeric'
+      });
+
+      function creerCarte(article: ResumeActualite) {
+        const carte = document.createElement('article');
+        carte.className = 'carte';
+
+        const lien = document.createElement('a');
+        lien.className = 'carte-lien';
+        lien.href = '/actualites/' + article.slug;
+        const acces = document.createElement('span');
+        acces.className = 'sr-only';
+        acces.textContent = 'Lire : ' + article.titre;
+        lien.append(acces);
+
+        const media = document.createElement('div');
+        media.className = article.vignette ? 'carte-media' : 'carte-media carte-media--vide';
+        if (article.vignette) {
+          const image = document.createElement('img');
+          image.src = article.vignette;
+          image.alt = '';
+          image.loading = 'lazy';
+          image.decoding = 'async';
+          image.width = 480;
+          image.height = 480;
+          media.append(image);
+        } else {
+          const marque = document.createElement('span');
+          marque.textContent = 'CDSBF 77';
+          marque.setAttribute('aria-hidden', 'true');
+          media.append(marque);
+        }
+        if (article.video) {
+          const video = document.createElement('span');
+          video.className = 'pastille-video';
+          video.setAttribute('aria-hidden', 'true');
+          video.textContent = '▶';
+          media.append(video);
+        }
+
+        const corps = document.createElement('div');
+        corps.className = 'carte-corps';
+        const date = document.createElement('p');
+        date.className = 'carte-date';
+        date.textContent = formater(article.date);
+        const titre = document.createElement('h2');
+        titre.className = 'carte-titre';
+        titre.textContent = article.titre;
+        const extrait = document.createElement('p');
+        extrait.className = 'carte-extrait';
+        extrait.textContent = article.extrait;
+        corps.append(date, titre, extrait);
+        carte.append(lien, media, corps);
+
+        // Les styles de cette page sont isolés par Astro au moyen d'un
+        // attribut de portée. Les cartes créées après coup doivent recevoir
+        // ce même attribut pour conserver exactement le rendu serveur.
+        if (attributPortee) {
+          carte.setAttribute(attributPortee, '');
+          carte.querySelectorAll('*').forEach((element) => element.setAttribute(attributPortee, ''));
+        }
+        return carte;
       }
-      aucun.hidden = visibles > 0;
-      const filtreActif = q !== '' || a !== '';
-      compteur.hidden = !filtreActif || visibles === 0;
-      compteur.textContent = visibles > 1 ? visibles + ' articles affichés' : visibles + ' article affiché';
+
+      function afficher() {
+        const q = recherche.value.trim().toLowerCase();
+        const a = annee.value;
+        const filtreActif = q !== '' || a !== '';
+        const resultats = articles.filter((article) => {
+          const texte = (article.titre + ' ' + article.extrait).toLowerCase();
+          return (!q || texte.includes(q)) && (!a || article.date.startsWith(a));
+        });
+        const visibles = filtreActif ? resultats : resultats.slice(0, limite);
+        liste.replaceChildren(...visibles.map(creerCarte));
+
+        aucun.hidden = resultats.length > 0;
+        compteur.hidden = !filtreActif || resultats.length === 0;
+        compteur.textContent = resultats.length > 1
+          ? resultats.length + ' articles trouvés'
+          : resultats.length + ' article trouvé';
+
+        chargeur.hidden = filtreActif || limite >= articles.length;
+        const restants = Math.min(PAS, articles.length - limite);
+        chargeur.textContent = 'Afficher ' + restants + (restants > 1 ? ' articles' : ' article') + ' de plus';
+      }
+
+      recherche.addEventListener('input', afficher);
+      annee.addEventListener('change', afficher);
+      chargeur.addEventListener('click', () => {
+        limite = Math.min(limite + PAS, articles.length);
+        afficher();
+      });
+      liste.dataset.pret = 'oui';
+      afficher();
     }
-    recherche.addEventListener('input', filtrer);
-    annee.addEventListener('change', filtrer);
+
+    initialiserActualites();
+    document.addEventListener('astro:page-load', initialiserActualites);
   </script>
 </Base>
 
@@ -189,7 +312,21 @@ const vignette = (article) =>
   }
   .carte-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s var(--sortie); }
   .carte:hover .carte-media img { transform: scale(1.04); }
-  .carte-media--vide { background: linear-gradient(135deg, var(--bleu-900), var(--bleu-700)); }
+  .carte-media--vide {
+    display: grid;
+    place-items: end start;
+    padding: 1.25rem;
+    background:
+      radial-gradient(circle at 78% 24%, var(--or-400) 0 4px, transparent 5px),
+      linear-gradient(145deg, transparent 0 48%, rgba(212, 175, 55, 0.35) 48.3% 48.8%, transparent 49.1%),
+      linear-gradient(135deg, var(--bleu-900), var(--bleu-700));
+  }
+  .carte-media--vide > span {
+    font-family: var(--police-titre);
+    font-size: clamp(2rem, 4vw, 3.3rem);
+    letter-spacing: 0.04em;
+    color: var(--blanc);
+  }
   .pastille-video {
     position: absolute;
     top: 0.7rem;
@@ -234,5 +371,35 @@ const vignette = (article) =>
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  .suite-articles { display: flex; justify-content: center; padding: 2rem 0 0; }
+  .bouton--ligne-sombre {
+    color: var(--bleu-900);
+    border-color: var(--bleu-700);
+    background: transparent;
+    cursor: pointer;
+  }
+  .bouton--ligne-sombre:hover { color: var(--blanc); background: var(--bleu-700); transform: translateY(-2px); }
+
+  @media (min-width: 900px) {
+    .grille-articles .carte:first-child {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    }
+    .grille-articles .carte:first-child .carte-media { aspect-ratio: auto; min-height: 20rem; }
+    .grille-articles .carte:first-child .carte-corps { justify-content: end; padding: 1.8rem; }
+    .grille-articles .carte:first-child .carte-titre { font-size: clamp(1.65rem, 2.4vw, 2.25rem); }
+  }
+
+  @media (max-width: 600px) {
+    .filtres { display: grid; grid-template-columns: 1fr; gap: 0.7rem; }
+    .filtres .champ,
+    .filtres .champ--select {
+      width: 100%;
+      min-height: 3.45rem;
+      flex: none;
+    }
   }
 </style>
