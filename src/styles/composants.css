@@ -104,39 +104,6 @@
 }
 @keyframes tracer { to { stroke-dashoffset: 0; } }
 
-/* ---------- L'échelle des gants ---------- */
-.echelle { list-style: none; margin: 0; padding: 0; }
-.echelle .gant {
-  display: grid;
-  grid-template-columns: 2.4rem 7rem 1fr;
-  align-items: center;
-  gap: 1.2rem;
-  padding: 1.15rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  transition: padding-left 0.35s var(--sortie);
-}
-.echelle .gant:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
-.echelle .gant:hover { padding-left: 0.8rem; }
-.gant-pastille {
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 50%;
-  background: var(--gant);
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  transition: box-shadow 0.4s ease, transform 0.4s var(--ressort);
-}
-.echelle .gant:hover .gant-pastille {
-  transform: scale(1.15);
-  box-shadow: 0 0 0 8px color-mix(in srgb, var(--gant) 28%, transparent);
-}
-.gant-nom {
-  font-family: var(--police-titre);
-  font-size: 1.6rem;
-  letter-spacing: 0.06em;
-  color: var(--blanc);
-}
-.gant-profil { color: #a8b6c8; font-style: italic; font-size: 0.98rem; }
-
 /* ---------- Cartes en grille au filet ---------- */
 .grille-filet {
   display: grid;
@@ -237,14 +204,8 @@
   margin: 0;
 }
 
-@media (max-width: 860px) {
-  .echelle .gant { grid-template-columns: 2rem 1fr; row-gap: 0.2rem; }
-  .echelle .gant-profil { grid-column: 2; }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .bouton, .carte, .carte::before, .carte-fleche,
-  .echelle .gant, .gant-pastille { transition: none; }
+  .bouton, .carte, .carte::before, .carte-fleche { transition: none; }
   .trajectoire .trace-anime { stroke-dashoffset: 0; animation: none; }
 }
 

@@ -5,7 +5,6 @@ import donnees from '../data/clubs.json';
 import formation from '../data/formation.json';
 import savateAdaptee from '../data/savate-adaptee.json';
 import articles from '../data/actualites.json';
-import donneesSecteurs from '../data/secteurs.json';
 
 const nbClubs = donnees.clubs.length;
 const nbLecons = formation.lecons.length + savateAdaptee.lecons.length;
@@ -17,41 +16,6 @@ const vignetteActualite = (article) =>
   article.vignette || article.images?.[0] || article.videoThumbs?.[0] || null;
 const dateActualite = (iso) =>
   new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-
-const positions: Record<string, { x: number; y: number }> = {
-  meaux: { x: 51, y: 13 },
-  'marne-la-vallee': { x: 23, y: 31 },
-  coulommiers: { x: 62, y: 35 },
-  ozoir: { x: 18, y: 51 },
-  melun: { x: 40, y: 68 },
-  fontainebleau: { x: 58, y: 84 },
-};
-const libellesClubs: Record<string, string> = {
-  meaux: 'CS Meaux',
-  collegien: 'Collégien',
-  dampmart: 'Dampmart',
-  serris: 'SVES',
-  rebais: 'Rebais',
-  'fontenay-tresigny': 'Fontenay-Trésigny',
-  roissy: 'Roissy',
-  avon: 'Avon',
-};
-const bassins = donneesSecteurs.secteurs.map((secteur) => ({
-  ...secteur,
-  ...positions[secteur.slug],
-  clubsEnVue: secteur.misEnAvant.map((slug) => libellesClubs[slug] || slug),
-}));
-
-// La progression technique fédérale : le système d'accent du site.
-// Les phrases-profils viennent du module 1.3c de l'espace formation.
-const gants = [
-  { nom: 'Bleu', variable: '--gant-bleu', profil: 'Je touche' },
-  { nom: 'Vert', variable: '--gant-vert', profil: 'Je ne suis pas touché, et je touche' },
-  { nom: 'Rouge', variable: '--gant-rouge', profil: 'Décalage, débordement' },
-  { nom: 'Blanc', variable: '--gant-blanc', profil: 'Contres et contre-attaques' },
-  { nom: 'Jaune', variable: '--gant-jaune', profil: 'Feinter, perturber' },
-  { nom: 'Argent', variable: '--gant-argent', profil: 'Expertise technique' },
-];
 
 const disciplines = [
   { icone: 'boxe', nom: 'Savate boxe française', teinte: 'var(--gant-bleu)',
@@ -98,8 +62,8 @@ const partenaires = [
         <p class="surtitre">Comité de Seine-et-Marne</p>
         <h1>L'escrime<br /><em>des pieds</em><br />et des poings</h1>
         <p class="accroche">
-          {nbClubs} clubs, quatre disciplines. Une progression qui se lit à la
-          couleur du gant, du premier assaut à la transmission.
+          {nbClubs} clubs, quatre disciplines. De la découverte à la compétition,
+          la savate se vit partout en Seine-et-Marne.
         </p>
         <div class="heros-actions">
           <a class="bouton bouton--plein" href="/clubs">Trouver mon club</a>
@@ -122,34 +86,6 @@ const partenaires = [
         </div>
         <p class="legende">Tourné dans les clubs du département</p>
       </div>
-    </div>
-  </section>
-
-  <!-- ================= L'ÉCHELLE DES GANTS ================= -->
-  <section class="section section--sombre" id="progression">
-    <div class="enveloppe">
-      <p class="surtitre">La progression fédérale</p>
-      <h2 class="titre-section">Six gants, six façons de tirer</h2>
-      <p class="intro">
-        En savate, le niveau se lit à la couleur du gant. Chaque grade tient en
-        une phrase : ce qu'on sait faire, pas ce qu'on a gagné.
-      </p>
-
-      <ol class="echelle">
-        {gants.map((g) => (
-          <li class="gant" style={`--gant: var(${g.variable})`}>
-            <span class="gant-pastille"></span>
-            <span class="gant-nom">{g.nom}</span>
-            <span class="gant-profil">« {g.profil} »</span>
-          </li>
-        ))}
-      </ol>
-
-      <p class="echelle-pied">
-        Avant le gant bleu, les plus jeunes passent les grades Kangourou.
-        Après le jaune viennent les Gants d'Argent Technique.
-        <a href="/formations/monitorat">Comprendre la progression</a>
-      </p>
     </div>
   </section>
 
@@ -177,54 +113,6 @@ const partenaires = [
     </div>
   </section>
 
-  <!-- ================= TOUR DU 77 ================= -->
-  <section class="section territoire" id="tour-du-77">
-    <div class="enveloppe territoire-entete">
-      <div>
-        <p class="surtitre">La savate près de chez vous</p>
-        <h2 class="titre-section">Le Tour du 77</h2>
-      </div>
-      <p class="intro">
-        Six bassins, {nbClubs} clubs et autant de portes d'entrée. Choisissez
-        votre territoire pour retrouver directement les clubs les plus proches.
-      </p>
-    </div>
-
-    <div class="enveloppe">
-      <div class="territoire-plan">
-        <svg class="territoire-dessin" viewBox="0 0 700 720" aria-hidden="true">
-          <path class="territoire-contour" d="M290 34 L462 74 L531 155 L641 236 L590 347 L624 467 L520 548 L482 680 L327 646 L236 568 L112 518 L89 394 L144 293 L123 188 L214 129 Z" />
-          <path class="territoire-trace" d="M356 94 C258 145 174 208 173 350 S286 522 412 603" />
-          <path class="territoire-trace territoire-trace--bis" d="M175 350 C294 316 394 244 493 246 S572 332 529 423" />
-        </svg>
-
-        <ol class="bassins">
-          {bassins.map((bassin, index) => (
-            <li style={`--x:${bassin.x}%; --y:${bassin.y}%`}>
-              <a href={'/clubs/autour-de-' + bassin.slug}>
-                <span class="bassin-numero">0{index + 1}</span>
-                <span class="bassin-texte">
-                  <strong>{bassin.nom}</strong>
-                  <small>
-                    {bassin.clubsEnVue.length
-                      ? bassin.clubsEnVue.join(' · ')
-                      : bassin.clubs.length + ' clubs à découvrir'}
-                  </small>
-                </span>
-                <span class="bassin-fleche"><Icone nom="fleche-droite" taille="1rem" /></span>
-              </a>
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      <p class="territoire-pied">
-        <span>Vous préférez parcourir tout l'annuaire ?</span>
-        <a href="/clubs">Voir les {nbClubs} clubs</a>
-      </p>
-    </div>
-  </section>
-
   <!-- ================= CHIFFRES ================= -->
   <section class="section section--craie">
     <div class="enveloppe">
@@ -232,7 +120,6 @@ const partenaires = [
         <div class="chiffre"><strong>{nbClubs}</strong><span>clubs affiliés</span></div>
         <div class="chiffre"><strong>4</strong><span>disciplines</span></div>
         <div class="chiffre"><strong>{nbLecons}</strong><span>leçons en ligne</span></div>
-        <div class="chiffre"><strong>6</strong><span>gants à gravir</span></div>
       </div>
     </div>
   </section>
@@ -402,107 +289,6 @@ const partenaires = [
     color: #9aa8ba;
   }
 
-  /* ---------- Pied de l'échelle ---------- */
-  .echelle-pied {
-    margin: 1.8rem 0 0;
-    font-size: 0.9rem;
-    color: #a8b6c8;
-    max-width: 62ch;
-  }
-  .echelle-pied a { color: var(--or-400); }
-
-  /* ---------- Tour du 77 ---------- */
-  .territoire {
-    background: linear-gradient(155deg, #071a31, var(--bleu-900));
-    color: var(--blanc);
-    overflow: hidden;
-  }
-  .territoire-entete {
-    display: grid;
-    grid-template-columns: minmax(0, 0.8fr) minmax(18rem, 1.2fr);
-    align-items: end;
-    gap: clamp(2rem, 6vw, 6rem);
-  }
-  .territoire .titre-section { color: var(--blanc); }
-  .territoire .intro { margin: 0; color: #b8c6d7; }
-  .territoire-plan {
-    position: relative;
-    min-height: 43rem;
-    margin-top: 2.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.13);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-    background: radial-gradient(circle at 50% 48%, rgba(26, 78, 140, 0.34), transparent 55%);
-  }
-  .territoire-dessin {
-    position: absolute;
-    inset: 0;
-    width: min(100%, 44rem);
-    height: 100%;
-    margin: auto;
-  }
-  .territoire-contour {
-    fill: rgba(255, 255, 255, 0.025);
-    stroke: rgba(255, 255, 255, 0.22);
-    stroke-width: 1.5;
-  }
-  .territoire-trace {
-    fill: none;
-    stroke: var(--or-400);
-    stroke-width: 2;
-    stroke-dasharray: 7 11;
-    animation: territoire-defile 10s linear infinite;
-  }
-  .territoire-trace--bis { stroke: rgba(129, 170, 218, 0.7); animation-duration: 14s; }
-  @keyframes territoire-defile { to { stroke-dashoffset: -180; } }
-
-  .bassins { list-style: none; margin: 0; padding: 0; }
-  .bassins li {
-    position: absolute;
-    left: var(--x);
-    top: var(--y);
-    transform: translate(-50%, -50%);
-    z-index: 2;
-  }
-  .bassins a {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    width: clamp(12rem, 20vw, 15.5rem);
-    padding: 0.8rem 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(8, 29, 54, 0.88);
-    color: var(--blanc);
-    text-decoration: none;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
-    backdrop-filter: blur(12px);
-    transition: transform 0.25s var(--sortie), border-color 0.25s ease, background 0.25s ease;
-  }
-  .bassins a:hover,
-  .bassins a:focus-visible {
-    transform: translateY(-4px);
-    border-color: var(--or-400);
-    background: rgba(15, 52, 96, 0.98);
-  }
-  .bassins a:focus-visible { outline: 3px solid var(--or-400); outline-offset: 3px; }
-  .bassin-numero {
-    color: var(--or-400);
-    font-family: var(--police-titre);
-    font-size: 1.35rem;
-  }
-  .bassin-texte { display: flex; flex: 1; min-width: 0; flex-direction: column; }
-  .bassin-texte strong { font-family: var(--police-titre); font-size: 1.35rem; letter-spacing: 0.03em; line-height: 1; }
-  .bassin-texte small { margin-top: 0.25rem; color: #aebed1; font-size: 0.68rem; line-height: 1.35; }
-  .bassin-fleche { display: inline-flex; color: var(--or-400); }
-  .territoire-pied {
-    display: flex;
-    justify-content: center;
-    gap: 0.65rem;
-    margin: 1.5rem 0 0;
-    color: #9fb0c5;
-    font-size: var(--txt-sm);
-  }
-  .territoire-pied a { color: var(--or-400); font-weight: 700; }
-
   /* ---------- Actualités sur l'accueil ---------- */
   .actualites-entete {
     display: flex;
@@ -636,19 +422,6 @@ const partenaires = [
   .partenaire--sombre .partenaire-nom { color: var(--blanc); }
 
   @media (max-width: 900px) {
-    .territoire-entete { grid-template-columns: 1fr; align-items: start; gap: 1rem; }
-    .territoire-plan { min-height: auto; padding: 1.2rem; }
-    .territoire-dessin { opacity: 0.22; }
-    .bassins {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.75rem;
-      z-index: 2;
-    }
-    .bassins li { position: static; transform: none; }
-    .bassins a { width: 100%; height: 100%; }
-
     .actualites-grille { grid-template-columns: 1fr; }
     .actu-accueil--vedette { grid-row: auto; }
   }
@@ -658,9 +431,6 @@ const partenaires = [
     .heros-media { max-width: 20rem; }
   }
   @media (max-width: 600px) {
-    .bassins { grid-template-columns: 1fr; }
-    .territoire-plan { padding: 0.85rem; }
-    .territoire-pied { align-items: flex-start; flex-direction: column; }
     .actualites-entete { align-items: flex-start; flex-direction: column; gap: 0.8rem; }
     .actu-accueil { grid-template-columns: 7rem minmax(0, 1fr); min-height: 8rem; }
     .actu-accueil--vedette { grid-template-columns: 1fr; grid-template-rows: 14rem auto; }
@@ -669,7 +439,6 @@ const partenaires = [
     .partenaire img { filter: none; opacity: 1; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .partenaire img, .cadre-video iframe, .actu-visuel img, .bassins a { transition: none; }
-    .territoire-trace { animation: none; }
+    .partenaire img, .cadre-video iframe, .actu-visuel img { transition: none; }
   }
 </style>
