@@ -89,6 +89,17 @@ const partenaires = [
     </div>
   </section>
 
+  <section class="annonce-gant" aria-label="Inscription au gant jaune">
+    <div class="enveloppe annonce-gant-contenu">
+      <div>
+        <p class="surtitre">3 et 17 octobre 2026 · Champs-sur-Marne</p>
+        <h2>Préparation et examen du gant jaune</h2>
+        <p>Préparation gratuite · Examen 20 € · De 10 h à 12 h</p>
+      </div>
+      <a class="bouton bouton--marine" href="/inscription-gant-jaune-2026">M’inscrire <Icone nom="fleche-droite" /></a>
+    </div>
+  </section>
+
   <!-- ================= DISCIPLINES ================= -->
   <section class="section" id="disciplines">
     <div class="enveloppe">
@@ -194,6 +205,12 @@ const partenaires = [
 </Base>
 
 <style>
+  .annonce-gant { padding: 2rem 0; background: var(--or-200); }
+  .annonce-gant-contenu { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .annonce-gant .surtitre { margin-bottom: 0.45rem; color: var(--bleu-900); }
+  .annonce-gant h2 { font-family: var(--police-titre); font-size: var(--titre-md); line-height: 1.1; color: var(--bleu-900); margin: 0 0 0.4rem; }
+  .annonce-gant p { margin: 0; color: var(--bleu-900); font-size: var(--txt-sm); }
+
   /* ---------- Héros ---------- */
   .heros {
     position: relative;

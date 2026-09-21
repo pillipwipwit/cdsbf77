@@ -1,0 +1,313 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+import donnees from '../data/clubs.json';
+
+const clubs = [...donnees.clubs].sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+---
+
+<Base
+  title="Inscription gant jaune · 3 et 17 octobre 2026 – CDSBF77"
+  description="Inscrivez-vous à la préparation gratuite du gant jaune le 3 octobre et à l’examen du 17 octobre 2026 (20 €), de 10 h à 12 h à Champs-sur-Marne."
+>
+  <section class="bandeau">
+    <svg class="trajectoire" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path class="trace-or trace-anime" d="M-50 330 C 260 330, 380 90, 700 90 S 1150 260, 1300 190" />
+      <circle class="impact" cx="700" cy="90" r="4" />
+    </svg>
+    <div class="enveloppe">
+      <p class="surtitre">Champs-sur-Marne · Octobre 2026</p>
+      <h1>Objectif <em>gant jaune</em></h1>
+      <p class="accroche">Une séance pour se tester, un examen pour valider son grade.
+        Inscrivez-vous à la préparation, à l’examen ou aux deux rendez-vous.</p>
+      <a class="bouton bouton--plein acces-formulaire" href="#inscription">M’inscrire <Icone nom="fleche-droite" /></a>
+    </div>
+  </section>
+
+  <section class="section section--craie">
+    <div class="enveloppe inscription-grille">
+      <aside class="informations" aria-label="Informations pratiques">
+        <p class="surtitre">Deux rendez-vous</p>
+        <article class="rendez-vous">
+          <p class="date"><span>03</span> octobre 2026</p>
+          <h2>Préparation au gant jaune</h2>
+          <p><time datetime="2026-10-03T10:00:00+02:00">Samedi · 10 h – 12 h</time></p>
+          <p class="tarif">Gratuit</p>
+          <p>Une seule séance, ouverte à tous les licenciés souhaitant se tester,
+            sans obligation de passer l’examen.</p>
+        </article>
+        <article class="rendez-vous">
+          <p class="date"><span>17</span> octobre 2026</p>
+          <h2>Examen du gant jaune</h2>
+          <p><time datetime="2026-10-17T10:00:00+02:00">Samedi · 10 h – 12 h</time></p>
+          <p class="tarif">20 €</p>
+          <p>Aucun paiement sur cette page. Les modalités de règlement sont à voir avec le comité.</p>
+        </article>
+        <div class="lieu">
+          <h2><Icone nom="lieu" /> Un même lieu</h2>
+          <p><strong>Gymnase du Bois de Grâce</strong><br />Allée de la Lisière<br />77420 Champs-sur-Marne</p>
+          <p>Une question ?<br /><a href="mailto:cdsbf77@gmail.com">cdsbf77@gmail.com</a></p>
+        </div>
+      </aside>
+
+      <div class="inscription" id="inscription">
+        <p class="surtitre">Formulaire d’inscription</p>
+        <h2 class="titre-section">Votre participation</h2>
+        <p class="introduction">Un formulaire par participant. Tous les champs sont obligatoires.</p>
+        <p class="mode-envoi">Après vérification, vous envoyez votre demande à
+          <strong>cdsbf77@gmail.com</strong> depuis votre messagerie.
+          Le comité vous confirme ensuite l’inscription.</p>
+
+        <noscript>
+          <p class="avis">Activez JavaScript pour utiliser le formulaire, ou écrivez à
+            <a href="mailto:cdsbf77@gmail.com">cdsbf77@gmail.com</a> en indiquant les rendez-vous choisis,
+            vos nom, prénom, club, numéro de licence, date de naissance, email et téléphone.</p>
+        </noscript>
+
+        <form id="formulaire-gant-jaune">
+          <fieldset class="saisie" id="saisie-gant-jaune" disabled>
+            <legend class="visuellement-masque">Inscription au gant jaune</legend>
+            <fieldset class="choix-participation">
+              <legend><span class="numero">01</span> Je souhaite participer</legend>
+              <label class="choix">
+                <input type="radio" name="participation" value="preparation" required />
+                <span><strong>À la préparation</strong><small>3 octobre · Gratuit</small></span>
+              </label>
+              <label class="choix">
+                <input type="radio" name="participation" value="examen" required />
+                <span><strong>À l’examen</strong><small>17 octobre · 20 €</small></span>
+              </label>
+              <label class="choix">
+                <input type="radio" name="participation" value="les-deux" required />
+                <span><strong>À la préparation et à l’examen</strong><small>3 et 17 octobre · 20 € au total</small></span>
+              </label>
+            </fieldset>
+
+            <fieldset class="identite">
+              <legend><span class="numero">02</span> Le participant</legend>
+              <div class="champs-grille">
+                <div class="champ">
+                  <label for="nom">Nom</label>
+                  <input id="nom" name="nom" type="text" autocomplete="family-name" maxlength="80" required />
+                </div>
+                <div class="champ">
+                  <label for="prenom">Prénom</label>
+                  <input id="prenom" name="prenom" type="text" autocomplete="given-name" maxlength="80" required />
+                </div>
+                <div class="champ pleine-largeur">
+                  <label for="club">Club</label>
+                  <input id="club" name="club" type="text" list="clubs-savate" maxlength="150" aria-describedby="aide-club" required />
+                  <datalist id="clubs-savate">
+                    {clubs.map((club) => <option value={`${club.nom} — ${club.ville}`} />)}
+                  </datalist>
+                  <small id="aide-club">Choisissez une suggestion ou saisissez le nom de votre club.</small>
+                </div>
+                <div class="champ">
+                  <label for="licence">Numéro de licence</label>
+                  <input id="licence" name="licence" type="text" maxlength="40" spellcheck="false" required />
+                </div>
+                <div class="champ">
+                  <label for="naissance">Date de naissance</label>
+                  <input id="naissance" name="naissance" type="date" autocomplete="bday" required />
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="coordonnees">
+              <legend><span class="numero">03</span> Pour vous joindre</legend>
+              <p id="aide-coordonnees">Pour un participant mineur, indiquez l’email et le téléphone de son responsable légal.</p>
+              <div class="champs-grille">
+                <div class="champ">
+                  <label for="email">Adresse email</label>
+                  <input id="email" name="email" type="email" autocomplete="email" maxlength="150" aria-describedby="aide-coordonnees" required />
+                </div>
+                <div class="champ">
+                  <label for="telephone">Téléphone</label>
+                  <input id="telephone" name="telephone" type="tel" autocomplete="tel" maxlength="30" aria-describedby="aide-coordonnees" required />
+                </div>
+              </div>
+            </fieldset>
+
+            <label class="attestation">
+              <input type="checkbox" name="attestation" required />
+              <span>Je confirme que le participant est licencié et que les informations saisies sont exactes.</span>
+            </label>
+            <button type="submit" class="bouton bouton--marine verifier">Vérifier ma demande <Icone nom="fleche-droite" /></button>
+            <p class="confidentialite">Les informations saisies restent dans votre navigateur jusqu’à l’envoi
+              de votre email. Le site ne les enregistre pas. Elles sont destinées au comité pour gérer votre inscription.</p>
+          </fieldset>
+        </form>
+
+        <section id="recapitulatif" class="recapitulatif" aria-labelledby="titre-recapitulatif" tabindex="-1" hidden>
+          <p class="surtitre">Dernière étape</p>
+          <h2 id="titre-recapitulatif">Vérifiez, puis envoyez votre email</h2>
+          <p><strong>Votre demande n’a pas encore été envoyée.</strong> Ouvrez votre messagerie avec le bouton ci-dessous,
+            puis envoyez le message au comité pour recevoir sa confirmation.</p>
+          <p><strong>Destinataire :</strong> <a href="mailto:cdsbf77@gmail.com">cdsbf77@gmail.com</a><br />
+            <strong>Objet :</strong> <span id="objet-inscription"></span></p>
+          <label for="message-inscription">Votre demande</label>
+          <textarea id="message-inscription" rows="15" readonly></textarea>
+          <div class="actions-envoi">
+            <a id="ouvrir-messagerie" class="bouton bouton--plein" data-astro-reload><Icone nom="courriel" /> Ouvrir ma messagerie</a>
+            <button id="copier-demande" type="button" class="bouton bouton--marine">Copier la demande</button>
+          </div>
+          <p class="aide-envoi">Si aucune messagerie ne s’ouvre, copiez la demande et collez-la dans un email adressé
+            à cdsbf77@gmail.com. Vous pouvez modifier les champs ci-dessus pour corriger votre demande.</p>
+          <p id="statut-copie" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  function initialiserInscription() {
+    const form = document.querySelector<HTMLFormElement>('#formulaire-gant-jaune');
+    if (!form || form.dataset.initialise) return;
+    form.dataset.initialise = 'true';
+
+    const saisie = document.querySelector<HTMLFieldSetElement>('#saisie-gant-jaune')!;
+    const naissance = form.querySelector<HTMLInputElement>('#naissance')!;
+    const recapitulatif = document.querySelector<HTMLElement>('#recapitulatif')!;
+    const message = document.querySelector<HTMLTextAreaElement>('#message-inscription')!;
+    const objet = document.querySelector<HTMLElement>('#objet-inscription')!;
+    const ouvrir = document.querySelector<HTMLAnchorElement>('#ouvrir-messagerie')!;
+    const copier = document.querySelector<HTMLButtonElement>('#copier-demande')!;
+    const statut = document.querySelector<HTMLElement>('#statut-copie')!;
+    const maintenant = new Date();
+    naissance.max = `${maintenant.getFullYear()}-${String(maintenant.getMonth() + 1).padStart(2, '0')}-${String(maintenant.getDate()).padStart(2, '0')}`;
+    saisie.disabled = false;
+
+    form.addEventListener('input', (event) => {
+      if (event.target instanceof HTMLInputElement) event.target.setCustomValidity('');
+      recapitulatif.hidden = true;
+      message.value = '';
+      objet.textContent = '';
+      ouvrir.removeAttribute('href');
+      statut.textContent = '';
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      for (const input of form.querySelectorAll<HTMLInputElement>('input[type="text"], input[type="email"], input[type="tel"]')) {
+        input.value = input.value.trim();
+        input.setCustomValidity(input.value ? '' : 'Merci de renseigner ce champ.');
+      }
+      const telephone = form.querySelector<HTMLInputElement>('#telephone')!;
+      if (telephone.value && (!/^[+\d\s().-]+$/.test(telephone.value) || telephone.value.replace(/\D/g, '').length < 7)) {
+        telephone.setCustomValidity('Indiquez un numéro de téléphone valide, avec son indicatif si nécessaire.');
+      }
+      if (!form.reportValidity()) return;
+
+      const donnees = new FormData(form);
+      const valeur = (nom: string) => String(donnees.get(nom) || '').trim();
+      const participation = valeur('participation');
+      const preparation = participation !== 'examen';
+      const examen = participation !== 'preparation';
+      const dateNaissance = valeur('naissance').split('-').reverse().join('/');
+      const sujet = `Inscription gant jaune — octobre 2026 — ${valeur('prenom')} ${valeur('nom')}`;
+      const lignes = [
+        'Bonjour,', '',
+        'Je souhaite inscrire le participant suivant :', '',
+        `Nom : ${valeur('nom')}`,
+        `Prénom : ${valeur('prenom')}`,
+        `Club : ${valeur('club')}`,
+        `Numéro de licence : ${valeur('licence')}`,
+        `Date de naissance : ${dateNaissance}`,
+        `Email de contact : ${valeur('email')}`,
+        `Téléphone de contact : ${valeur('telephone')}`, '',
+        'Rendez-vous choisis :',
+        ...(preparation ? ['- Préparation au gant jaune : samedi 3 octobre 2026, 10 h – 12 h (gratuite).'] : []),
+        ...(examen ? ['- Examen du gant jaune : samedi 17 octobre 2026, 10 h – 12 h (20 €).'] : []), '',
+        `Montant : ${examen ? '20 € (modalités de règlement à voir avec le comité)' : 'gratuit'}.`,
+        'Lieu : Gymnase du Bois de Grâce, allée de la Lisière, 77420 Champs-sur-Marne.', '',
+        'Je confirme que le participant est licencié et que ces informations sont exactes.',
+        'Merci de me confirmer son inscription.', '',
+        'Demande préparée depuis cdsbf77.fr.',
+      ];
+
+      objet.textContent = sujet;
+      message.value = lignes.join('\n');
+      ouvrir.href = `mailto:cdsbf77@gmail.com?subject=${encodeURIComponent(sujet)}&body=${encodeURIComponent(message.value)}`;
+      recapitulatif.hidden = false;
+      recapitulatif.focus();
+    });
+
+    copier.addEventListener('click', async () => {
+      const texte = `À : cdsbf77@gmail.com\nObjet : ${objet.textContent}\n\n${message.value}`;
+      try {
+        await navigator.clipboard.writeText(texte);
+        statut.textContent = 'Demande copiée. Collez-la dans votre email, puis envoyez-le au comité.';
+      } catch {
+        message.focus();
+        message.select();
+        statut.textContent = 'La copie automatique est indisponible. Le texte est sélectionné : copiez-le, puis collez-le dans votre email.';
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', initialiserInscription);
+  initialiserInscription();
+</script>
+
+<style>
+  h1 em { color: var(--or-400); font-style: normal; }
+  .acces-formulaire { margin-top: 1.5rem; }
+  .inscription-grille { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.4fr); gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .informations { min-width: 0; }
+  .rendez-vous { border-top: 1px solid var(--gris-200); padding: 1.4rem 0; }
+  .rendez-vous h2, .lieu h2, .recapitulatif h2 { font-family: var(--police-titre); font-size: var(--titre-sm); color: var(--bleu-900); line-height: 1.15; margin: 0 0 0.6rem; }
+  .rendez-vous p, .lieu p { font-size: 0.9rem; line-height: 1.65; color: var(--gris-600); margin: 0 0 0.6rem; }
+  .rendez-vous .date { display: flex; align-items: baseline; gap: 0.7rem; color: var(--bleu-900); }
+  .date span { font-family: var(--police-titre); font-size: 3.5rem; line-height: 1; }
+  .rendez-vous .tarif { display: inline-block; padding: 0.15rem 0.65rem; color: var(--bleu-900); background: var(--or-200); font-weight: 600; }
+  .lieu { border-top: 3px solid var(--or-400); padding-top: 1.4rem; }
+  .lieu h2 { display: flex; align-items: center; gap: 0.5rem; }
+  .lieu a, .recapitulatif a:not(.bouton), .avis a { color: var(--bleu-700); overflow-wrap: anywhere; }
+  .inscription { background: var(--blanc); border-top: 4px solid var(--or-400); padding: clamp(1.2rem, 3vw, 2.4rem); scroll-margin-top: 6rem; min-width: 0; }
+  .inscription .titre-section { font-size: var(--titre-md); }
+  .introduction, .mode-envoi { font-size: var(--txt-sm); color: var(--gris-600); line-height: 1.65; margin: 0 0 1rem; }
+  .mode-envoi { padding: 0.9rem 1rem; background: var(--craie); }
+  fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+  .saisie > fieldset { margin: 1.7rem 0; }
+  legend { font-weight: 600; color: var(--bleu-900); margin-bottom: 1rem; line-height: 1.5; }
+  .numero { color: var(--or-texte); margin-right: 0.5rem; font-size: var(--txt-sm); }
+  .choix { display: flex; gap: 0.8rem; align-items: center; padding: 0.9rem 1rem; border: 1px solid var(--gris-200); margin-bottom: 0.6rem; cursor: pointer; }
+  .choix:has(input:checked) { border-color: var(--bleu-700); background: #f0f5fa; box-shadow: inset 3px 0 var(--bleu-700); }
+  .choix strong, .choix small { display: block; }
+  .choix strong { font-size: var(--txt-sm); color: var(--bleu-900); font-weight: 600; }
+  .choix small { color: var(--gris-600); margin-top: 0.2rem; font-size: 0.8rem; }
+  input[type="radio"], input[type="checkbox"] { width: 1.15rem; height: 1.15rem; flex: 0 0 auto; accent-color: var(--bleu-700); }
+  .champs-grille { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
+  .pleine-largeur { grid-column: 1 / -1; }
+  .champ { min-width: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+  .champ label, .recapitulatif label { font-size: var(--txt-sm); font-weight: 600; color: var(--bleu-900); }
+  .champ input, .recapitulatif textarea { width: 100%; min-width: 0; box-sizing: border-box; padding: 0.75rem; border: 1px solid var(--gris-200); border-radius: 2px; background: var(--blanc); color: var(--encre); font-family: var(--police-texte); font-size: 1rem; }
+  .champ small, .coordonnees p { color: var(--gris-600); font-size: 0.8rem; line-height: 1.6; }
+  .coordonnees p { margin: 0 0 1rem; }
+  .attestation { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.82rem; line-height: 1.65; cursor: pointer; margin: 0.5rem 0 1.5rem; color: var(--encre); }
+  .attestation input { margin-top: 0.2rem; }
+  .verifier { width: 100%; justify-content: center; }
+  .confidentialite { font-size: var(--txt-xs); color: var(--gris-600); line-height: 1.65; margin: 1rem 0 0; }
+  .recapitulatif { margin-top: 2rem; padding-top: 1.5rem; border-top: 3px solid var(--or-400); scroll-margin-top: 6rem; }
+  .recapitulatif p { font-size: var(--txt-sm); color: var(--gris-600); line-height: 1.65; margin-bottom: 1rem; }
+  .recapitulatif textarea { font-size: 0.85rem; line-height: 1.6; margin: 0.5rem 0 1rem; resize: vertical; }
+  .actions-envoi { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+  .actions-envoi .bouton { justify-content: center; padding: 0.8rem 1rem; font-size: 0.82rem; }
+  .recapitulatif .aide-envoi { margin-top: 1rem; font-size: 0.8rem; }
+  #statut-copie { color: var(--bleu-900); font-weight: 600; }
+  .avis { background: var(--or-200); color: var(--bleu-900); padding: 1rem; line-height: 1.65; }
+  .visuellement-masque { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  input:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--bleu-500); outline-offset: 3px; }
+  [hidden] { display: none !important; }
+  @media (max-width: 850px) {
+    .inscription-grille { grid-template-columns: 1fr; }
+    .informations { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 1.5rem; }
+    .informations > .surtitre, .lieu { grid-column: 1 / -1; }
+  }
+  @media (max-width: 520px) {
+    .informations, .champs-grille { grid-template-columns: 1fr; }
+    .actions-envoi { flex-direction: column; }
+    .inscription-grille { padding-inline: 1rem; }
+  }
+</style>

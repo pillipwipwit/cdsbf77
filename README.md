@@ -14,6 +14,23 @@ Ce dépôt fusionne l'ancien repo `cdsbf77` (site principal) et le repo
 
 ## Sources de données uniques
 
+### Inscription au gant jaune — octobre 2026
+
+La page `/inscription-gant-jaune-2026` présente la préparation gratuite du
+3 octobre et l’examen du 17 octobre (20 €), de 10 h à 12 h au gymnase du Bois
+de Grâce à Champs-sur-Marne. Elle est liée depuis l’accueil et les formations.
+
+Le participant choisit un ou deux rendez-vous et renseigne ses nom, prénom,
+club, numéro de licence, date de naissance, email et téléphone. Le formulaire
+prépare un récapitulatif puis un email à `cdsbf77@gmail.com`, à envoyer par le
+visiteur. Une copie du texte est disponible si aucune messagerie n’est configurée.
+Il n’y a ni enregistrement côté serveur ni paiement en ligne ; la confirmation
+de l’inscription relève du comité. Aucun message de succès ne prétend qu’un
+email a été envoyé. Pour un mineur, les coordonnées demandées sont celles du
+responsable légal. Le script est réinitialisé lors des navigations Astro.
+
+### Contenus du site
+
 - **`src/data/clubs.json`** — toutes les pages clubs (annuaire, fiches, page
   savate adaptée, chiffres de l'accueil) sont générées depuis ce fichier.
   Champs à compléter en priorité (marqués `aCompleter: true`) : emails,
