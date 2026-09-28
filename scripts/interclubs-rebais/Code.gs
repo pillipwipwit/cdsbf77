@@ -25,7 +25,8 @@ function initialiser() {
     var id = properties.getProperty('REBAIS_SPREADSHEET_ID');
     var book = id ? SpreadsheetApp.openById(id) : SpreadsheetApp.create('Interclubs de Rebais — inscriptions — 8 novembre 2026');
     if (!id) properties.setProperty('REBAIS_SPREADSHEET_ID', book.getId());
-    book.setSpreadsheetTimeZone('Europe/Paris').setSpreadsheetLocale('fr_FR');
+    book.setSpreadsheetTimeZone('Europe/Paris');
+    book.setSpreadsheetLocale('fr_FR');
     var sheet = book.getSheetByName(REBAIS.sheet) || book.insertSheet(REBAIS.sheet);
     if (sheet.getLastRow() > 0 && !headersMatch_(sheet)) throw new Error('Les colonnes existantes ne correspondent pas. Conserver les données et vérifier le guide.');
     sheet.getRange(1, 1, 1, REBAIS.headers.length).setValues([REBAIS.headers]);

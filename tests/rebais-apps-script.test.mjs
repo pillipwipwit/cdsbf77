@@ -55,7 +55,8 @@ function fixture(options = {}) {
   const book = {
     getId: () => 'private-test-sheet', getUrl: () => 'https://docs.google.com/spreadsheets/d/private-test-sheet/edit',
     getSheetByName: () => sheet, insertSheet: () => sheet,
-    setSpreadsheetTimeZone: () => book, setSpreadsheetLocale: () => book,
+    setSpreadsheetTimeZone: (value) => { state.timeZone = value; },
+    setSpreadsheetLocale: (value) => { state.locale = value; },
   };
   const context = vm.createContext({
     Date: TestDate,
@@ -131,6 +132,8 @@ test('initialisation idempotente : table privée, format texte licences, filtre 
   const result = f.context.initialiser();
   f.context.initialiser();
   assert.equal(result.configured, true);
+  assert.equal(f.state.timeZone, 'Europe/Paris');
+  assert.equal(f.state.locale, 'fr_FR');
   assert.equal(f.state.created, 1);
   assert.equal(f.state.triggers.length, 1);
   assert.equal(f.state.interval, 5);
