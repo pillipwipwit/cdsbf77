@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import '../../styles/interclubs-rebais.css';
+---
+<Base title="Votre inscription · Interclubs de Rebais 2026" description="Confirmation de votre inscription à l’interclubs de Rebais du dimanche 8 novembre 2026." noindex={true}>
+  <div class="rb-page rb-confirmation-page">
+    <section class="rb-confirmation-card" aria-label="Votre inscription à l’interclubs de Rebais">
+      <div class="rb-organisers"><div class="rb-logo-plate"><img src="/logos/rebais.jpg" width="86" height="86" alt="Club de savate boxe française de Rebais" /></div><span class="rb-logo-cross" aria-hidden="true">×</span><div class="rb-logo-plate"><img src="/logos/cdsbf77.png" width="86" height="86" alt="Comité départemental de savate boxe française de Seine-et-Marne" /></div></div>
+      <div id="rb-confirmed" hidden>
+        <span class="rb-check" aria-hidden="true">✓</span>
+        <p class="rb-eyebrow rb-eyebrow-dark">C’est enregistré</p>
+        <h1 id="rb-confirmation-title">Inscription<br /><em>confirmée !</em></h1>
+        <p class="rb-confirmation-intro">On se retrouve à Rebais pour une belle journée de savate.</p>
+        <p class="rb-receipt">Votre référence <strong id="rb-reference"></strong></p>
+        <p id="rb-email-status" class="rb-confirmation-email"></p>
+        <div class="rb-confirmation-event"><strong>Dimanche 8 novembre 2026</strong><span>Gymnase du collège de Rebais<br />Rue Gaspard Monge · 77510 Rebais</span><small>Horaires communiqués prochainement · Participation gratuite</small></div>
+        <a class="rb-button rb-button-navy" href="/interclubs-rebais-2026" data-astro-reload>Inscrire un autre tireur <span aria-hidden="true">↗</span></a>
+        <p class="rb-confirmation-contact">Une correction ou une annulation ? <a href="mailto:sbfrebais77@gmail.com">Écrivez aux organisateurs</a> en précisant votre référence.</p>
+      </div>
+      <div id="rb-no-receipt">
+        <p class="rb-eyebrow rb-eyebrow-dark">Interclubs de Rebais · 2026</p>
+        <h1>Aucun récépissé<br />dans cette session.</h1>
+        <p class="rb-confirmation-intro">Cette page s’affiche après l’envoi du formulaire. Si vous vous êtes déjà inscrit, consultez votre email de confirmation ou contactez les organisateurs avant de recommencer.</p>
+        <a class="rb-button rb-button-navy" href="/interclubs-rebais-2026" data-astro-reload>Revenir aux inscriptions <span aria-hidden="true">↗</span></a>
+        <p class="rb-confirmation-contact"><a href="mailto:sbfrebais77@gmail.com">Contacter le club de Rebais</a></p>
+      </div>
+      <a class="rb-confirmation-home" href="/">← Retour au site du comité</a>
+    </section>
+    <p class="rb-confirmation-signature">Le respect. La technique. Le plaisir de se retrouver.</p>
+  </div>
+</Base>
+<script>
+  function afficherRecuRebais() {
+    const confirmed = document.querySelector<HTMLElement>('#rb-confirmed');
+    if (!confirmed) return;
+    try {
+      const receipt = JSON.parse(sessionStorage.getItem('rebais-2026-receipt') || 'null');
+      if (!receipt || typeof receipt.reference !== 'string' || !/^REB-[A-Z0-9-]{4,80}$/i.test(receipt.reference) || !['sent', 'pending'].includes(receipt.emailStatus)) return;
+      document.querySelector<HTMLElement>('#rb-reference')!.textContent = receipt.reference;
+      document.querySelector<HTMLElement>('#rb-email-status')!.textContent = receipt.emailStatus === 'sent'
+        ? 'Un email récapitulatif a été envoyé à l’adresse renseignée. Pensez à vérifier vos courriers indésirables.'
+        : 'Votre inscription est bien enregistrée. L’email récapitulatif est en attente d’envoi et vous parviendra ultérieurement. Inutile de vous réinscrire.';
+      document.querySelector<HTMLElement>('#rb-no-receipt')!.hidden = true;
+      confirmed.hidden = false;
+    } catch { /* A direct visit or unavailable storage is never shown as a confirmed registration. */ }
+  }
+  afficherRecuRebais();
+  document.addEventListener('astro:page-load', afficherRecuRebais);
+</script>

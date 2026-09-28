@@ -9,6 +9,7 @@ const {
   title = 'CDSBF77 – Savate boxe française en Seine-et-Marne',
   description = 'Le Comité Départemental de Savate Boxe Française de Seine-et-Marne : annuaire des clubs, disciplines, compétitions et formations.',
   image = '/og-cdsbf77.png',
+  noindex = false,
 } = Astro.props;
 
 const urlImage = new URL(image, Astro.site);
@@ -32,6 +33,7 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#0f3460" />

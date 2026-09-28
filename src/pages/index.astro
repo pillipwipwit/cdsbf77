@@ -89,6 +89,19 @@ const partenaires = [
     </div>
   </section>
 
+  <section class="annonce-rebais" aria-labelledby="annonce-rebais-titre">
+    <div class="enveloppe annonce-rebais-contenu">
+      <div class="annonce-rebais-date" aria-hidden="true"><strong>08</strong><span>NOV. 2026</span></div>
+      <div class="annonce-rebais-texte">
+        <p class="surtitre">Dimanche 8 novembre 2026 · Participation gratuite</p>
+        <h2 id="annonce-rebais-titre">L’interclubs de Rebais vous attend</h2>
+        <p>Une journée d’assauts pour les enfants, adultes et vétérans, au gymnase du collège de Rebais.</p>
+        <p class="annonce-rebais-limite">Inscription par tireur jusqu’au 1<sup>er</sup> novembre à 23 h 59 (heure de Paris).</p>
+      </div>
+      <a class="bouton bouton--plein" href="/interclubs-rebais-2026">Inscrire un tireur <Icone nom="fleche-droite" /></a>
+    </div>
+  </section>
+
   <section class="annonce-gant" aria-label="Inscription au gant jaune">
     <div class="enveloppe annonce-gant-contenu">
       <div>
@@ -205,6 +218,18 @@ const partenaires = [
 </Base>
 
 <style>
+  .annonce-rebais { position: relative; overflow: hidden; padding: 2.4rem 0; color: var(--blanc); background: linear-gradient(115deg, #123f74, var(--bleu-900)); border-top: 1px solid rgba(255,255,255,.15); }
+  .annonce-rebais::after { content: ''; position: absolute; width: 24rem; height: 24rem; right: -8rem; top: -15rem; border: 1px solid rgba(212,175,55,.3); border-radius: 50%; pointer-events: none; }
+  .annonce-rebais-contenu { position: relative; z-index: 1; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .annonce-rebais-date { display: flex; flex-direction: column; align-items: center; border-right: 1px solid rgba(255,255,255,.25); padding-right: 2rem; color: var(--or-400); }
+  .annonce-rebais-date strong { font-family: var(--police-titre); font-size: 4rem; line-height: .95; }
+  .annonce-rebais-date span { font-size: .75rem; font-weight: 700; letter-spacing: .14em; margin-top: .5rem; }
+  .annonce-rebais-texte { flex: 1 1 23rem; }
+  .annonce-rebais .surtitre { color: var(--or-400); margin: 0 0 .5rem; }
+  .annonce-rebais h2 { font-family: var(--police-titre); font-size: var(--titre-md); line-height: 1.05; margin: 0 0 .6rem; }
+  .annonce-rebais p { margin: 0; font-size: var(--txt-sm); line-height: 1.6; }
+  .annonce-rebais .annonce-rebais-limite { margin-top: .35rem; color: #c3cedb; font-size: var(--txt-xs); }
+  @media (max-width: 600px) { .annonce-rebais-date { display: none; } .annonce-rebais-contenu { gap: 1.25rem; } }
   .annonce-gant { padding: 2rem 0; background: var(--or-200); }
   .annonce-gant-contenu { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
   .annonce-gant .surtitre { margin-bottom: 0.45rem; color: var(--bleu-900); }

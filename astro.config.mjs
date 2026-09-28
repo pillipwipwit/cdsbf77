@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://www.cdsbf77.fr',
-  integrations: [sitemap(), react()],
+  integrations: [sitemap({ filter: (page) => !page.includes('/interclubs-rebais-2026/confirmation') }), react()],
   vite: {
     plugins: [tailwindcss()],
   },

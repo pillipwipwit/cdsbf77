@@ -14,6 +14,22 @@ Ce dépôt fusionne l'ancien repo `cdsbf77` (site principal) et le repo
 
 ## Sources de données uniques
 
+### Interclubs de Rebais — 8 novembre 2026
+
+La page `/interclubs-rebais-2026` propose une inscription individuelle aux assauts
+gratuits enfants, adultes et vétérans. Clôture le 1er novembre 2026 à 23 h 59
+(Europe/Paris). Le formulaire appelle `api/inscription-rebais.js`, qui valide les
+champs et transmet au script Google protégé par un secret. Les inscriptions sont
+conservées dans un tableau privé exportable en Excel ; les emails partent au
+participant et aux deux organisateurs. Les échecs d’envoi sont repris séparément.
+
+**Activation externe nécessaire** : suivre
+[`scripts/interclubs-rebais/ACTIVATION.md`](scripts/interclubs-rebais/ACTIVATION.md).
+Sans compte Google raccordé et variables Vercel configurées, le formulaire ne
+produit aucun envoi ni confirmation fictive. Les tests locaux utilisent des
+services simulés : `npm run test:rebais`. Pour un aperçu incluant l’API :
+`npm run build` puis `npm run preview:rebais`.
+
 ### Inscription au gant jaune — octobre 2026
 
 La page `/inscription-gant-jaune-2026` présente la préparation gratuite du

@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "functions": {
+    "api/inscription-rebais.js": { "maxDuration": 30 }
+  },
   "redirects": [
     {
       "source": "/savate-adaptee",

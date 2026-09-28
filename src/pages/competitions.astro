@@ -11,11 +11,26 @@ import Base from '../layouts/Base.astro';
       <circle class="impact" cx="700" cy="90" r="4" />
     </svg>
     <div class="enveloppe">
-    <p class="surtitre">Compétitions</p>
-    <h1>Le calendrier départemental</h1>
-      </section>
+      <p class="surtitre">Compétitions</p>
+      <h1>Le calendrier départemental</h1>
+    </div>
+  </section>
   <section class="section">
     <div class="enveloppe">
+      <article class="interclubs" aria-labelledby="interclubs-titre">
+        <div class="interclubs-date" aria-label="Dimanche 8 novembre 2026"><span>Dimanche</span><strong>08</strong><span>Novembre 2026</span></div>
+        <div class="interclubs-contenu">
+          <p class="surtitre">Inscriptions ouvertes · Participation gratuite</p>
+          <h2 id="interclubs-titre">Interclubs de Rebais</h2>
+          <p>Une journée consacrée aux assauts, pour les enfants, adultes et vétérans.</p>
+          <dl class="interclubs-infos">
+            <div><dt>Lieu</dt><dd>Gymnase du collège de Rebais<br />Rue Gaspard Monge · 77510 Rebais</dd></div>
+            <div><dt>Clôture des inscriptions</dt><dd>1<sup>er</sup> novembre 2026 à 23 h 59 (heure de Paris)</dd></div>
+          </dl>
+          <a class="bouton bouton--plein" href="/interclubs-rebais-2026">Inscrire un tireur</a>
+          <p class="interclubs-note">Un formulaire par tireur · Sans limite du nombre d’inscriptions</p>
+        </div>
+      </article>
       <section class="bloc">
           <h2 class="titre-section">Du Challenge 77 aux championnats</h2>
           <p>
@@ -23,12 +38,27 @@ import Base from '../layouts/Base.astro';
             <strong>Challenge 77 des jeunes</strong>, et accompagne les tireuses et tireurs
             vers les championnats régionaux et nationaux.
           </p>
-          <p class="panneau" style="margin-top:1.5rem;">Le calendrier de la saison 2026-2027 sera publié ici à la rentrée.</p>
-              </section>
+          <p class="panneau" style="margin-top:1.5rem;">Les autres rendez-vous de la saison 2026-2027 seront annoncés ici.</p>
       </section>
+    </div>
+  </section>
 </Base>
 
 <style>
+  .interclubs { display: grid; grid-template-columns: 10rem minmax(0,1fr); background: linear-gradient(120deg, #123f74, var(--bleu-900)); color: var(--blanc); overflow: hidden; margin-bottom: 3rem; border-top: 4px solid var(--or-400); }
+  .interclubs-date { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .65rem; padding: 2rem 1rem; background: rgba(0,0,0,.15); color: var(--or-400); text-align: center; }
+  .interclubs-date strong { font-family: var(--police-titre); font-size: 5rem; line-height: 1; }
+  .interclubs-date span { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+  .interclubs-contenu { padding: clamp(1.4rem,4vw,2.5rem); }
+  .interclubs .surtitre { color: var(--or-400); margin: 0 0 .7rem; }
+  .interclubs h2 { font-family: var(--police-titre); font-size: var(--titre-lg); line-height: 1; margin: 0 0 1rem; }
+  .interclubs p { line-height: 1.65; }
+  .interclubs-infos { display: flex; gap: 1.3rem 3rem; flex-wrap: wrap; margin: 1.5rem 0; }
+  .interclubs-infos dt { color: #c3cedb; font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .4rem; }
+  .interclubs-infos dd { margin: 0; font-weight: 600; line-height: 1.5; }
+  .interclubs a.bouton { color: var(--bleu-900); }
+  .interclubs .interclubs-note { color: #c3cedb; font-size: var(--txt-xs); margin: .8rem 0 0; }
+  @media (max-width: 650px) { .interclubs { grid-template-columns: 1fr; } .interclubs-date { flex-direction: row; gap: .6rem; padding: 1rem; } .interclubs-date strong { font-size: 2.3rem; } }
   .bloc {
     margin-top: clamp(2.2rem, 5vw, 3.5rem);
     padding-top: clamp(1.8rem, 4vw, 2.6rem);

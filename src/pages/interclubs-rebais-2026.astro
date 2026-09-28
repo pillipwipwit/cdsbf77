@@ -1,0 +1,196 @@
+---
+import Base from '../layouts/Base.astro';
+import clubsData from '../data/clubs.json';
+import { GRADES_REBAIS } from '../lib/inscription-rebais.mjs';
+import '../styles/interclubs-rebais.css';
+const clubs = [...clubsData.clubs].sort((a, b) => a.nom.localeCompare(b.nom, 'fr'));
+---
+<Base title="Interclubs de Rebais · 8 novembre 2026 – Inscriptions" description="Inscrivez-vous à l’interclubs de Rebais du dimanche 8 novembre 2026. Assauts enfants, adultes et vétérans. Participation gratuite, inscriptions jusqu’au 1er novembre inclus.">
+  <div class="rb-page">
+    <section class="rb-hero" aria-labelledby="rb-title">
+      <div class="rb-hero-lines" aria-hidden="true"></div>
+      <div class="rb-wrap rb-hero-grid">
+        <div class="rb-hero-copy">
+          <a class="rb-back" href="/competitions">← Les rendez-vous du comité</a>
+          <p class="rb-eyebrow"><span></span> Savate boxe française · Saison 2026–2027</p>
+          <h1 id="rb-title">Interclubs<br />de <em>Rebais.</em></h1>
+          <p class="rb-hero-intro">Une journée pour se rencontrer,<br class="rb-desktop-break" /> partager et boxer ensemble.</p>
+          <div class="rb-hero-tags"><span>100 % assauts</span><span>Enfants · Adultes · Vétérans</span></div>
+          <a class="rb-button rb-button-gold" href="#inscription">Inscrire un tireur <span aria-hidden="true">↗</span></a>
+          <p class="rb-hero-foot">Participation gratuite · Jusqu’au 1<sup>er</sup> novembre</p>
+        </div>
+        <div class="rb-poster">
+          <div class="rb-organisers">
+            <div class="rb-logo-plate"><img src="/logos/rebais.jpg" width="100" height="100" alt="Club de savate boxe française de Rebais" /></div>
+            <span class="rb-logo-cross" aria-hidden="true">×</span>
+            <div class="rb-logo-plate"><img src="/logos/cdsbf77.png" width="100" height="100" alt="Comité départemental de savate boxe française de Seine-et-Marne" /></div>
+          </div>
+          <p class="rb-poster-day">Dimanche</p>
+          <p class="rb-poster-date"><span>08</span><strong>Novembre<br /><b>2026</b></strong></p>
+          <svg class="rb-strokes" viewBox="0 0 500 240" fill="none" aria-hidden="true"><path d="M-30 199C106 216 171 48 317 64C415 75 455 173 545 133" /><path d="M-25 226C114 237 181 75 313 88C412 97 452 194 546 157" /><path d="M-25 174C117 190 172 19 321 37C432 50 464 147 539 110" /><circle cx="316" cy="65" r="6" /></svg>
+          <div class="rb-poster-place"><span class="rb-pin" aria-hidden="true">↗</span><div><strong>Gymnase du collège de Rebais</strong><span>Rue Gaspard Monge · 77510 Rebais</span></div><span class="rb-poster-seal" aria-hidden="true">77</span></div>
+        </div>
+      </div>
+    </section>
+    <div class="rb-info-strip"><div class="rb-wrap"><p><span aria-hidden="true">01 /</span> Une inscription par tireur</p><p><span aria-hidden="true">02 /</span> Participation gratuite</p><p><span aria-hidden="true">03 /</span> Tous les âges, un même esprit</p></div></div>
+    <section id="inscription" class="rb-registration" aria-labelledby="rb-form-title">
+      <div class="rb-wrap rb-registration-grid">
+        <aside class="rb-sidebar">
+          <p class="rb-eyebrow rb-eyebrow-dark">À vous de jouer</p>
+          <h2 id="rb-form-title">Rendez-vous<br /> sur le ring.</h2>
+          <p>Remplissez les informations du tireur. Une confirmation d’inscription sera envoyée à l’adresse email renseignée.</p>
+          <div class="rb-details">
+            <div><span class="rb-detail-icon" aria-hidden="true">↗</span><p><strong>Le lieu</strong>Gymnase du collège de Rebais<br />Rue Gaspard Monge<br />77510 Rebais</p></div>
+            <div><span class="rb-detail-icon" aria-hidden="true">◷</span><p><strong>Le programme</strong>Dimanche 8 novembre 2026<br /><small>Horaires communiqués prochainement.</small></p></div>
+            <div><span class="rb-detail-icon" aria-hidden="true">✓</span><p><strong>Les inscriptions</strong>Jusqu’au 1<sup>er</sup> novembre 2026 à 23 h 59, heure de Paris.<br /><small>Sans limite du nombre de participants.</small></p></div>
+          </div>
+          <div class="rb-contact"><strong>Une question ? Une correction ?</strong><p>Les organisateurs sont à votre écoute.</p><a href="mailto:sbfrebais77@gmail.com">Contacter le club de Rebais ↗</a></div>
+        </aside>
+        <div class="rb-form-card">
+          <div class="rb-form-top"><p>Fiche d’inscription</p><span>Édition 2026</span></div>
+          <div id="rb-closed" class="rb-notice" role="status" hidden>Les inscriptions sont closes depuis le 1<sup>er</sup> novembre 2026 à 23 h 59. Pour toute question, contactez <a href="mailto:sbfrebais77@gmail.com">le club de Rebais</a>.</div>
+          <noscript><div class="rb-notice">Activez JavaScript pour envoyer cette inscription. Vous pouvez aussi <a href="mailto:sbfrebais77@gmail.com">contacter les organisateurs</a>.</div></noscript>
+          <form id="rb-form" novalidate>
+            <p class="rb-required-note">Tous les champs sont obligatoires.</p>
+            <fieldset class="rb-fieldset"><legend><span>01</span> Le tireur</legend>
+              <div class="rb-fields">
+                <div class="rb-field"><label for="rb-nom">Nom</label><input id="rb-nom" name="nom" type="text" autocomplete="family-name" maxlength="80" required aria-describedby="rb-error-nom" /><span id="rb-error-nom" class="rb-field-error"></span></div>
+                <div class="rb-field"><label for="rb-prenom">Prénom</label><input id="rb-prenom" name="prenom" type="text" autocomplete="given-name" maxlength="80" required aria-describedby="rb-error-prenom" /><span id="rb-error-prenom" class="rb-field-error"></span></div>
+                <div class="rb-field"><label for="rb-naissance">Date de naissance</label><input id="rb-naissance" name="naissance" type="date" autocomplete="bday" min="1900-01-01" max="2026-11-08" required aria-describedby="rb-error-naissance" /><span id="rb-error-naissance" class="rb-field-error"></span></div>
+                <div class="rb-field"><label for="rb-sexe">Sexe</label><select id="rb-sexe" name="sexe" required aria-describedby="rb-error-sexe"><option value="">Sélectionner</option><option value="F">Féminin</option><option value="M">Masculin</option></select><span id="rb-error-sexe" class="rb-field-error"></span></div>
+                <div class="rb-field"><label for="rb-poids">Poids <span>(en kg)</span></label><input id="rb-poids" name="poids" type="text" inputmode="decimal" placeholder="Ex. : 62,5" maxlength="5" required aria-describedby="rb-error-poids" /><span id="rb-error-poids" class="rb-field-error"></span></div>
+                <div class="rb-field"><label for="rb-grade">Grade</label><select id="rb-grade" name="grade" required aria-describedby="rb-error-grade"><option value="">Sélectionner</option>{GRADES_REBAIS.map((grade) => <option value={grade}>{grade}</option>)}</select><span id="rb-error-grade" class="rb-field-error"></span></div>
+              </div>
+            </fieldset>
+            <fieldset class="rb-fieldset"><legend><span>02</span> Le club &amp; la licence</legend>
+              <div class="rb-fields"><div class="rb-field rb-field-wide"><label for="rb-club">Club</label><input id="rb-club" name="club" type="text" list="rb-clubs" maxlength="150" required aria-describedby="rb-club-help rb-error-club" /><datalist id="rb-clubs">{clubs.map((club) => <option value={`${club.nom} — ${club.ville}`} />)}</datalist><small id="rb-club-help">Choisissez un club proposé ou saisissez son nom.</small><span id="rb-error-club" class="rb-field-error"></span></div>
+                <div class="rb-field rb-field-wide"><label for="rb-licence">Numéro de licence</label><input id="rb-licence" name="licence" type="text" maxlength="40" required aria-describedby="rb-error-licence" /><span id="rb-error-licence" class="rb-field-error"></span></div></div>
+            </fieldset>
+            <fieldset class="rb-fieldset"><legend><span>03</span> La confirmation</legend>
+              <div class="rb-field"><label for="rb-email">Adresse email</label><input id="rb-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="rb-email-help rb-error-email" /><small id="rb-email-help">Email du tireur, d’un parent ou du responsable de club. Vérifiez-le : votre confirmation y sera envoyée.</small><span id="rb-error-email" class="rb-field-error"></span></div>
+            </fieldset>
+            <div class="rb-honeypot" aria-hidden="true"><label for="rb-website">Votre site internet — laisser vide</label><input id="rb-website" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+            <div id="rb-form-error" class="rb-notice rb-notice-error" role="alert" tabindex="-1" hidden></div>
+            <p class="rb-privacy">Ces informations sont utilisées pour organiser l’interclubs et transmises aux organisateurs, Cédric Senez et le club de Rebais. Pour les consulter, les corriger ou demander leur suppression, <a href="mailto:cedricsenez@gmail.com">contactez-nous</a>. <a href="/mentions-legales#inscriptions-rebais">Utilisation de vos données</a>.</p>
+            <button id="rb-submit" class="rb-button rb-button-navy" type="submit" disabled><span id="rb-submit-label">Confirmer l’inscription</span><span class="rb-submit-arrow" aria-hidden="true">↗</span></button>
+            <p class="rb-submit-note" id="rb-submit-note">L’envoi du formulaire confirme l’inscription. Aucun paiement.</p>
+            <p id="rb-sending" class="rb-submit-note" role="status" aria-live="polite"></p>
+          </form>
+          <div id="rb-local-success" class="rb-local-success" tabindex="-1" hidden><span class="rb-check" aria-hidden="true">✓</span><h2>Inscription confirmée !</h2><p id="rb-local-reference"></p><p id="rb-local-email"></p><a class="rb-button rb-button-navy" href="/interclubs-rebais-2026" data-astro-reload>Inscrire un autre tireur ↗</a></div>
+        </div>
+      </div>
+    </section>
+    <div class="rb-closing"><p>Le respect. La technique. <em>Le plaisir de se retrouver.</em></p><span>Rebais · 08.11.2026</span></div>
+  </div>
+</Base>
+
+<script>
+  import { CLOTURE_REBAIS, validerInscription } from '../lib/inscription-rebais.mjs';
+  function initialiserRebais() {
+    const form = document.querySelector<HTMLFormElement>('#rb-form');
+    if (!form || form.dataset.ready) return;
+    form.dataset.ready = 'true';
+    const submit = document.querySelector<HTMLButtonElement>('#rb-submit')!;
+    const label = document.querySelector<HTMLElement>('#rb-submit-label')!;
+    const notice = document.querySelector<HTMLElement>('#rb-form-error')!;
+    const status = document.querySelector<HTMLElement>('#rb-sending')!;
+    const birth = document.querySelector<HTMLInputElement>('#rb-naissance')!;
+    birth.max = new Date().toISOString().slice(0, 10);
+    let sending = false;
+    let requestId = crypto.randomUUID();
+    let previousPayload = '';
+    const closeIfNeeded = () => {
+      const closed = Date.now() >= CLOTURE_REBAIS;
+      document.querySelector<HTMLElement>('#rb-closed')!.hidden = !closed;
+      submit.disabled = closed || sending;
+      if (closed) label.textContent = 'Inscriptions closes';
+      return closed;
+    };
+    closeIfNeeded();
+    const clearErrors = () => {
+      notice.hidden = true;
+      form.querySelectorAll('[aria-invalid]').forEach((field) => field.removeAttribute('aria-invalid'));
+      form.querySelectorAll('.rb-field-error').forEach((error) => error.textContent = '');
+    };
+    const showErrors = (message: string, errors: Record<string, string> = {}) => {
+      notice.textContent = message;
+      notice.hidden = false;
+      let first: HTMLElement | null = null;
+      for (const [key, error] of Object.entries(errors)) {
+        const field = form.elements.namedItem(key);
+        const destination = document.getElementById(`rb-error-${key}`);
+        if (field instanceof HTMLElement && destination) {
+          field.setAttribute('aria-invalid', 'true');
+          destination.textContent = error;
+          first ??= field;
+        }
+      }
+      (first ?? notice).focus();
+    };
+    form.addEventListener('input', (event) => {
+      const field = event.target as HTMLInputElement;
+      field.removeAttribute('aria-invalid');
+      const error = document.getElementById(`rb-error-${field.name}`);
+      if (error) error.textContent = '';
+    });
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (sending || closeIfNeeded()) return;
+      clearErrors();
+      const entries = Object.fromEntries(new FormData(form).entries());
+      const fingerprint = JSON.stringify(entries);
+      if (previousPayload && previousPayload !== fingerprint) requestId = crypto.randomUUID();
+      previousPayload = fingerprint;
+      const payload = { ...entries, requestId };
+      const validation = validerInscription(payload);
+      if (!validation.ok) {
+        showErrors('Vérifiez les champs indiqués avant de confirmer votre inscription.', validation.errors);
+        return;
+      }
+      sending = true;
+      submit.disabled = true;
+      form.setAttribute('aria-busy', 'true');
+      label.textContent = 'Envoi en cours…';
+      status.textContent = 'Enregistrement de votre inscription, veuillez patienter.';
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 30000);
+      try {
+        const response = await fetch('/api/inscription-rebais', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload), signal: controller.signal,
+        });
+        const result = await response.json();
+        if (!response.ok || result.ok !== true) {
+          showErrors(typeof result.message === 'string' ? result.message : 'L’inscription n’a pas pu être confirmée. Réessayez dans quelques instants.', result.errors);
+          return;
+        }
+        if (typeof result.reference !== 'string' || !/^REB-[A-Z0-9-]{4,80}$/i.test(result.reference) || !['sent', 'pending'].includes(result.emailStatus)) {
+          throw new Error('Réponse inattendue');
+        }
+        const receipt = { reference: result.reference, emailStatus: result.emailStatus };
+        try {
+          sessionStorage.setItem('rebais-2026-receipt', JSON.stringify(receipt));
+          window.location.assign('/interclubs-rebais-2026/confirmation');
+        } catch {
+          form.hidden = true;
+          const success = document.querySelector<HTMLElement>('#rb-local-success')!;
+          document.querySelector<HTMLElement>('#rb-local-reference')!.textContent = `Votre référence : ${receipt.reference}`;
+          document.querySelector<HTMLElement>('#rb-local-email')!.textContent = receipt.emailStatus === 'sent' ? 'Le récapitulatif a été envoyé à l’adresse email renseignée. Pensez à vérifier vos courriers indésirables.' : 'Votre inscription est enregistrée. L’email de confirmation est en attente d’envoi ; inutile de vous réinscrire.';
+          success.hidden = false;
+          success.focus();
+        }
+      } catch {
+        showErrors('Nous n’avons pas pu recevoir la confirmation du serveur. Vérifiez votre connexion, puis réessayez sans modifier les informations : cette tentative ne créera pas de doublon.');
+      } finally {
+        window.clearTimeout(timeout);
+        sending = false;
+        form.removeAttribute('aria-busy');
+        label.textContent = 'Confirmer l’inscription';
+        status.textContent = '';
+        closeIfNeeded();
+      }
+    });
+  }
+  initialiserRebais();
+  document.addEventListener('astro:page-load', initialiserRebais);
+</script>

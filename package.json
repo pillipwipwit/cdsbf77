@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "preview:rebais": "node scripts/preview-rebais.mjs",
+    "test:rebais": "node --test tests/rebais-*.test.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^6.0.1",
