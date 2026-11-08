@@ -9,6 +9,7 @@ export function getStaticPaths() {
     "uc1-01-culture-federale",
     "m1-02-histoire-sbf",
     "m1-03-histoire-sbd",
+    "m1-04-histoire-sf",
   ]);
   const lecons = formation.lecons.filter((lecon) => !pagesDediees.has(lecon.id));
   return lecons.map((lecon) => {
