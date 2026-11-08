@@ -19,7 +19,9 @@ const groupes = [
 
 const par = (f) => donnees.lecons.filter((l) => l.famille === f).sort((a, b) => a.ordre - b.ordre);
 const total = donnees.lecons.length;
-const questions = donnees.lecons.reduce((n, l) => n + l.quiz.length, 0);
+const nombreQuestions = (lecon: (typeof donnees.lecons)[number]) =>
+  lecon.questions ?? lecon.quiz?.length ?? 0;
+const questions = donnees.lecons.reduce((n, l) => n + nombreQuestions(l), 0);
 const minutes = donnees.lecons.reduce((n, l) => n + l.duree, 0);
 ---
 
@@ -51,7 +53,7 @@ const minutes = donnees.lecons.reduce((n, l) => n + l.duree, 0);
                 <span class="corps-lien">
                   <strong>{l.titre}</strong>
                   <span class="resume">{l.chapo}</span>
-                  <span class="meta">≈ {l.duree} min · {l.quiz.length} questions</span>
+                  <span class="meta">≈ {l.duree} min · {nombreQuestions(l)} questions</span>
                 </span>
               </a>
             </li>

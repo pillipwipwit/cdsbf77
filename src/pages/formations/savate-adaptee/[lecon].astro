@@ -9,7 +9,7 @@ const FAMILLES = {
 };
 
 export function getStaticPaths() {
-  return donnees.lecons.map((lecon) => {
+  return donnees.lecons.filter((lecon) => lecon.contenu).map((lecon) => {
     const memeFamille = donnees.lecons
       .filter((l) => l.famille === lecon.famille)
       .sort((a, b) => a.ordre - b.ordre);
