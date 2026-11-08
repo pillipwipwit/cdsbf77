@@ -4,7 +4,10 @@ import Quiz from "../../../components/Quiz.astro";
 import formation from "../../../data/formation.json";
 
 export function getStaticPaths() {
-  return formation.lecons.map((lecon) => {
+  // Ces leçons ont leur propre page et restent dans le sommaire.
+  const pagesDediees = new Set(["uc1-01-culture-federale", "m1-02-histoire-sbf"]);
+  const lecons = formation.lecons.filter((lecon) => !pagesDediees.has(lecon.id));
+  return lecons.map((lecon) => {
     const memeUc = formation.lecons
       .filter((l) => l.uc === lecon.uc)
       .sort((a, b) => a.ordre - b.ordre);
