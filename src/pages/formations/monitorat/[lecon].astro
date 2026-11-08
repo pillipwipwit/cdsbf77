@@ -10,6 +10,7 @@ export function getStaticPaths() {
     "m1-02-histoire-sbf",
     "m1-03-histoire-sbd",
     "m1-04-histoire-sf",
+    "m1-06-filiere-formation",
   ]);
   const lecons = formation.lecons.filter((lecon) => !pagesDediees.has(lecon.id));
   return lecons.map((lecon) => {
