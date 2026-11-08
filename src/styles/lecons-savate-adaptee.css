@@ -73,7 +73,7 @@
   font-weight: 600;
 }
 h3 { color: var(--marine); font-size: 1.1rem; line-height: 1.4; }
-.cards, .constraint-grid, .besoin-list, .media-grid, .reglages {
+.cards, .constraint-grid, .besoin-list, .media-grid, .reglages, .communication-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
   gap: 0.85rem;
@@ -81,12 +81,14 @@ h3 { color: var(--marine); font-size: 1.1rem; line-height: 1.4; }
 }
 .card, .constraint-card, .besoin-card, .callout, .fmt-encart, .fmt-cle, .panel,
 .example, .intro-card, .instruction-card, .memo, .fiche-exercice, .remember, .trouble,
-.diagram, .schema, .media-grid .fmt-media {
+.diagram, .schema, .media-grid .fmt-media, .communication-cards > div {
   padding: 1rem;
   background: var(--blanc);
   border: 1px solid var(--gris-clair);
   border-radius: var(--rayon);
 }
+.communication-cards span { margin-right: 0.45rem; color: var(--or-texte); font-weight: 600; }
+.communication-cards p { margin: 0.35rem 0 0; }
 .callout, .fmt-encart, .fmt-cle, .memo { margin-block: 1rem; border-left: 4px solid var(--marine); }
 .callout.warning, .callout.safety, .fmt-encart.attention { border-left-color: var(--rouge); }
 .card > :first-child, .constraint-card > :first-child, .besoin-card > :first-child,
@@ -112,7 +114,7 @@ details {
 }
 summary { padding: 0.75rem 1rem; color: var(--marine); font-weight: 600; cursor: pointer; }
 summary small { display: block; color: var(--gris); font-weight: 400; }
-.fiche-body, .profile-content, details > ol { margin-block: 0; padding: 0.25rem 1rem 1rem; }
+.fiche-body, .profile-content, .depliant-body, details > ol { margin-block: 0; padding: 0.25rem 1rem 1rem; }
 details > ol { padding-left: 2.25rem; }
 .profile-index { margin-right: 0.45rem; color: var(--or-texte); }
 

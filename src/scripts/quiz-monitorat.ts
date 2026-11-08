@@ -10,6 +10,7 @@ const effacer = form.querySelector<HTMLButtonElement>("#forget");
 const dernierScore = quiz.querySelector<HTMLElement>("#last-score");
 const cle = "cdsbf77-formation";
 const lecon = quiz.dataset.lecon!;
+const version = quiz.dataset.version;
 const total = questions.length;
 const seuil = Math.ceil(total * 0.7);
 
@@ -17,7 +18,8 @@ function afficherDernierScore() {
   if (!effacer && !dernierScore) return;
   try {
     const suivi = JSON.parse(localStorage.getItem(cle) ?? "{}");
-    const dernier = suivi[lecon];
+    const scoreEnregistre = suivi[lecon];
+    const dernier = scoreEnregistre?.version === version ? scoreEnregistre : undefined;
     if (effacer) effacer.hidden = !dernier;
     const affichage = dernierScore ?? stockage;
     affichage.textContent = dernier ? `Dernier score enregistré : ${dernier.note} / ${dernier.total}.` : "";
@@ -77,7 +79,7 @@ form.addEventListener("submit", (event) => {
     stockage.hidden = false;
     try {
       const suivi = JSON.parse(localStorage.getItem(cle) ?? "{}");
-      suivi[lecon] = { note, total, date: new Date().toISOString() };
+      suivi[lecon] = { note, total, date: new Date().toISOString(), version };
       localStorage.setItem(cle, JSON.stringify(suivi));
       afficherDernierScore();
       if (!effacer) stockage.textContent = "Score enregistré dans ce navigateur.";
