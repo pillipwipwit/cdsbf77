@@ -5,7 +5,11 @@ import formation from "../../../data/formation.json";
 
 export function getStaticPaths() {
   // Ces leçons ont leur propre page et restent dans le sommaire.
-  const pagesDediees = new Set(["uc1-01-culture-federale", "m1-02-histoire-sbf"]);
+  const pagesDediees = new Set([
+    "uc1-01-culture-federale",
+    "m1-02-histoire-sbf",
+    "m1-03-histoire-sbd",
+  ]);
   const lecons = formation.lecons.filter((lecon) => !pagesDediees.has(lecon.id));
   return lecons.map((lecon) => {
     const memeUc = formation.lecons
