@@ -31,11 +31,11 @@ a { color: var(--marine); }
   background: var(--marine);
   color: var(--blanc);
 }
-.fmt-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem 1rem; }
+.fmt-top { border-bottom: 2px solid var(--or-400); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.4rem 1rem; }
 .fmt-top a { color: inherit; font-size: 0.8rem; text-decoration: none; }
 .fmt-top .brand, .fil a { color: var(--or-clair); }
 .fmt-top a:hover { text-decoration: underline; }
-.fmt-foot { margin-top: 4rem; font-size: 0.85rem; }
+.fmt-foot { border-top: 2px solid var(--or-400); margin-top: 4rem; font-size: 0.85rem; }
 
 .fmt-wrap { max-width: 56rem; margin: auto; padding-inline: clamp(1rem, 4vw, 3rem); }
 .tete { padding: clamp(2rem, 6vw, 4rem) 0; background: var(--marine); color: var(--blanc); }

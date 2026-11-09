@@ -1,4 +1,5 @@
 ---
+import '../styles/accueil.css';
 import Base from '../layouts/Base.astro';
 import Icone from '../components/Icone.astro';
 import donnees from '../data/clubs.json';
@@ -12,6 +13,7 @@ const nbLecons = formation.lecons.length + savateAdaptee.lecons.length;
 const actualitesRecentes = [...articles]
   .sort((a, b) => b.date.localeCompare(a.date))
   .slice(0, 4);
+const [vedette, ...autresActualites] = actualitesRecentes;
 const vignetteActualite = (article) =>
   article.vignette || article.images?.[0] || article.videoThumbs?.[0] || null;
 const dateActualite = (iso) =>
@@ -29,11 +31,11 @@ const disciplines = [
 ];
 
 const activites = [
-  { icone: 'formation', nom: 'Se former', lien: '/formations', teinte: 'var(--gant-bleu)',
+  { icone: 'formation', nom: 'Se former', action: 'Voir les formations', lien: '/formations',
     texte: `Moniteur fédéral, officiels, savate adaptée. ${nbLecons} leçons en ligne, en accès libre, chacune close par un quiz.` },
-  { icone: 'competition', nom: 'Compétitions', lien: '/competitions', teinte: 'var(--gant-rouge)',
+  { icone: 'competition', nom: 'Compétitions', action: 'Voir le calendrier', lien: '/competitions',
     texte: 'Championnats et challenges départementaux, du jeune tireur au tireur confirmé.' },
-  { icone: 'developpement', nom: 'Développement', lien: '/developpement', teinte: 'var(--gant-vert)',
+  { icone: 'developpement', nom: 'Développement', action: 'Découvrir les actions', lien: '/developpement',
     texte: 'Aller-vers, sport-santé, milieu scolaire, insertion : la savate hors les murs.' },
 ];
 
@@ -49,438 +51,245 @@ const partenaires = [
 ];
 ---
 <Base>
-  <!-- ================= HÉROS ================= -->
-  <section class="heros">
-    <svg class="trajectoire" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path class="trace-or trace-anime" d="M-50 560 C 250 560, 380 120, 700 120 S 1150 420, 1300 300" />
-      <path class="trace-pale trace-anime" d="M-50 620 C 300 620, 420 200, 760 200 S 1180 480, 1300 360" />
-      <circle class="impact" cx="700" cy="120" r="4" />
-    </svg>
+  <div class="accueil">
+    <section class="hero" aria-labelledby="hero-title">
+      <svg class="hero-trajectory" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path class="trajectory-gold" d="M-50 560 C 250 560, 380 120, 700 120 S 1150 420, 1300 300"></path>
+        <path class="trajectory-pale" d="M-50 620 C 300 620, 420 200, 760 200 S 1180 480, 1300 360"></path>
+        <circle class="trajectory-impact" cx="700" cy="120" r="5"></circle>
+      </svg>
 
-    <div class="heros-grille">
-      <div class="heros-texte">
-        <p class="surtitre">Comité de Seine-et-Marne</p>
-        <h1>L'escrime<br /><em>des pieds</em><br />et des poings</h1>
-        <p class="accroche">
-          {nbClubs} clubs, quatre disciplines. De la découverte à la compétition,
-          la savate se vit partout en Seine-et-Marne.
-        </p>
-        <div class="heros-actions">
-          <a class="bouton bouton--plein" href="/clubs">Trouver mon club</a>
-          <a class="bouton bouton--ligne" href="/disciplines">Voir les disciplines</a>
+      <div class="site-container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow eyebrow--light"><span></span>Comité de Seine-et-Marne</p>
+          <h1 id="hero-title">L'escrime<br><em>des pieds</em><br>et des poings</h1>
+          <p class="hero-intro">{nbClubs} clubs, quatre disciplines. De la découverte à la compétition, la savate se vit partout en Seine-et-Marne.</p>
+          <div class="hero-actions">
+            <a class="button button--gold" href="/clubs">
+              Trouver mon club
+              <Icone nom="fleche-droite" taille="1rem" />
+            </a>
+            <a class="button button--outline" href="/disciplines">Voir les disciplines</a>
+          </div>
         </div>
-      </div>
 
-      <!-- La vidéo est au format portrait : assumée en panneau vertical -->
-      <div class="heros-media">
-        <div class="cadre-video">
-          <div class="video-attente" aria-hidden="true">
-            <strong>CDSBF 77</strong>
+        <figure class="hero-media">
+          <div class="media-topline" aria-hidden="true">
+            <span>CDSBF 77</span>
             <span>La savate en mouvement</span>
           </div>
-          <iframe
-            src="https://player.vimeo.com/video/1072779716?h=fe9825216e&background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
-            allow="autoplay; fullscreen; picture-in-picture"
-            title="La savate en Seine-et-Marne" loading="eager"
-            onload="this.parentElement.classList.add('charge')"></iframe>
-        </div>
-        <p class="legende">Tourné dans les clubs du département</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="annonce-rebais" aria-labelledby="annonce-rebais-titre">
-    <div class="enveloppe annonce-rebais-contenu">
-      <div class="annonce-rebais-date" aria-hidden="true"><strong>08</strong><span>NOV. 2026</span></div>
-      <div class="annonce-rebais-texte">
-        <p class="surtitre">Dimanche 8 novembre 2026 · Participation gratuite</p>
-        <h2 id="annonce-rebais-titre">L’interclubs de Rebais vous attend</h2>
-        <p>Une journée d’assauts pour les enfants, adultes et vétérans, au gymnase du collège de Rebais.</p>
-        <p class="annonce-rebais-limite">Inscription par tireur jusqu’au 1<sup>er</sup> novembre à 23 h 59 (heure de Paris).</p>
-      </div>
-      <a class="bouton bouton--plein" href="/interclubs-rebais-2026">Inscrire un tireur <Icone nom="fleche-droite" /></a>
-    </div>
-  </section>
-
-  <section class="annonce-gant" aria-label="Inscription au gant jaune">
-    <div class="enveloppe annonce-gant-contenu">
-      <div>
-        <p class="surtitre">3 et 17 octobre 2026 · Champs-sur-Marne</p>
-        <h2>Préparation et examen du gant jaune</h2>
-        <p>Préparation gratuite · Examen 20 € · De 10 h à 12 h</p>
-      </div>
-      <a class="bouton bouton--marine" href="/inscription-gant-jaune-2026">M’inscrire <Icone nom="fleche-droite" /></a>
-    </div>
-  </section>
-
-  <!-- ================= DISCIPLINES ================= -->
-  <section class="section" id="disciplines">
-    <div class="enveloppe">
-      <p class="surtitre">Disciplines</p>
-      <h2 class="titre-section">Quatre façons de pratiquer</h2>
-      <p class="intro">
-        La savate boxe française est le cœur de la pratique. Autour d'elle, trois
-        disciplines associées permettent à chacun de trouver sa forme.
-      </p>
-    </div>
-    <div class="enveloppe">
-      <div class="grille-filet">
-        {disciplines.map((d) => (
-          <a class="carte" href="/disciplines" style={`--teinte: ${d.teinte}`}>
-            <span class="carte-icone"><Icone nom={d.icone} taille="1.6rem" /></span>
-            <h3>{d.nom}</h3>
-            <p>{d.texte}</p>
-            <span class="carte-fleche"><Icone nom="fleche-droite" taille="1.1rem" /></span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CHIFFRES ================= -->
-  <section class="section section--craie">
-    <div class="enveloppe">
-      <div class="chiffres">
-        <div class="chiffre"><strong>{nbClubs}</strong><span>clubs affiliés</span></div>
-        <div class="chiffre"><strong>4</strong><span>disciplines</span></div>
-        <div class="chiffre"><strong>{nbLecons}</strong><span>leçons en ligne</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ACTIVITÉS ================= -->
-  <section class="section">
-    <div class="enveloppe">
-      <p class="surtitre">Le rôle du comité</p>
-      <h2 class="titre-section">Former, organiser, aller vers</h2>
-    </div>
-    <div class="enveloppe">
-      <div class="grille-filet">
-        {activites.map((a) => (
-          <a class="carte" href={a.lien} style={`--teinte: ${a.teinte}`}>
-            <span class="carte-icone"><Icone nom={a.icone} taille="1.6rem" /></span>
-            <h3>{a.nom}</h3>
-            <p>{a.texte}</p>
-            <span class="carte-fleche"><Icone nom="fleche-droite" taille="1.1rem" /></span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ACTUALITÉS ================= -->
-  <section class="section actualites-accueil">
-    <div class="enveloppe actualites-entete">
-      <div>
-        <p class="surtitre">En ce moment</p>
-        <h2 class="titre-section">La vie du comité</h2>
-      </div>
-      <a class="lien-tout" href="/actualites">Toutes les actualités <Icone nom="fleche-droite" taille="1rem" /></a>
-    </div>
-
-    <div class="enveloppe">
-      <div class="actualites-grille">
-        {actualitesRecentes.map((article, index) => (
-          <a class:list={['actu-accueil', { 'actu-accueil--vedette': index === 0 }]} href={'/actualites/' + article.slug}>
-            <span class:list={['actu-visuel', { 'actu-visuel--vide': !vignetteActualite(article) }]}>
-              {vignetteActualite(article) ? (
-                <img src={vignetteActualite(article)} alt="" loading="lazy" decoding="async" width="640" height="640" />
-              ) : (
-                <span class="actu-marque" aria-hidden="true">CDSBF 77</span>
-              )}
-            </span>
-            <span class="actu-corps">
-              <span class="actu-date">{dateActualite(article.date)}</span>
-              <strong>{article.titre}</strong>
-              {index === 0 && <span class="actu-extrait">{article.extrait}</span>}
-            </span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= PARTENAIRES ================= -->
-  <section class="section section--craie">
-    <div class="enveloppe">
-      <p class="surtitre">Ils soutiennent la savate en Seine-et-Marne</p>
-      <div class="partenaires">
-        {partenaires.map((p) => (
-          <div class:list={['partenaire', { 'partenaire--sombre': p.fondSombre }]}>
-            <img src={p.logo} alt={p.nom} loading="lazy" decoding="async"
-                 onerror="this.hidden=true;this.nextElementSibling.hidden=false;" />
-            <span class="partenaire-nom" hidden>{p.court}</span>
+          <div class="video-shell">
+            <div class="video-frame">
+              <div class="video-poster" aria-hidden="true">
+                <span class="poster-number" aria-hidden="true">77</span>
+                <strong>CDSBF 77</strong>
+                <span>La savate en mouvement</span>
+              </div>
+              <iframe tabindex="-1" data-video="https://player.vimeo.com/video/1072779716?h=fe9825216e&background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" allow="autoplay; fullscreen; picture-in-picture" title="La savate en Seine-et-Marne" loading="lazy"></iframe>
+            </div>
           </div>
-        ))}
+          <figcaption>
+            <span aria-hidden="true"></span>Tourné dans les clubs du département
+            <a href="https://vimeo.com/1072779716/fe9825216e">Voir la vidéo sur Vimeo</a>
+          </figcaption>
+        </figure>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="stats" aria-label="Le comité en chiffres">
+      <div class="site-container stats-grid">
+        <a href="/clubs" class="stat">
+          <strong>{nbClubs}</strong>
+          <span>clubs affiliés</span>
+          <Icone nom="fleche-droite" taille="1rem" />
+        </a>
+        <a href="/disciplines" class="stat">
+          <strong>4</strong>
+          <span>disciplines</span>
+          <Icone nom="fleche-droite" taille="1rem" />
+        </a>
+        <a href="/formations" class="stat">
+          <strong>{nbLecons}</strong>
+          <span>leçons en ligne</span>
+          <Icone nom="fleche-droite" taille="1rem" />
+        </a>
+      </div>
+    </section>
+
+    <section class="section disciplines" id="disciplines" aria-labelledby="disciplines-title">
+      <div class="site-container">
+        <div class="section-heading section-heading--intro">
+          <div>
+            <p class="eyebrow eyebrow--light"><span></span>Disciplines</p>
+            <h2 id="disciplines-title">Quatre façons de pratiquer</h2>
+          </div>
+          <p class="section-intro">La savate boxe française est le cœur de la pratique. Autour d'elle, trois disciplines associées permettent à chacun de trouver sa forme.</p>
+        </div>
+
+        <div class="discipline-grid">
+          {disciplines.map(({ icone, nom, texte, teinte }, index) => (
+            <a class="discipline-card" href="/disciplines" style={"--accent: " + teinte}>
+              <span class="card-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+              <span class="discipline-icon"><Icone nom={icone} taille="1.5rem" /></span>
+              <h3>{nom}</h3>
+              <p>{texte}</p>
+              <span class="card-link">Découvrir la discipline <Icone nom="fleche-droite" taille="1rem" /></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section committee" aria-labelledby="committee-title">
+      <div class="site-container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow"><span></span>Le rôle du comité</p>
+            <h2 id="committee-title">Former, organiser, aller vers</h2>
+          </div>
+        </div>
+
+        <div class="committee-grid">
+          {activites.map(({ icone, nom, texte, lien, action }) => (
+            <a class="committee-card" href={lien}>
+              <span class="committee-icon"><Icone nom={icone} taille="1.5rem" /></span>
+              <div>
+                <h3>{nom}</h3>
+                <p>{texte}</p>
+                <span class="card-link">{action} <Icone nom="fleche-droite" taille="1rem" /></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="photo-band" aria-labelledby="band-title">
+      <img class="photo-band-image" src="/images/actualites/2026-06-08-avec-babekus-xv-plus-de-30-personnes-de/video-1-thumb-vignette.jpg" alt="" loading="lazy" decoding="async">
+      <div class="site-container photo-band-inner">
+        <div class="photo-band-copy">
+          <p class="eyebrow eyebrow--light"><span></span>Dans les clubs</p>
+          <h2 id="band-title">De la découverte à la compétition</h2>
+          <p>{nbClubs} clubs accueillent les tireurs de tous âges en Seine-et-Marne, de l'initiation aux championnats.</p>
+          <a class="button button--gold" href="/clubs">
+            Trouver mon club
+            <Icone nom="fleche-droite" taille="1rem" />
+          </a>
+        </div>
+        <div class="photo-band-figure" aria-hidden="true">
+          <strong>77</strong>
+          <span>Seine-et-Marne</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section news" aria-labelledby="news-title">
+      <div class="site-container">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow"><span></span>En ce moment</p>
+            <h2 id="news-title">La vie du comité</h2>
+          </div>
+          <a class="text-link" href="/actualites">
+            Toutes les actualités
+            <Icone nom="fleche-droite" taille="1rem" />
+          </a>
+        </div>
+
+        {vedette && (
+          <div class="news-grid">
+            <a class="news-feature" href={'/actualites/' + vedette.slug}>
+              <div class="news-feature-visual">
+                <span class="news-watermark" aria-hidden="true">77</span>
+                {vignetteActualite(vedette) && (
+                  <img src={vignetteActualite(vedette)} alt="" loading="lazy" decoding="async" width="640" height="640" />
+                )}
+                <span class="news-label">Actualité du comité</span>
+              </div>
+              <div class="news-feature-body">
+                <time datetime={vedette.date}>{dateActualite(vedette.date)}</time>
+                <h3>{vedette.titre}</h3>
+                <p>{vedette.extrait}</p>
+                <span class="card-link">Lire l’actualité <Icone nom="fleche-droite" taille="1rem" /></span>
+              </div>
+            </a>
+
+            <div class="news-list">
+              {autresActualites.map((article) => (
+                <a class="news-item" href={'/actualites/' + article.slug}>
+                  <span class="news-thumb">
+                    <span class="image-fallback" aria-hidden="true">77</span>
+                    {vignetteActualite(article) && (
+                      <img src={vignetteActualite(article)} alt="" loading="lazy" decoding="async" width="640" height="640" />
+                    )}
+                  </span>
+                  <div class="news-item-body">
+                    <time datetime={article.date}>{dateActualite(article.date)}</time>
+                    <h3>{article.titre}</h3>
+                    <span class="news-read">Lire l’actualité <Icone nom="fleche-droite" taille="1rem" /></span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <section class="partners" aria-labelledby="partners-title">
+      <div class="site-container partners-inner">
+        <h2 class="partners-title" id="partners-title">Ils soutiennent la savate<br>en Seine-et-Marne</h2>
+        <ul class="partners-list">
+          {partenaires.map(({ nom, court, logo, fondSombre }) => (
+            <li class:list={['partner', { 'partner--dark': fondSombre }]}>
+              <img src={logo} alt={nom} loading="lazy" decoding="async"
+                   onerror="this.hidden=true;this.nextElementSibling.hidden=false;" />
+              <span class="partner-fallback" hidden>{court}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="contact-strip" aria-labelledby="contact-title">
+      <div class="site-container contact-strip-inner">
+        <div>
+          <p class="eyebrow"><span></span>Contact</p>
+          <h2 id="contact-title">Une question sur la pratique ?</h2>
+          <p>Écrivez au comité pour être orienté vers le bon interlocuteur.</p>
+        </div>
+        <a class="button button--navy" href="mailto:cdsbf77@gmail.com">
+          Écrire au comité
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+        </a>
+      </div>
+    </section>
+  </div>
 </Base>
 
-<style>
-  .annonce-rebais { position: relative; overflow: hidden; padding: 2.4rem 0; color: var(--blanc); background: linear-gradient(115deg, #123f74, var(--bleu-900)); border-top: 1px solid rgba(255,255,255,.15); }
-  .annonce-rebais::after { content: ''; position: absolute; width: 24rem; height: 24rem; right: -8rem; top: -15rem; border: 1px solid rgba(212,175,55,.3); border-radius: 50%; pointer-events: none; }
-  .annonce-rebais-contenu { position: relative; z-index: 1; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
-  .annonce-rebais-date { display: flex; flex-direction: column; align-items: center; border-right: 1px solid rgba(255,255,255,.25); padding-right: 2rem; color: var(--or-400); }
-  .annonce-rebais-date strong { font-family: var(--police-titre); font-size: 4rem; line-height: .95; }
-  .annonce-rebais-date span { font-size: .75rem; font-weight: 700; letter-spacing: .14em; margin-top: .5rem; }
-  .annonce-rebais-texte { flex: 1 1 23rem; }
-  .annonce-rebais .surtitre { color: var(--or-400); margin: 0 0 .5rem; }
-  .annonce-rebais h2 { font-family: var(--police-titre); font-size: var(--titre-md); line-height: 1.05; margin: 0 0 .6rem; }
-  .annonce-rebais p { margin: 0; font-size: var(--txt-sm); line-height: 1.6; }
-  .annonce-rebais .annonce-rebais-limite { margin-top: .35rem; color: #c3cedb; font-size: var(--txt-xs); }
-  @media (max-width: 600px) { .annonce-rebais-date { display: none; } .annonce-rebais-contenu { gap: 1.25rem; } }
-  .annonce-gant { padding: 2rem 0; background: var(--or-200); }
-  .annonce-gant-contenu { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
-  .annonce-gant .surtitre { margin-bottom: 0.45rem; color: var(--bleu-900); }
-  .annonce-gant h2 { font-family: var(--police-titre); font-size: var(--titre-md); line-height: 1.1; color: var(--bleu-900); margin: 0 0 0.4rem; }
-  .annonce-gant p { margin: 0; color: var(--bleu-900); font-size: var(--txt-sm); }
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const hero = document.querySelector('.accueil .hero');
+    const trajectoire = hero?.querySelector('.hero-trajectory');
+    const video = hero?.querySelector<HTMLIFrameElement>('iframe[data-video]');
+    const sobre = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- Héros ---------- */
-  .heros {
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(160deg, #0b2748 0%, var(--bleu-900) 45%, #123f74 100%);
-    padding: clamp(7rem, 14vw, 10rem) 0 clamp(4rem, 8vw, 6rem);
-  }
-  .heros-grille {
-    position: relative;
-    z-index: 1;
-    max-width: var(--large);
-    margin: 0 auto;
-    padding: 0 clamp(1.2rem, 5vw, 3rem);
-    display: grid;
-    gap: clamp(2rem, 5vw, 4rem);
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    align-items: center;
-  }
-  .heros :global(.surtitre) { color: var(--or-400); }
-  .heros h1 {
-    font-family: var(--police-titre);
-    font-size: var(--titre-xl);
-    line-height: 0.92;
-    letter-spacing: 0.01em;
-    color: var(--blanc);
-    margin: 0 0 1.4rem;
-  }
-  .heros h1 em { font-style: normal; color: var(--or-400); }
-  .accroche {
-    color: #c3cedb;
-    font-size: var(--txt-md);
-    line-height: 1.65;
-    max-width: 42ch;
-    margin: 0 0 2rem;
-  }
-  .heros-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; }
+    if (trajectoire && !sobre) {
+      trajectoire.querySelectorAll('path').forEach((trace) => {
+        trace.style.setProperty('--longueur', String(Math.ceil(trace.getTotalLength())));
+      });
+      requestAnimationFrame(() => trajectoire.classList.add('is-drawing'));
+    }
 
-  .heros-media { display: flex; flex-direction: column; gap: 0.7rem; }
-  .cadre-video {
-    position: relative;
-    aspect-ratio: 9 / 14;
-    overflow: hidden;
-    border-radius: 2px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
-    background: linear-gradient(145deg, #081d36, var(--bleu-700));
-  }
-  .video-attente {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.15rem;
-    padding: 1.5rem;
-    background:
-      radial-gradient(circle at 78% 22%, var(--or-400) 0 5px, transparent 6px),
-      linear-gradient(145deg, transparent 0 47%, rgba(212, 175, 55, 0.38) 47.2% 47.65%, transparent 47.9%),
-      linear-gradient(160deg, #081d36, var(--bleu-700));
-    color: var(--blanc);
-  }
-  .video-attente strong {
-    font-family: var(--police-titre);
-    font-size: clamp(2.4rem, 5vw, 4.5rem);
-    letter-spacing: 0.04em;
-    line-height: 0.95;
-  }
-  .video-attente span {
-    color: #c3cedb;
-    font-size: var(--txt-xs);
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-  /* Le lecteur Vimeo ajoute des bandes noires pour préserver le format :
-     on agrandit légèrement l'iframe pour que l'image couvre le cadre. */
-  .cadre-video iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    transform: scale(1.18);
-    transform-origin: center;
-    opacity: 0;
-    transition: opacity 0.45s ease;
-  }
-  .cadre-video.charge iframe { opacity: 1; }
-  .legende {
-    margin: 0;
-    font-size: var(--txt-xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #9aa8ba;
-  }
+    if (!video?.dataset.video || video.hasAttribute('src')) return;
+    if (sobre) {
+      video.hidden = true;
+      return;
+    }
 
-  /* ---------- Actualités sur l'accueil ---------- */
-  .actualites-entete {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-  .lien-tout {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    color: var(--bleu-700);
-    font-weight: 700;
-    text-decoration: none;
-  }
-  .lien-tout:hover { color: var(--or-texte); }
-  .lien-tout:focus-visible { outline: 3px solid var(--or-400); outline-offset: 4px; }
-  .actualites-grille {
-    display: grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
-    gap: 1px;
-    border: 1px solid var(--gris-200);
-    background: var(--gris-200);
-  }
-  .actu-accueil {
-    display: grid;
-    grid-template-columns: 8.5rem minmax(0, 1fr);
-    min-height: 9.5rem;
-    background: var(--blanc);
-    color: var(--encre);
-    text-decoration: none;
-    overflow: hidden;
-    transition: background 0.25s ease;
-  }
-  .actu-accueil--vedette {
-    grid-row: span 3;
-    grid-template-columns: 1fr;
-    grid-template-rows: minmax(18rem, 1fr) auto;
-  }
-  .actu-visuel { display: block; min-width: 0; overflow: hidden; background: var(--craie); }
-  .actu-visuel img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.55s var(--sortie);
-  }
-  .actu-visuel--vide {
-    display: flex;
-    align-items: end;
-    padding: 1.4rem;
-    background:
-      radial-gradient(circle at 78% 22%, var(--or-400) 0 5px, transparent 6px),
-      linear-gradient(145deg, transparent 0 48%, rgba(212, 175, 55, 0.34) 48.2% 48.7%, transparent 49%),
-      linear-gradient(135deg, var(--bleu-900), var(--bleu-700));
-  }
-  .actu-marque {
-    color: var(--blanc);
-    font-family: var(--police-titre);
-    font-size: clamp(2.2rem, 6vw, 4.8rem);
-    letter-spacing: 0.04em;
-    line-height: 0.9;
-  }
-  .actu-corps { display: flex; flex-direction: column; justify-content: center; padding: 1.15rem 1.3rem; }
-  .actu-corps strong {
-    color: var(--bleu-900);
-    font-family: var(--police-titre);
-    font-size: 1.28rem;
-    letter-spacing: 0.02em;
-    line-height: 1.12;
-  }
-  .actu-accueil--vedette .actu-corps { padding: 1.6rem 1.75rem 1.8rem; }
-  .actu-accueil--vedette .actu-corps strong { font-size: clamp(1.8rem, 3vw, 2.7rem); }
-  .actu-date {
-    margin-bottom: 0.4rem;
-    color: var(--or-texte);
-    font-size: var(--txt-xs);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .actu-extrait {
-    display: -webkit-box;
-    margin-top: 0.7rem;
-    color: var(--gris-500);
-    font-size: var(--txt-sm);
-    line-height: 1.55;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .actu-accueil:hover { background: #f7f9fb; }
-  .actu-accueil:hover img { transform: scale(1.045); }
-  .actu-accueil:focus-visible { outline: 3px solid var(--or-400); outline-offset: -3px; }
-
-  /* ---------- Partenaires ---------- */
-  .partenaires {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-    gap: 1px;
-    background: var(--gris-200);
-    border: 1px solid var(--gris-200);
-  }
-  .partenaire {
-    display: grid;
-    place-items: center;
-    background: var(--blanc);
-    padding: 1.6rem 1.2rem;
-    min-height: 7.5rem;
-  }
-  .partenaire--sombre { background: var(--bleu-900); }
-  .partenaire img {
-    max-width: 100%;
-    max-height: 3.6rem;
-    width: auto;
-    height: auto;
-    filter: grayscale(1);
-    opacity: 0.72;
-    transition: filter 0.35s ease, opacity 0.35s ease;
-  }
-  .partenaire:hover img { filter: none; opacity: 1; }
-  .partenaire--sombre img { filter: none; opacity: 0.9; }
-  .partenaire-nom {
-    font-family: var(--police-titre);
-    font-size: 1.05rem;
-    letter-spacing: 0.05em;
-    color: var(--bleu-900);
-    text-align: center;
-  }
-  .partenaire--sombre .partenaire-nom { color: var(--blanc); }
-
-  @media (max-width: 900px) {
-    .actualites-grille { grid-template-columns: 1fr; }
-    .actu-accueil--vedette { grid-row: auto; }
-  }
-
-  @media (max-width: 860px) {
-    .heros-grille { grid-template-columns: 1fr; }
-    .heros-media { max-width: 20rem; }
-  }
-  @media (max-width: 600px) {
-    .actualites-entete { align-items: flex-start; flex-direction: column; gap: 0.8rem; }
-    .actu-accueil { grid-template-columns: 7rem minmax(0, 1fr); min-height: 8rem; }
-    .actu-accueil--vedette { grid-template-columns: 1fr; grid-template-rows: 14rem auto; }
-  }
-  @media (hover: none), (pointer: coarse) {
-    .partenaire img { filter: none; opacity: 1; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .partenaire img, .cadre-video iframe, .actu-visuel img { transition: none; }
-  }
-</style>
+    video.addEventListener('load', () => {
+      video.parentElement?.classList.add('is-loaded');
+    }, { once: true });
+    video.src = video.dataset.video;
+  });
+</script>

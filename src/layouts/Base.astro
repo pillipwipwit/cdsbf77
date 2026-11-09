@@ -2,6 +2,7 @@
 import '../styles/polices.css';
 import '../styles/comite.css';
 import '../styles/composants.css';
+import '../styles/interface.css';
 import { ClientRouter } from 'astro:transitions';
 import Icone from '../components/Icone.astro';
 
@@ -36,7 +37,7 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="theme-color" content="#0f3460" />
+    <meta name="theme-color" content="#0b2744" />
     <meta property="og:site_name" content="CDSBF77" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -56,73 +57,85 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
     <ClientRouter />
   </head>
   <body>
-    <a class="aller-contenu" href="#contenu">Aller au contenu</a>
-    <nav class="navigation" id="navigation" aria-label="Navigation principale">
-      <div class="nav-container">
-        <a class="nav-marque" href="/" aria-label="CDSBF 77 — Accueil">
-          <span class="nav-monogramme">77</span>
-          <span class="nav-nom">CDSBF</span>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <header class="site-header" id="navigation">
+      <div class="site-container nav-wrap">
+        <a class="brand" href="/" aria-label="CDSBF 77 — Accueil">
+          <span class="brand-monogram" aria-hidden="true">77</span>
+          <span class="brand-name">CDSBF<small>Savate boxe française</small></span>
         </a>
 
-        <button class="nav-bouton" type="button" aria-expanded="false" aria-controls="menu-principal">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
           <span>Menu</span>
           <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 7h16M4 12h16M4 17h16" />
+            <path class="menu-line menu-line--top" d="M4 7h16"></path>
+            <path class="menu-line menu-line--middle" d="M4 12h16"></path>
+            <path class="menu-line menu-line--bottom" d="M4 17h16"></path>
           </svg>
         </button>
 
-        <div class="nav-liens" id="menu-principal">
-          {nav.map((item) => (
-            <a
-              href={item.href}
-              class="nav-link"
-              aria-current={chemin === item.href || (item.href !== '/' && chemin.startsWith(item.href + '/')) ? 'page' : undefined}
-            ><span>{item.label}</span></a>
+        <nav class="main-nav" id="menu-principal" aria-label="Navigation principale">
+          {nav.map(({ href, label }) => (
+            <a href={href} aria-current={chemin === href || (href !== "/" && chemin.startsWith(href + "/")) ? "page" : undefined}>{label}</a>
           ))}
-        </div>
-      </div>
-    </nav>
+          <a class="nav-mobile-cta" href="/clubs">Trouver mon club</a>
+        </nav>
 
-    <main id="contenu">
+        <a class="nav-cta" href="/clubs">
+          Trouver un club
+          <Icone nom="fleche-droite" taille="1rem" />
+        </a>
+      </div>
+    </header>
+
+    <main id="contenu" tabindex="-1">
       <slot />
     </main>
 
-    <footer id="contact">
-      <div class="footer-content">
-        <img src="/logos/cdsbf77.png" alt="Logo CDSBF77" class="footer-logo" width="100" height="100" loading="lazy" decoding="async" />
-        <div class="social-links">
-          <a href="https://www.facebook.com/profile.php?id=100088440284322" class="social-link" aria-label="Facebook" rel="noopener">
-            <Icone nom="facebook" taille="1.2rem" />
-          </a>
-          <a href="https://www.instagram.com/comite_77_savate_bf/" class="social-link" aria-label="Instagram" rel="noopener">
-            <Icone nom="instagram" taille="1.2rem" />
-          </a>
-          <a href="mailto:cdsbf77@gmail.com" class="social-link" aria-label="Courriel">
-            <Icone nom="courriel" taille="1.2rem" />
-          </a>
+    <footer class="site-footer" id="contact">
+      <div class="site-container footer-main">
+        <div class="footer-identity">
+          <img src="/logos/cdsbf77.png" alt="Logo CDSBF77" width="100" height="100" loading="lazy" decoding="async">
+          <div>
+            <strong>CDSBF 77</strong>
+            <p>Comité Départemental de Savate Boxe Française de Seine-et-Marne</p>
+          </div>
         </div>
-        <p>© 2026 - Comité Départemental de Savate Boxe Française de Seine-et-Marne</p>
-        <p>
-          <a href="mailto:cdsbf77@gmail.com" style="color: var(--gold); text-decoration: none;">cdsbf77@gmail.com</a>
-          &nbsp;·&nbsp;
-          <a href="/liens" style="color: var(--gold); text-decoration: none;">Liens utiles</a>
-          &nbsp;·&nbsp;
-          <a href="/comite" style="color: var(--gold); text-decoration: none;">Le comité</a>
-          &nbsp;·&nbsp;
-          <a href="/mentions-legales" style="color: var(--gold); text-decoration: none;">Mentions légales</a>
-        </p>
+
+        <div class="footer-contact">
+          <span>Nous contacter</span>
+          <a href="mailto:cdsbf77@gmail.com">cdsbf77@gmail.com</a>
+          <div class="site-socials">
+            <a href="https://www.facebook.com/profile.php?id=100088440284322" aria-label="Facebook" rel="noopener">
+              <Icone nom="facebook" taille="1.2rem" />
+            </a>
+            <a href="https://www.instagram.com/comite_77_savate_bf/" aria-label="Instagram" rel="noopener">
+              <Icone nom="instagram" taille="1.2rem" />
+            </a>
+            <a href="mailto:cdsbf77@gmail.com" aria-label="Courriel">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="site-container footer-bottom">
+        <p>© {new Date().getFullYear()} - Comité Départemental de Savate Boxe Française de Seine-et-Marne</p>
+        <nav aria-label="Liens de pied de page">
+          <a href="/liens">Liens utiles</a>
+          <a href="/comite">Le comité</a>
+          <a href="/mentions-legales">Mentions légales</a>
+        </nav>
       </div>
     </footer>
+
+    <button class="back-to-top" type="button" aria-label="Retour en haut de la page">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m18 15-6-6-6 6"></path></svg>
+    </button>
 
     <script>
       const sobre = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const tactile = () => window.matchMedia('(hover: none), (pointer: coarse)').matches;
-
-      // Barre de navigation : posée une seule fois, l'élément est requestionné à chaque appel
-      window.addEventListener('scroll', () => {
-        const nav = document.getElementById('navigation');
-        if (nav) nav.classList.toggle('scrolled', window.pageYOffset > 100);
-      }, { passive: true });
 
       // Les trajectoires se dessinent à l'arrivée dans le champ.
       // Elles remplacent les particules flottantes : le mouvement dit
@@ -194,47 +207,63 @@ const chemin = Astro.url.pathname.replace(/\/$/, '') || '/';
         });
       }
 
-      function annee() {
-        const a = new Date().getFullYear();
-        document.querySelectorAll('footer p').forEach((p) => {
-          if (p.textContent.includes('©')) p.textContent = p.textContent.replace('2026', String(a));
-        });
-      }
+      const desktop = window.matchMedia('(min-width: 1121px)');
+      const miseAJourDefilement = () => {
+        document.querySelector('.site-header')?.classList.toggle('scrolled', window.scrollY > 24);
+        document.querySelector('.back-to-top')?.classList.toggle('is-visible', window.scrollY > 650);
+      };
+      window.addEventListener('scroll', miseAJourDefilement, { passive: true });
 
-      function menuPrincipal() {
-        const nav = document.getElementById('navigation');
-        const bouton = nav?.querySelector<HTMLButtonElement>('.nav-bouton');
-        const liens = nav?.querySelectorAll<HTMLAnchorElement>('.nav-link');
-        if (!nav || !bouton || bouton.dataset.pret === 'oui') return;
-        bouton.dataset.pret = 'oui';
-
+      let navigation: AbortController | undefined;
+      function interfaceSite() {
+        navigation?.abort();
+        navigation = new AbortController();
+        const options = { signal: navigation.signal };
+        const header = document.querySelector('.site-header');
+        const bouton = header?.querySelector<HTMLButtonElement>('.nav-toggle');
         const fermer = () => {
-          nav.classList.remove('ouverte');
-          bouton.setAttribute('aria-expanded', 'false');
+          header?.classList.remove('menu-open');
+          document.body.classList.remove('menu-open');
+          bouton?.setAttribute('aria-expanded', 'false');
         };
-
-        bouton.addEventListener('click', () => {
-          const ouvert = nav.classList.toggle('ouverte');
+        fermer();
+        document.documentElement.classList.add('js');
+        bouton?.addEventListener('click', () => {
+          const ouvert = header?.classList.toggle('menu-open') ?? false;
+          document.body.classList.toggle('menu-open', ouvert);
           bouton.setAttribute('aria-expanded', String(ouvert));
+        }, options);
+        header?.querySelectorAll('.main-nav a').forEach((lien) => {
+          lien.addEventListener('click', fermer, options);
         });
-        liens?.forEach((lien) => lien.addEventListener('click', fermer));
-        nav.addEventListener('keydown', (event) => {
-          if (event.key === 'Escape') {
-            fermer();
-            bouton.focus();
-          }
-        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key !== 'Escape' || !header?.classList.contains('menu-open')) return;
+          fermer();
+          bouton?.focus();
+        }, options);
+        document.addEventListener('click', (event) => {
+          if (event.target instanceof Node && !header?.contains(event.target)) fermer();
+        }, options);
+        desktop.addEventListener('change', fermer, options);
+
+        document.querySelector('.back-to-top')?.addEventListener('click', () => {
+          document.querySelector<HTMLElement>('.brand')?.focus({ preventScroll: true });
+          window.scrollTo({ top: 0, behavior: sobre() ? 'instant' : 'smooth' });
+        }, options);
+        miseAJourDefilement();
       }
 
       function initialiser() {
-        trajectoires();
-        apparitions();
+        interfaceSite();
+        if ('IntersectionObserver' in window) {
+          trajectoires();
+          apparitions();
+        }
         logoClub();
-        annee();
-        menuPrincipal();
       }
 
       // Se déclenche au premier chargement comme après chaque transition de page
+      document.addEventListener('astro:before-swap', () => navigation?.abort());
       document.addEventListener('astro:page-load', initialiser);
     </script>
   </body>

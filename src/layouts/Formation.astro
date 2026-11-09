@@ -22,7 +22,7 @@ const { title, description = "Espace formation du Comité départemental de sava
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} — CDSBF 77</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0f3460" />
+    <meta name="theme-color" content="#0b2744" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
@@ -98,6 +98,7 @@ const { title, description = "Espace formation du Comité départemental de sava
 
       /* ---- Chrome ---- */
       .fmt-top {
+        border-bottom: 2px solid var(--or-400);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -122,6 +123,7 @@ const { title, description = "Espace formation du Comité départemental de sava
       .fmt-back:hover, .fmt-brand:hover { text-decoration: underline; }
 
       .fmt-foot {
+        border-top: 2px solid var(--or-400);
         margin-top: 5rem;
         padding: 2.5rem clamp(1rem, 4vw, 3rem);
         background: var(--marine);

@@ -10,29 +10,30 @@
   color-scheme: light;
 
   /* ---- Bleu : couleur d'identité ---- */
-  --bleu-950: #08192e; /* fonds les plus sombres */
-  --bleu-900: #0f3460; /* marine, bandeaux et pieds de page */
-  --bleu-700: #1a4e8c; /* bleu principal, liens */
+  --bleu-950: #071a2e; /* fonds les plus sombres */
+  --bleu-900: #0b2744; /* marine, bandeaux et pieds de page */
+  --bleu-800: #0f3460;
+  --bleu-750: #174878;
+  --bleu-700: #2f6fb2; /* bleu principal, liens */
   --bleu-500: #3a6eb8; /* bleu clair, dégradés */
 
   /* ---- Or : couleur d'accent ----
      Les valeurs claires sont réservées au décor et aux fonds sombres :
-     sur blanc, elles n'atteignent pas le contraste minimal (2,1:1 pour
-     --or-400). Pour du texte sur fond clair, utiliser --or-texte. */
-  --or-400: #d4af37; /* accent sur fond sombre, filets, pastilles */
+     sur blanc, elles n'atteignent pas le contraste minimal. Pour du texte sur fond clair, utiliser --or-texte. */
+  --or-400: #e0b34f; /* accent sur fond sombre, filets, pastilles */
   --or-500: #b8941f; /* survols sur fond clair */
-  --or-200: #f5e7b9; /* aplats très clairs */
-  --or-texte: #806418; /* 5,6:1 sur blanc et 5,1:1 sur crème — le seul or utilisable en texte */
+  --or-200: #f1d28b; /* aplats très clairs */
+  --or-texte: #806418; /* texte sur fond clair */
 
   /* ---- Neutres ---- */
   --blanc: #ffffff;
-  --craie: #f8f9fa; /* fond de page clair */
-  --creme: #f7f4ee; /* fond de l'espace formation */
-  --gris-200: #dfe4ea; /* filets et bordures — jamais en texte */
+  --craie: #f5f5f1; /* fond de page clair */
+  --creme: var(--craie); /* fond de l'espace formation */
+  --gris-200: #dfe3e6; /* filets et bordures — jamais en texte */
   --gris-400: #8792a0; /* gros chiffres et repères, 3,2:1 sur blanc */
   --gris-500: #697079; /* texte secondaire, 5,0:1 sur blanc et 4,8:1 sur craie */
-  --gris-600: #5d6b7a; /* texte secondaire soutenu, 5,5:1 */
-  --encre: #1c2530; /* texte courant */
+  --gris-600: #5b6878; /* texte secondaire soutenu, 5,5:1 */
+  --encre: #142235; /* texte courant */
 
   /* ---- Couleurs de sens ---- */
   --vert: #2e7d5b;
@@ -43,11 +44,11 @@
      C'est le système d'accent propre au site : le bleu et le jaune sont déjà
      les couleurs du comité, les autres prolongent la même famille.
      Ordre : bleu, vert, rouge, blanc, jaune, argent. */
-  --gant-bleu: #1a4e8c;
+  --gant-bleu: var(--bleu-700);
   --gant-vert: #2e7d5b;
   --gant-rouge: #b4402f;
   --gant-blanc: #f2f0ea;
-  --gant-jaune: #d4af37;
+  --gant-jaune: var(--or-400);
   --gant-argent: #9aa5b3;
 
   /* ---- Échelle typographique ----
@@ -84,11 +85,12 @@
   --mesure: 68ch; /* largeur de lecture confortable */
 
   /* ---- Ombres ---- */
-  --ombre-basse: 0 5px 15px rgba(8, 25, 46, 0.08);
+  --ombre-basse: 0 8px 30px rgba(7, 26, 46, 0.07);
   --ombre-moyenne: 0 10px 30px rgba(8, 25, 46, 0.15);
-  --ombre-haute: 0 20px 60px rgba(8, 25, 46, 0.3);
+  --ombre-haute: 0 24px 70px rgba(7, 26, 46, 0.15);
 
   /* ---- Mouvement ---- */
+  --transition-interface: 220ms ease;
   --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* ============================================================
