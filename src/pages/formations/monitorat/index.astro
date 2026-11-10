@@ -1,246 +1,89 @@
 ---
-import Formation from "../../../layouts/Formation.astro";
+import "../../../styles/polices.css";
+import "../../../styles/tokens.css";
+import "../../../styles/accueil-monitorat.css";
 import formation from "../../../data/formation.json";
 
-const { ucs, lecons } = formation;
-const total = lecons.length;
-const dureeTotale = lecons.reduce((s, l) => s + l.duree, 0);
-const questions = lecons.reduce((s, l) => s + l.quiz.length, 0);
+const groupes = [
+  { id: "uc1", titre: "Accueil / Protection", modules: ["m1", "m2"] },
+  { id: "uc2", titre: "Encadrement", modules: ["m3", "m4", "m5", "m6", "m7"] },
+  { id: "uc3", titre: "Dynamisation / Intégration", modules: ["m8", "m9"] },
+  { id: "revision", titre: "Révision générale", modules: [] },
+];
+
+function groupe(lecon: (typeof formation.lecons)[number]) {
+  if (lecon.id === "m9-05-revision-generale") return "revision";
+  if (lecon.id === "m1-08-facteurs-performance") return "uc2";
+  if (lecon.id === "m7-04-publics-differencie") return "uc1";
+  return groupes.find(({ modules }) => modules.includes(lecon.uc))?.id;
+}
 ---
 
-<Formation
-  title="Espace formation"
-  description="Les modules de formation au monitorat de savate boxe française du CDSBF 77 : sciences de l'entraînement, pédagogie, environnement du club."
->
-  <section class="hero">
-    <div class="fmt-wrap hero-in">
-      <p class="eyebrow">Préparation au monitorat</p>
-      <h1>
-        {total} leçons.<br />
-        Vingt minutes chacune.<br />
-        <span class="or">Un quiz à la fin de chaque.</span>
-      </h1>
-      <p class="hero-txt">
-        Neuf modules, dans l'ordre du programme de l'unité capitalisable. Tu peux les suivre pas à
-        pas ou piocher ce dont tu as besoin. Chaque leçon se lit en une session, se termine par une
-        vérification des acquis, et garde ton résultat sur cet appareil.
-      </p>
-      <dl class="stats">
-        <div><dt>Leçons</dt><dd>{total}</dd></div>
-        <div><dt>Minutes</dt><dd>{dureeTotale}</dd></div>
-        <div><dt>Questions</dt><dd>{questions}</dd></div>
-      </dl>
-    </div>
-  </section>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitorat fédéral · Parcours UC1, UC2, UC3 — CDSBF 77</title>
+<meta name="description" content="66 supports de préparation au monitorat fédéral de savate boxe française, classés par UC. Calendrier CDSBF 77 de la saison 2026–2027.">
+<meta name="theme-color" content="#0b2744">
+<link rel="canonical" href="https://www.cdsbf77.fr/formations/monitorat/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
-  <div class="fmt-wrap">
-    <p class="progress-line" id="progress-line" hidden></p>
-
-    {ucs.map((uc) => {
-      const items = lecons.filter((l) => l.uc === uc.id).sort((a, b) => a.ordre - b.ordre);
-      return (
-        <section class="uc" id={uc.id}>
-          <header class="uc-head">
-            <span class="uc-code">{uc.code}</span>
-            <div>
-              <h2>{uc.titre}</h2>
-              <p>{uc.chapo}</p>
-            </div>
-            <span class="uc-count">{items.length} leçons</span>
-          </header>
-
-          <ol class="liste">
-            {items.map((l) => (
-              <li>
-                <a href={`/formations/monitorat/${l.id}`} data-lecon={l.id}>
-                  <span class="rang">{String(l.ordre).padStart(2, "0")}</span>
-                  <span class="corps">
-                    <span class="titre">{l.titre}</span>
-                    <span class="chapo">{l.chapo}</span>
-                  </span>
-                  <span class="meta">
-                    <span class="etat" hidden></span>
-                    <span class="duree">{l.duree} min</span>
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ol>
-        </section>
-      );
-    })}
-  </div>
-</Formation>
-
-<style>
-  .hero {
-    background: var(--marine);
-    color: var(--blanc);
-    padding: clamp(3rem, 9vw, 6rem) 0 clamp(2.5rem, 7vw, 4.5rem);
-    margin-bottom: 3.5rem;
-  }
-  .eyebrow {
-    margin: 0 0 1rem;
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--or-clair);
-    font-weight: 600;
-  }
-  .hero h1 {
-    font-size: clamp(2.6rem, 7vw, 4.6rem);
-    max-width: 18ch;
-  }
-  .or { color: var(--or); }
-  .hero-txt {
-    margin: 1.8rem 0 0;
-    max-width: 58ch;
-    color: #c3cedb;
-  }
-  .stats {
-    display: flex;
-    gap: clamp(1.6rem, 5vw, 3.5rem);
-    margin: 2.6rem 0 0;
-    padding-top: 1.6rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
-  }
-  .stats div { margin: 0; }
-  .stats dt {
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: #9aa8ba;
-  }
-  .stats dd {
-    margin: 0.2rem 0 0;
-    font-family: var(--police-titre);
-    font-size: 2.4rem;
-    color: var(--or);
-    line-height: 1;
-  }
-
-  .progress-line {
-    margin: 0 0 2.5rem;
-    padding: 0.85rem 1.1rem;
-    background: var(--blanc);
-    border: 1px solid var(--gris-clair);
-    border-left: 3px solid var(--or);
-    border-radius: var(--rayon);
-    font-size: 0.88rem;
-    color: var(--gris);
-  }
-
-  .uc { margin-bottom: 4.5rem; }
-  .uc-head {
-    display: flex;
-    align-items: baseline;
-    gap: 1.2rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid var(--marine);
-    margin-bottom: 1.6rem;
-    flex-wrap: wrap;
-  }
-  .uc-code {
-    font-family: var(--police-titre);
-    font-size: 2.1rem;
-    color: var(--or-texte);
-    line-height: 1;
-    flex: none;
-  }
-  .uc-head h2 { font-size: 1.9rem; color: var(--marine); }
-  .uc-head p { margin: 0.25rem 0 0; color: var(--gris); font-size: 0.9rem; }
-  .uc-head > div { flex: 1 1 20ch; }
-  .uc-count {
-    font-size: 0.72rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gris);
-    flex: none;
-  }
-
-  .liste { list-style: none; margin: 0; padding: 0; }
-  .liste li + li { margin-top: 0.5rem; }
-  .liste a {
-    display: flex;
-    align-items: center;
-    gap: 1.1rem;
-    padding: 1rem 1.2rem;
-    background: var(--blanc);
-    border: 1px solid var(--gris-clair);
-    border-radius: var(--rayon);
-    text-decoration: none;
-    color: inherit;
-    transition: border-color 0.15s ease, transform 0.15s ease;
-  }
-  .liste a:hover {
-    border-color: var(--marine);
-    transform: translateX(3px);
-  }
-  .rang {
-    font-family: var(--police-titre);
-    font-size: 1.5rem;
-    color: var(--gris-400);
-    flex: none;
-    width: 2ch;
-  }
-  .liste a:hover .rang { color: var(--or-texte); }
-  .corps { flex: 1; display: flex; flex-direction: column; }
-  .titre { font-weight: 600; font-size: 1.02rem; line-height: 1.35; }
-  .chapo { color: var(--gris); font-size: 0.85rem; line-height: 1.45; margin-top: 0.15rem; }
-  .meta {
-    flex: none;
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-  }
-  .duree {
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gris);
-    white-space: nowrap;
-  }
-  .etat {
-    font-size: 0.72rem;
-    font-weight: 600;
-    padding: 0.2rem 0.55rem;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-  .etat.acquis { background: #eef7f2; color: #1d5a3f; }
-  .etat.repasser { background: #fbeeec; color: #8c3123; }
-
-  @media (max-width: 620px) {
-    .chapo { display: none; }
-  }
-</style>
-
-<script>
-  type Suivi = Record<string, { note: number; total: number }>;
-  let suivi: Suivi = {};
-  try {
-    suivi = JSON.parse(localStorage.getItem("cdsbf77-formation") ?? "{}");
-  } catch {
-    suivi = {};
-  }
-
-  const liens = document.querySelectorAll<HTMLAnchorElement>("a[data-lecon]");
-  let acquis = 0;
-
-  liens.forEach((a) => {
-    const res = suivi[a.dataset.lecon!];
-    if (!res) return;
-    const badge = a.querySelector<HTMLElement>(".etat")!;
-    const reussi = res.note >= Math.ceil(res.total * 0.7);
-    if (reussi) acquis++;
-    badge.hidden = false;
-    badge.classList.add(reussi ? "acquis" : "repasser");
-    badge.textContent = `${res.note}/${res.total}`;
-  });
-
-  if (Object.keys(suivi).length > 0) {
-    const ligne = document.getElementById("progress-line")!;
-    ligne.hidden = false;
-    ligne.textContent = `${acquis} leçon(s) acquise(s) sur ${liens.length}. Ton avancement est enregistré sur cet appareil uniquement.`;
-  }
-</script>
+</head>
+<body>
+<a class="skip" href="#parcours">Aller aux leçons</a>
+<header class="top"><div class="wrap top-in"><a href="/formations">← Formations CDSBF 77</a><span>Seine-et-Marne · Savate boxe française</span></div></header>
+<main>
+<section class="hero"><div class="wrap"><p class="eyebrow">Espace formation / Qualification boxe française</p><h1>Préparer le monitorat,<br><em>UC par UC.</em></h1><p class="intro">Un parcours de lecture organisé autour de l'accueil et de la protection des pratiquants, de l'encadrement des séances et de la vie du club.</p><div class="hero-bottom"><dl class="stats"><div><dt>Unités capitalisables</dt><dd>3</dd></div><div><dt>Leçons et quiz</dt><dd>66</dd></div><div><dt>Lecture estimée</dt><dd>22 h</dd></div></dl><a class="calendar-link" href="#calendrier">Calendrier 2026–2027 ↗</a></div></div></section>
+<div class="wrap">
+<div class="notice">Ces supports complètent la formation en présentiel et le travail en club. Les résultats aux quiz sont des repères de révision ; ils ne valident pas les UC.</div>
+<nav class="overview" aria-label="Les trois unités capitalisables">
+<a href="#uc1"><span class="unit">UC1</span><h2>Accueil / Protection</h2><p>Accueillir les pratiquants, préparer une séance et encadrer les premiers apprentissages.</p><span class="card-foot">Meaux · Décembre 2026 <b>↓</b></span></a>
+<a href="#uc2"><span class="unit">UC2</span><h2>Encadrement</h2><p>Qualification boxe française : technique, enseignement et entraînement.</p><span class="card-foot">Meaux · Mars à mai 2027 <b>↓</b></span></a>
+<a href="#uc3"><span class="unit">UC3</span><h2>Dynamisation / Intégration</h2><p>Connaître le milieu sportif, gérer une association et développer un club.</p><span class="card-foot">Meaux · Février 2027 <b>↓</b></span></a>
+</nav>
+<section class="progress-box" aria-label="Résultats aux quiz"><div><p class="eyebrow">Mon suivi de révision</p><p id="progress-text">Résultats des quiz enregistrés sur cet appareil.</p><small id="storage-note">Les résultats sont conservés dans ce navigateur, sur le site où les quiz ont été réalisés.</small></div><div class="progress-visual"><span id="progress-value">0 / 66</span><progress id="progress" value="0" max="66" aria-label="Leçons avec au moins 70 % de bonnes réponses">0 / 66</progress></div></section>
+<section id="parcours" class="catalogue" aria-labelledby="catalogue-title"><div class="section-title"><div><p class="eyebrow">Supports de préparation</p><h2 id="catalogue-title">Les leçons, dans l'ordre du parcours</h2></div><p>Environ 20 min par leçon</p></div>
+<div class="toolbar" hidden><div class="filters" role="group" aria-label="Filtrer par unité"><button type="button" data-uc="all" aria-pressed="true">Tout le parcours</button><button type="button" data-uc="uc1" aria-pressed="false">UC1</button><button type="button" data-uc="uc2" aria-pressed="false">UC2</button><button type="button" data-uc="uc3" aria-pressed="false">UC3</button></div><div class="search"><label for="search">Rechercher une leçon</label><input id="search" type="search" placeholder="Muscle, séance, association…"></div><label class="review"><input type="checkbox" id="review"> Masquer les quiz réussis</label></div>
+<p id="results" class="result-count" role="status" aria-live="polite"></p>
+<div id="lessons">
+  {groupes.map(({ id, titre, modules }) => {
+    const lecons = formation.lecons.filter((lecon) => groupe(lecon) === id);
+    return (
+      <section class="lesson-group" id={id} data-group={id} aria-labelledby={id + "-titre"}>
+        {modules.map((module) => <span class="module-anchor" id={module}></span>)}
+        <h3 id={id + "-titre"}>{id === "revision" ? titre : id.toUpperCase() + " · " + titre}</h3>
+        <ol class="lesson-list">
+          {lecons.map((lecon) => (
+            <li data-lesson={lecon.id}>
+              <a href={`/formations/monitorat/${lecon.id}`}>
+                <span>
+                  <strong>{lecon.titre}</strong>
+                  <span class="lesson-summary">{lecon.chapo}</span>
+                </span>
+                <span class="lesson-meta">
+                  <span data-score hidden></span>
+                  <span>{lecon.duree} min</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    );
+  })}
+</div><div id="empty" class="empty" hidden><p>Aucune leçon ne correspond à ces filtres.</p><button id="reset" type="button">Afficher tout le parcours</button></div>
+</section>
+<section id="calendrier" class="schedule" aria-labelledby="schedule-title"><div class="section-title"><div><p class="eyebrow">Saison 2026–2027</p><h2 id="schedule-title">Calendrier de formation</h2></div><span class="tag">Calendrier prévisionnel</span></div><p>Les journées de formation ont lieu à Meaux, de 9 h à 17 h. Le parcours en présentiel commence par l'UC1, puis l'UC3 et les trois sessions de l'UC2.</p>
+<div class="schedule-grid"><article><span class="unit">UC1 · 50 €</span><h3>Culture fédérale et cadre légal</h3><p>Meaux · 9 h–17 h</p><ul><li>Samedi 5 décembre 2026</li><li>Dimanche 6 décembre 2026</li></ul></article><article><span class="unit">UC3 · 50 €</span><h3>Vie associative et environnement</h3><p>Meaux · 9 h–17 h</p><ul><li>Samedi 6 février 2027</li><li>Dimanche 7 février 2027</li></ul></article><article><span class="unit">UC2 · Session 1</span><h3>Qualification SBF et didactique</h3><p>Meaux · 9 h–17 h</p><ul><li>Samedi 6 mars 2027</li><li>Dimanche 7 mars 2027</li></ul><p>250 € pour les trois sessions de l'UC2.</p></article><article><span class="unit">UC2 · Session 2</span><h3>Pédagogie et perfectionnement</h3><p>Meaux · 9 h–17 h</p><ul><li>Samedi 17 avril 2027</li><li>Dimanche 18 avril 2027</li></ul><p>Inclus dans le tarif UC2.</p></article><article><span class="unit">UC2 · Session 3</span><h3>Synthèse technique et pratique</h3><p>Meaux · 9 h–17 h</p><ul><li>Samedi 22 mai 2027</li></ul><p>Inclus dans le tarif UC2.</p></article></div>
+<div class="exam"><div><p class="eyebrow">Examen blanc</p><h3>23 mai 2027</h3><p>Dimanche · 9 h–17 h · Lieu à déterminer<br>Mise en situation d'épreuve · Inclus dans la formation</p></div><div><p class="eyebrow">Examen du monitorat SBF</p><h3>12 juin 2027</h3><p>Samedi · Lieu à déterminer<br>Inscription à l'examen : 100 €</p></div></div>
+<details><summary>Pièces à joindre, tarifs et inscription · session 2026–2027</summary><div class="details-body"><div class="two-col"><div><h3>Pièces obligatoires</h3><ul><li>Pièce d'identité en cours de validité : CNI recto-verso ou passeport.</li><li>Diplôme de secourisme : PSC1, SST en cours de validité ou équivalent.</li></ul><p>Le dossier demande les renseignements du candidat, son club et son numéro de licence FFSBF. Le code postal de naissance est obligatoire.</p></div><div><h3>Tarifs de la session</h3><p>Cursus complet : <strong>450 €</strong>, soit 350 € de formation et 100 € d'inscription à l'examen.</p><p>UC au détail : UC1 <strong>50 €</strong> ; UC2 <strong>250 €</strong> pour les trois sessions ; UC3 <strong>50 €</strong>.</p><p>Examen seul : <strong>100 €</strong>.</p></div></div></div></details>
+<div class="contact"><div><h3>Contact formation</h3><p>Référent : M. HAMOURI · CDSBF 77</p></div><div><a href="mailto:cdsbf77@gmail.com">cdsbf77@gmail.com</a><a href="tel:+33616967266">06 16 96 72 66</a></div></div>
+</section>
+<section class="sources" aria-labelledby="sources-title"><h2 id="sources-title">Organisation du parcours et références</h2><p>Le classement répartit les supports existants entre les trois UC et une révision générale. Il conserve les adresses des leçons et les identifiants de suivi, même lorsque leur préfixe historique ne correspond pas à leur nouvelle rubrique. La révision générale reste transversale aux trois UC.</p><p>Les thèmes des UC suivent le Cahier n° 1 « La filière formation », version publiée en février 2024, pages 19, 20 et 24. Le calendrier, les tarifs et les modalités d'inscription proviennent du document « Dossier d'inscription — Monitorat fédéral 2026–2027 » fourni. Les 22 heures correspondent à l'estimation de lecture des supports, et non au volume horaire réglementaire de la formation.</p><ul><li><a href="https://www.ffsavate.com/content/uploads/2023/11/CAHIER-1-la-filiere-MAJ-fevrier-24.pdf" target="_blank" rel="noopener">Cahier n° 1 · version de février 2024 (PDF, nouvel onglet)</a></li><li><a href="https://www.ffsavate.com/federation/status-et-reglement/" target="_blank" rel="noopener">Règlements fédéraux et éditions du Cahier n° 1 (nouvel onglet)</a></li></ul></section>
+</div>
+</main><footer><div class="wrap"><p>Comité départemental de savate boxe française de Seine-et-Marne</p><p>Supports pédagogiques internes · Préparation au monitorat fédéral</p><a href="#">Retour en haut ↑</a></div></footer>
+  <script src="../../../scripts/accueil-monitorat.ts"></script>
+</body>
+</html>
